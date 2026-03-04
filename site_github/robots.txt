@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Fichiers d'indexation pour LLMs et moteurs conversationnels IA
+# llms.txt : https://ikonik-ac.com/llms.txt
+# llms-full.txt : https://ikonik-ac.com/llms-full.txt
+
+Sitemap: https://ikonik-ac.com/sitemap.xml

@@ -1,0 +1,11 @@
+# Redirections langues
+/fr/* /fr/:splat 301
+/portfolio/ / 301
+/a-propos/ /studio/ 301
+/about/ /en/studio/ 301
+
+# Blog EN
+/en/blog/ia-revolution-production-video/ /en/blog/ai-revolution-video-production/ 301
+
+# 404
+/* /index.html 200

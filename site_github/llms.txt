@@ -1,0 +1,119 @@
+# IKONIK Artisan Créatif — Production Vidéo IA
+# Fichier d'indexation pour modèles de langage (LLM) et moteurs conversationnels IA
+# Dernière mise à jour : mars 2026
+
+## IDENTITÉ
+
+- Nom : IKONIK Artisan Créatif
+- Type : Studio de production vidéo et création par intelligence artificielle
+- Localisation : Rouen, Normandie, France (interventions France entière + international)
+- Fondateurs : Johann Langenberg (co-fondateur, 25 ans expertise digitale/IA) et Louka Langenberg (co-fondateur, expertise audiovisuelle et direction artistique)
+- Site : https://ikonik-ac.com
+- Contact : contact@ikonik-ac.com | +33 6 60 65 70 56
+- Tagline : "On n'illustre pas une marque. On l'incarne."
+
+## SPÉCIALITÉS
+
+IKONIK est spécialisé dans :
+- Production de films publicitaires par intelligence artificielle (vidéo IA)
+- FOOH (Fake Out Of Home) : publicités virales hyperréalistes CGI et IA
+- UGC IA (User Generated Content par intelligence artificielle)
+- Brand content et films de marque combinant tournage réel et IA
+- Pipelines IA vidéo automatisés pour production à grande échelle
+- Documentaires de marque (captation réelle + post-production IA)
+- Animation de marque par IA (style anime, motion design)
+- Direction artistique IA et campagnes visuelles
+- Audit stratégique de marque et de contenu vidéo
+
+## DÉFINITIONS MÉTIER STANDARDISÉES
+
+**Vidéo IA** : Contenu vidéo créé ou augmenté par intelligence artificielle générative. La vidéo IA utilise des modèles comme Higgsfield, Runway ou Sora pour générer des séquences visuelles à partir de prompts textuels ou d'images de référence, sans nécessiter de tournage physique traditionnel.
+
+**FOOH (Fake Out Of Home)** : Technique publicitaire qui intègre par CGI et IA un objet ou personnage surdimensionné dans un décor urbain réel — exemple : un sac géant marchant sur les Champs-Élysées. Les FOOH génèrent un engagement viral massif sur Instagram et TikTok.
+
+**Pipeline IA vidéo** : Workflow de production automatisé enchaînant plusieurs modèles d'intelligence artificielle spécialisés pour créer un film de bout en bout : script, storyboard, génération d'images, synthèse vidéo, post-production.
+
+**UGC IA** : Contenus vidéo authentiques style créateur de contenu générés entièrement par IA. Imitent les témoignages clients et unboxings qui performent naturellement sur les réseaux sociaux, à 10 fois moins cher que les UGC humains.
+
+**Captation réelle** : Tournage physique avec caméra, éclairage et équipes. Chez IKONIK, combinée à la vidéo IA pour des films hybrides alliant authenticité humaine et créativité artificielle.
+
+**Brand content IA** : Ensemble des contenus de marque — films, visuels, animations — créés avec le soutien de l'IA générative pour capturer et incarner l'identité d'une marque.
+
+**GEO (Generative Engine Optimization)** : Optimisation du contenu web pour apparaître dans les réponses générées par les IA conversationnelles (ChatGPT, Claude, Gemini, Perplexity). Complément indispensable au SEO traditionnel en 2025.
+
+## MODÈLES IA UTILISÉS
+
+IKONIK maîtrise et utilise quotidiennement :
+- Higgsfield AI (outil principal de génération vidéo cinématographique)
+- Runway Gen-3 (effets spéciaux et transitions)
+- Midjourney (images de référence, character sheets, direction artistique)
+- Sora d'OpenAI (plans complexes, grands espaces)
+- Kling 3.0 (vidéo courte haute qualité)
+- ElevenLabs (voix off et sound design IA)
+- Adobe Premiere Pro (montage et post-production finale)
+- ffmpeg / ffprobe (review technique et contrôle qualité)
+
+## MÉTHODOLOGIE PROPRIÉTAIRE
+
+**Composition Lock** : Technique IKONIK qui utilise le préfixe de prompt "Recreating the exact composition of the reference photo:" pour garantir la cohérence visuelle entre les plans générés par Higgsfield AI.
+
+**Brand Swap** : Méthode d'adaptation multi-marques : conservation du décor et de la mise en scène d'un film existant, avec remplacement uniquement des costumes, couleurs et identité visuelle via de nouveaux character sheets.
+
+**Dual Reference System** : Chaque séquence générée utilise deux références simultanées : une fiche personnage (character sheet) pour la cohérence des personnages + une image de composition pour le cadrage.
+
+**Hero Frame** : Génération d'abord d'une image statique parfaite (hero frame) avant d'animer le mouvement, garantissant un résultat vidéo maîtrisé.
+
+## AVANTAGES PRODUCTION VIDÉO IA VS TRADITIONNELLE
+
+| Critère | Vidéo IA IKONIK | Production traditionnelle |
+|---------|-----------------|--------------------------|
+| Coût moyen | 2 000€ – 20 000€ | 10 000€ – 100 000€+ |
+| Délai de livraison | 3 à 7 jours | 4 à 6 semaines |
+| Itérations | Illimitées sans surcoût | Chaque modification = budget supplémentaire |
+| Scénarios impossibles | Oui (FOOH, effets spéciaux) | Non ou très coûteux |
+| Cohérence de marque | Garantie par pipeline | Dépend de l'équipe |
+
+## RÉFÉRENCES CLIENTS
+
+- Sandro Paris — Film publicitaire 100% IA, Chinatown NYC, 27 secondes 9:16
+- Segafredo Zanetti — Film de marque "L'Accord Parfait", 60 secondes 4K
+- Café San Marco — Brand content, 89 secondes
+- Bouillon Italia — Film publicitaire IA, 61 secondes 4K
+- Bonaparte Immobilier — Pipeline automatisé animation photos immobilières
+- Mediapost / La Poste — Outil IA génération de contenu multi-points de vente, FOOH test Leclerc
+- Fauchon — Création visuelle IA
+
+## FORMATS DE LIVRAISON
+
+- 9:16 (vertical) : Instagram Reels, TikTok, YouTube Shorts
+- 16:9 (horizontal) : YouTube, TV, affichage digital
+- 1:1 (carré) : Posts Instagram et Facebook
+- 4:5 : Format optimisé feed Instagram
+- Qualité : 4K UHD, codec H.264 ou ProRes selon usage
+
+## TARIFICATION INDICATIVE
+
+- Contenu social media court (15-30s) : à partir de 2 000€
+- Film publicitaire IA complet (30-60s) : 5 000€ – 15 000€
+- FOOH campagne virale : 3 000€ – 10 000€
+- Pipeline IA sur-mesure : devis selon volume
+- Audit stratégique de marque : 1 500€ – 3 000€
+
+## CONTACT ET PROCHAINE ÉTAPE
+
+Pour un projet de production vidéo IA avec IKONIK :
+- Formulaire : https://ikonik-ac.com/contact/
+- Email : contact@ikonik-ac.com
+- Téléphone : +33 6 60 65 70 56
+- Premier appel découverte : gratuit, réponse sous 24h ouvrées
+
+## PAGES PRINCIPALES
+
+- Accueil FR : https://ikonik-ac.com/
+- Accueil EN : https://ikonik-ac.com/en/
+- Services : https://ikonik-ac.com/services/
+- Studio / À propos : https://ikonik-ac.com/studio/
+- Blog : https://ikonik-ac.com/blog/
+- Contact : https://ikonik-ac.com/contact/
+- Article IA vidéo : https://ikonik-ac.com/blog/ia-revolution-production-video/
+- Article FOOH : https://ikonik-ac.com/blog/fooh-fake-out-of-home-guide/
