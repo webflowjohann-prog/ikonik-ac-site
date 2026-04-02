@@ -1,0 +1,422 @@
+<!doctype html>
+<html dir="ltr" lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport">
+<title>Headphones Collection | Warwick Acoustics — Reference Clone</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,700;1,900&display=swap');
+:root{--bg:#ebeaea;--dark:#151c24;--text:#222931;--muted:#cac4bf;--accent:#E9540D;--white:#fff;--border:#9ea8b5;--gray:#5e6670;--ease:cubic-bezier(.645,.045,.355,1);--sans:'Outfit',sans-serif;--serif:'Playfair Display',serif}
+*,*::before,*::after{margin:0;padding:0;box-sizing:inherit}
+html{box-sizing:border-box;-webkit-font-smoothing:antialiased;background:var(--bg);font-size:62.5%;width:100%}
+body{color:var(--text);font-family:var(--sans);font-size:1.6rem;font-weight:300;letter-spacing:.06em;line-height:2.6rem;margin:0;width:100%}
+@media(min-width:768px){body{font-size:1.8rem;line-height:3rem}}
+p{margin:0 0 1em}a{color:currentColor;text-decoration:none}
+menu,ol,ul{margin:0;padding:0;list-style:none}
+button{appearance:none;background:0 0;border:none;cursor:pointer;padding:0}
+h1,h2,h3,h4,h5{margin:0}img{display:block;max-width:100%}
+h1 em,h2 em,h3 em{font-family:var(--serif);font-size:4.2rem;font-style:italic;font-weight:900;letter-spacing:.02em;line-height:5rem;text-transform:capitalize}
+@media(min-width:768px){h1 em,h2 em,h3 em{font-size:6.4rem;line-height:7.2rem}}
+@media(min-width:992px){h1 em,h2 em,h3 em{font-size:7.2rem;line-height:8.6rem}}
+.container{box-sizing:border-box;margin:0 auto;max-width:132rem;padding:0 2rem;width:100%}
+@media(min-width:768px){.container{padding:0 2.8rem}}
+@media(min-width:992px){.container{padding:0 4rem}}
+@keyframes moveUpAndFadeIn{0%{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{0%{opacity:0}to{opacity:1}}
+@keyframes grow{0%{width:0}to{width:100%}}
+@keyframes scaleIn{0%{transform:scale(1.1)}to{transform:scale(1)}}
+@keyframes changeBackground{0%{background:var(--dark)}to{background:rgba(21,28,36,.3)}}
+
+/* HEADER */
+.header{background:hsla(0,2%,92%,0);left:0;position:fixed;right:0;top:0;transition:transform .4s var(--ease),background .4s var(--ease);z-index:10}
+.header__inner{display:flex;justify-content:space-between;align-items:center;padding:2rem 0;position:relative;transition:padding .4s var(--ease);width:100%}
+@media(min-width:768px){.header__inner{padding:3.2rem 0}.header__inner::after{animation:grow 1.8s ease-in-out forwards;animation-delay:1s;background:hsla(0,0%,100%,.4);bottom:0;content:"";height:.1rem;left:0;position:absolute;width:0}}
+@media(min-width:992px){.header__inner{padding:4rem 0}}
+.header--collapsed{background:var(--dark);transform:translateY(-100%)}
+.header--peeked{transform:translateY(0)}
+.header__logo{display:block;height:3.2rem;width:22.9rem}
+@media(max-width:991px){.header__logo{width:4rem}}
+.header__logo svg{height:100%;width:100%}
+.header__logo .roundel{fill:var(--accent);animation:fadeIn 1.5s ease-in-out forwards;animation-delay:1s;opacity:0}
+.header__logo .text{fill:var(--white);animation:fadeIn 1.5s ease-in-out forwards;animation-delay:1.2s;opacity:0}
+.header--collapsed .header__logo .roundel,.header--collapsed .header__logo .text{fill:var(--white)}
+.dnav{display:none;align-items:center}@media(min-width:768px){.dnav{display:flex}}
+.dnav__menu{display:flex;gap:4rem;align-items:flex-end}@media(min-width:992px){.dnav__menu{gap:6rem}}
+.dnav__menu>li{opacity:0}.dnav__menu>li:nth-child(1){animation:fadeIn 1.5s ease-in-out forwards;animation-delay:1.4s}.dnav__menu>li:nth-child(2){animation:fadeIn 1.5s ease-in-out forwards;animation-delay:1.6s}.dnav__menu>li:nth-child(3){animation:fadeIn 1.5s ease-in-out forwards;animation-delay:1.8s}
+.dnav__link{color:var(--white);font-size:1.6rem;font-weight:450;letter-spacing:.06em;line-height:1.8rem;position:relative}
+.dnav__link::after{background:var(--white);bottom:-1.2rem;content:"";display:block;height:.1rem;left:50%;position:absolute;transform:translateX(-50%);transition:width .2s var(--ease);width:0}
+.dnav__link:hover::after{width:4rem}
+.burger{display:block;stroke:var(--white);height:4.4rem;width:4.4rem}@media(min-width:768px){.burger{display:none}}
+
+/* BUTTON */
+.button{background:linear-gradient(325deg,var(--accent) -20%,rgba(233,84,13,0) 31%);border-radius:80rem;cursor:pointer;display:inline-block;padding:.4rem .4rem .4rem 0;text-decoration:none;width:fit-content}
+.btn{align-items:center;border-radius:80rem;display:flex;font-family:var(--sans);font-size:1.6rem;font-weight:450;height:4.6rem;justify-content:center;letter-spacing:.04em;line-height:1.8rem;overflow:hidden;padding:0 3.6rem;position:relative;white-space:nowrap}
+.btn--pri{background:var(--text);border:.1rem solid var(--text);color:var(--white)}
+.btn--sec{background:var(--white);border:.1rem solid var(--text);color:var(--text)}
+.btn--ter{background:var(--bg);border:.1rem solid var(--text);color:var(--text)}
+.bt{transition:none}.bt--out{align-items:center;bottom:0;display:flex;justify-content:center;left:0;opacity:0;position:absolute;right:0;top:0;transform:translateX(110%)}
+.bt--in,.bt--out{transition:opacity .2s var(--ease),transform .2s var(--ease)}
+.button:hover .bt--in{opacity:0;transform:translateX(-110%)}.button:hover .bt--out{opacity:1;transform:translateX(0)}
+
+/* PAGE HERO — static image, NOT video */
+.page-hero{align-items:center;color:var(--white);display:flex;flex-direction:column;justify-content:center;min-height:100vh;overflow:hidden;padding-top:8rem;position:relative;width:100%;z-index:3}
+.page-hero__bg{animation:scaleIn 3s ease-in-out forwards;background-position:100%;background-repeat:no-repeat;background-size:cover;height:100%;inset:0;position:absolute;transform:scale(1.3);width:100%;z-index:1}
+.page-hero__bg::before{animation:changeBackground 3s ease-in-out forwards;animation-delay:.5s;background:var(--dark);content:"";height:100%;left:0;position:absolute;top:0;width:100%}
+.page-hero__inner{display:flex;max-width:100rem;padding:13rem 0 14.5rem;position:relative;width:100%;z-index:2}
+@media(min-width:992px){.page-hero__inner{padding:16.5rem 0}}
+.page-hero__subtitle{animation:moveUpAndFadeIn 1s ease-in-out forwards;animation-delay:.4s;font-family:var(--sans);font-size:4.4rem;font-weight:600;letter-spacing:.06em;line-height:5.2rem;margin:0;opacity:0;text-transform:uppercase;transform:translateY(20%)}
+@media(min-width:768px){.page-hero__subtitle{font-size:7.2rem;line-height:7.6rem}}
+@media(min-width:992px){.page-hero__subtitle{font-size:9.2rem;line-height:9.2rem}}
+.page-hero__subtitle em{font-family:var(--serif);font-size:5.4rem;font-style:italic;font-weight:900;letter-spacing:.02em;line-height:6.2rem;padding-right:1rem;text-transform:none}
+@media(min-width:768px){.page-hero__subtitle em{font-size:8.8rem;letter-spacing:0;line-height:8.8rem}}
+@media(min-width:992px){.page-hero__subtitle em{font-size:10.8rem;line-height:10.8rem}}
+.hero-title{display:flex;flex-direction:column;gap:0}
+.hero-line{align-items:center;display:flex;flex-wrap:wrap;gap:1rem}
+@media(min-width:768px){.hero-line{gap:3rem}}
+.scroll-ind{animation:fadeIn 3s ease-in-out forwards;animation-delay:1s;bottom:-20%;opacity:0;position:absolute;right:50%;transform:translateX(-50%);width:10px}
+@media(min-width:992px){.scroll-ind{right:-10%;transform:none}}
+
+/* LAYOUT */
+.layout__content{background-color:var(--bg);border-radius:60px;border-bottom-left-radius:0;border-bottom-right-radius:0;margin-top:-60px;overflow-x:clip;position:relative;z-index:3}
+.section{position:relative}.section__inner{position:relative;z-index:2}
+.s-pad-lg{padding:8rem 0}@media(min-width:768px){.s-pad-lg{padding:16rem 0}}@media(min-width:992px){.s-pad-lg{padding:20rem 0}}
+.s-pt-lg{padding-top:8rem}@media(min-width:768px){.s-pt-lg{padding-top:16rem}}@media(min-width:992px){.s-pt-lg{padding-top:20rem}}
+.s-pb-lg{padding-bottom:8rem}@media(min-width:768px){.s-pb-lg{padding-bottom:16rem}}@media(min-width:992px){.s-pb-lg{padding-bottom:20rem}}
+.s-pb-sm{padding-bottom:8rem}
+.s-pad-md{padding:8rem 0}@media(min-width:768px){.s-pad-md{padding:16rem 0}}
+.t-dark{background-color:var(--dark)}.t-light{background-color:var(--bg)}
+
+/* GRID 2 COLUMNS — exact Warwick */
+.grid{display:grid;gap:2rem;grid-template-columns:1fr}
+@media(min-width:768px){.grid{gap:4rem;grid-template-columns:repeat(2,1fr)}}
+.grid--gap-lg{gap:2rem}@media(min-width:768px){.grid--gap-lg{gap:8rem}}@media(min-width:1200px){.grid--gap-lg{gap:16rem}}
+
+/* NEW CARD — video card with rounded corners */
+.new-card{background-color:var(--white);border-radius:20px;height:400px;overflow:hidden;position:relative}
+@media(min-width:768px){.new-card{height:600px}}
+.new-card__video{height:100%;left:0;object-fit:cover;position:absolute;top:0;width:100%;z-index:0}
+
+/* CONTENT BLOCK */
+.cb{display:flex;flex-direction:column;justify-content:center}
+.cb--d{color:var(--white)}.cb--l{color:var(--text)}
+.cb__tag{display:inline-block;font-family:var(--sans);font-size:1.2rem;font-weight:450;letter-spacing:.16em;line-height:1.6rem;margin-bottom:1.2rem;text-transform:uppercase}
+@media(min-width:768px){.cb__tag{font-size:1.4rem;letter-spacing:.14em}}
+.cb__h h2{font-family:var(--sans);font-size:3.6rem;font-weight:600;letter-spacing:.06em;line-height:4rem;margin-bottom:1rem;text-transform:uppercase}
+@media(min-width:768px){.cb__h h2{font-size:5.2rem;line-height:5.6rem}}
+@media(min-width:992px){.cb__h h2{font-size:6rem;line-height:6rem}}
+.cb__t{font-family:var(--sans);font-size:1.6rem;font-weight:300;letter-spacing:.06em;line-height:2.6rem;max-width:460px}
+@media(min-width:768px){.cb__t{font-size:1.8rem;line-height:3rem}}
+.cb__ctas{margin-top:3.2rem}
+.cb__wrap{max-width:560px}
+
+/* HEADING LINE with accent SVG */
+.h-line{display:flex;flex-wrap:nowrap;align-items:center;gap:1rem}
+@media(min-width:768px){.h-line{gap:2rem}}
+/* Aperio accent: line + dot */
+.accent-aperio{display:flex;align-items:center;gap:0}
+.accent-aperio__line{background:var(--text);height:1px;width:80px;position:relative}
+@media(min-width:768px){.accent-aperio__line{width:140px;margin-left:2rem}}
+@media(min-width:992px){.accent-aperio__line{width:180px;margin-left:4rem}}
+/* Bravura accent: line + chevron */
+.accent-bravura{display:flex;align-items:center;margin-left:1rem}
+@media(min-width:768px){.accent-bravura{margin-left:2rem}}
+
+/* FEATURE CARD */
+.fc{border-radius:20px;min-height:620px;overflow:hidden;padding:3rem;position:relative}
+.fc::before{background:var(--dark);content:"";height:100%;left:0;opacity:.28;position:absolute;top:0;width:100%;z-index:0}
+@media(min-width:992px){.fc{border-radius:40px;padding:6rem}}
+.fc__ct{align-items:flex-end;display:flex;height:100%;position:relative;z-index:1}
+@media(min-width:992px){.fc__ct{align-items:center}}
+
+/* SONOMA CARD */
+.sonoma{background-color:var(--text);border-radius:20px;color:var(--white);display:flex;flex-direction:column;position:relative}
+.sonoma::after{background:linear-gradient(315deg,rgba(0,0,0,.1),rgba(0,0,0,.8) 60%,rgba(233,84,13,.6));border-radius:20px;content:"";height:100%;left:-1px;position:absolute;top:-1px;width:100%;z-index:-1}
+@media(min-width:768px){.sonoma,.sonoma::after{border-radius:40px}}
+@media(min-width:992px){.sonoma{flex-direction:row}}
+.sonoma__img{background-position:50%;background-repeat:no-repeat;background-size:cover;border-top-left-radius:20px;border-top-right-radius:20px;min-height:320px}
+@media(min-width:768px){.sonoma__img{border-top-left-radius:40px;border-top-right-radius:40px;min-width:500px}}
+@media(min-width:992px){.sonoma__img{border-bottom-left-radius:40px;border-top-left-radius:40px;border-top-right-radius:0;min-height:550px;min-width:500px}}
+.sonoma__ct{display:flex;flex-direction:column;gap:1rem;justify-content:center;padding:3rem}
+@media(min-width:768px){.sonoma__ct{padding:6rem}}
+.sonoma__sub{font-size:1.2rem;font-weight:450;letter-spacing:.16em;line-height:1.6rem;text-transform:uppercase}
+@media(min-width:768px){.sonoma__sub{font-size:1.4rem}}
+.sonoma__h{align-items:center;display:flex;flex-wrap:nowrap;font-size:3.2rem;font-weight:600;gap:4rem;letter-spacing:.02em;line-height:3.6rem}
+@media(min-width:768px){.sonoma__h{font-size:4.4rem;letter-spacing:.06em;line-height:4.4rem}}
+.sonoma__desc{font-size:1.6rem;font-weight:300;letter-spacing:.06em;line-height:2.6rem}
+@media(min-width:768px){.sonoma__desc{font-size:1.8rem;line-height:3rem}}
+
+/* REVIEW SECTION */
+.rs{position:relative}@media(min-width:992px){.rs{padding-bottom:10rem}}
+.rs--d{color:var(--white)}
+.rs__in{display:flex;flex-direction:column}@media(min-width:768px){.rs__in{gap:6rem}}@media(min-width:992px){.rs__in{flex-direction:row;gap:4rem}}@media(min-width:1200px){.rs__in{gap:8rem}}
+.rs__ag{display:flex;flex-wrap:nowrap;gap:2rem;overflow-x:scroll;scrollbar-width:none}.rs__ag::-webkit-scrollbar{display:none}
+@media(min-width:768px){.rs__ag{display:grid;gap:5rem;grid-template-columns:360px 360px;grid-template-rows:1fr 1fr;overflow:visible}}
+@media(min-width:992px){.rs__ag{grid-template-columns:260px 260px}}
+.rs__a{min-width:90%}@media(min-width:768px){.rs__a{display:flex;justify-content:center}.rs__a:nth-child(2) img,.rs__a:nth-child(2) video,.rs__a:nth-child(4) img,.rs__a:nth-child(4) video{transform:translateY(20%)}}
+.rs__a img,.rs__a video{border-radius:20px;height:360px;object-fit:cover;width:100%}@media(min-width:992px){.rs__a img,.rs__a video{height:340px;width:260px}}
+.rs__q{display:flex;flex-direction:column;gap:2rem;justify-content:center;margin-top:4rem;max-width:600px}
+@media(min-width:768px){.rs__q{margin-top:8rem}}@media(min-width:992px){.rs__q{margin-top:0}}
+.rs__q h2{font-family:var(--sans);font-size:2.8rem;font-weight:300;letter-spacing:.06em;line-height:3.6rem}
+@media(min-width:768px){.rs__q h2{font-size:3.6rem;line-height:4.8rem}}@media(min-width:992px){.rs__q h2{font-size:4rem;line-height:5.2rem}}
+.rs__cap{align-items:center;display:flex;font-size:1.2rem;font-weight:450;gap:2rem;letter-spacing:.16em;line-height:1.4rem;text-transform:uppercase}
+
+/* AWARDS */
+.awards{background:var(--bg)}
+.awards__h{font-size:3.6rem;font-weight:600;letter-spacing:.06em;line-height:4rem;margin-bottom:1rem;text-transform:uppercase}
+@media(min-width:768px){.awards__h{font-size:5.2rem;line-height:5.6rem}}
+@media(min-width:992px){.awards__h{font-size:6rem;line-height:6rem}}
+.awards__desc{margin-bottom:2rem}@media(min-width:992px){.awards__desc{margin-bottom:6rem}}
+.awards ul li{border:1px solid var(--muted);padding:3rem 2rem}
+.awards ul li:first-child{border-top-left-radius:40px;border-top-right-radius:40px}
+.awards ul li:last-child{border-bottom-left-radius:40px;border-bottom-right-radius:40px}
+.awards ul li a{align-items:center;display:flex;flex-direction:column;gap:.5rem;justify-content:space-between;text-decoration:none}
+@media(min-width:768px){.awards ul li a{flex-direction:row}}
+.awards ul li a h3{font-size:2rem;font-weight:450;letter-spacing:.04em;line-height:2.4rem;margin-bottom:1rem;text-transform:uppercase}
+@media(min-width:768px){.awards ul li a h3{font-size:2.4rem;line-height:2.8rem;margin-bottom:0}}
+.awards ul li a p{font-size:2rem;font-weight:600;letter-spacing:.04em;line-height:2.4rem;margin:0;text-align:center;text-transform:uppercase}
+@media(min-width:768px){.awards ul li a p{font-size:2.4rem;line-height:2.8rem;text-align:right}}
+.awards__btn{display:flex;justify-content:flex-end;margin-top:4rem;width:100%}
+
+/* SIGN UP */
+.su{background:var(--white);border-radius:4rem;display:flex;flex-direction:column;gap:2rem;padding:6rem 2.4rem}
+@media(min-width:768px){.su{flex-direction:row;gap:4rem;justify-content:space-between;padding:8rem 4rem}}
+.su__t{font-size:2.8rem;font-weight:600;letter-spacing:.06em;line-height:3.2rem;margin:0 0 2rem;text-transform:uppercase}
+@media(min-width:992px){.su__t{font-size:3.2rem;line-height:3.2rem}}
+.su__d{font-size:1.6rem;font-weight:300;letter-spacing:.06em;line-height:2.6rem;margin:0}
+@media(min-width:768px){.su__d{font-size:1.8rem;line-height:3rem}}
+.su__row{display:flex;flex-direction:column}@media(min-width:768px){.su__row{flex-direction:row}}
+.su__f{position:relative;width:100%;z-index:1}
+.su__inp{appearance:none;background:hsla(0,0%,100%,.6);border:.1rem solid var(--border);border-radius:80rem;color:var(--text);font-family:var(--sans);font-size:1.6rem;font-weight:300;letter-spacing:.06em;line-height:2.6rem;padding:2.1rem 2rem .5rem;width:100%}
+.su__inp:focus{border-color:var(--accent);outline:none}
+.su__lbl{font-size:1.6rem;font-weight:300;letter-spacing:.06em;color:var(--text);opacity:.4;position:absolute;left:2rem;top:1.3rem;pointer-events:none;transition:all .2s var(--ease)}
+.su__inp:focus+.su__lbl,.su__inp:not(:placeholder-shown)+.su__lbl{font-size:1.2rem;font-weight:450;letter-spacing:.04em;top:.7rem;opacity:.6}
+.su__inp--first{border-bottom-right-radius:0;border-top-right-radius:0;border-right:0}
+.su__inp--last{border-bottom-left-radius:0;border-top-left-radius:0}
+
+/* FOOTER */
+.footer{background:var(--dark);color:var(--muted);padding-bottom:8rem;padding-top:10rem;position:relative;z-index:3}
+.footer__main{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4rem}
+.fp__t{font-size:1.4rem;font-weight:450;letter-spacing:.14em;line-height:1.6rem;margin:0 0 2.8rem;text-transform:uppercase}
+.fp__l{display:block;font-size:1.6rem;font-weight:300;letter-spacing:.06em;line-height:2.6rem;text-decoration:none;margin-top:.4rem}.fp__l:hover{text-decoration:underline}
+.footer__line{background:0 0;border:none;border-bottom:.1rem solid hsla(27,9%,77%,.2);display:block;height:0;margin:8rem 0;width:100%}
+.footer__base{align-items:center;display:flex;justify-content:space-between;flex-wrap:wrap;gap:2rem}
+.footer__logo{height:6rem;width:6rem}
+.footer__info{font-size:1.2rem;font-weight:450;letter-spacing:.16em;line-height:2rem;text-align:right;text-transform:uppercase}
+.fp__addr{font-size:1.4rem;font-style:normal;font-weight:300;letter-spacing:.06em;line-height:2.4rem}
+
+.rv{opacity:0;transform:translateY(15px)}.rv--vis{animation:moveUpAndFadeIn 1s ease-in-out forwards}
+</style>
+</head>
+<body>
+
+<!-- HEADER (light text for dark hero) -->
+<header class="header" id="header">
+<div class="container">
+<div class="header__inner">
+  <a class="header__logo" href="/">
+    <svg fill="none" viewBox="0 0 229 32" aria-label="Warwick Acoustics">
+      <path d="M5.652 16.16c.483 1.496 1.617 5.002 2.4 5.002.779 0 1.913-3.506 2.398-5.003 1.107-3.423 2.36-7.302 5.558-7.302s4.454 3.879 5.561 7.302c.483 1.497 1.617 5.003 2.399 5.003s1.913-3.506 2.399-5.003c.997-3.085 1.943-5.997 4.102-6.98C27.91 3.753 22.392 0 15.994 0A15.961 15.961 0 0 0 3.65 5.823 15.93 15.93 0 0 0 1.525 9.17c2.176.97 3.127 3.893 4.127 6.99Z" class="roundel"/>
+      <path d="M16.001 32C24.838 32 32 24.836 32 16c0-1.24-.144-2.445-.411-3.603-.753.763-1.554 3.235-2.056 4.786-1.106 3.424-2.36 7.303-5.56 7.303-3.2 0-4.455-3.879-5.561-7.303-.483-1.496-1.617-5.002-2.399-5.002-.78 0-1.914 3.506-2.399 5.002-1.106 3.424-2.36 7.303-5.56 7.303-3.198 0-4.452-3.879-5.559-7.303-.507-1.57-1.322-4.08-2.077-4.808A16.075 16.075 0 0 0 0 16.004c0 3.315 1.009 6.392 2.731 8.947C5.61 29.203 10.478 32 16.001 32Z" class="roundel"/>
+      <path d="m50.473 10.626 1.856 7.458 1.887-7.458h2.216L53.556 21.38H51.4l-1.903-7.235-1.903 7.235h-2.156l-2.89-10.754h2.293l1.873 7.458 1.856-7.458h1.903Zm13.595 0 4.029 10.754h-2.233l-.853-2.306h-4.433l-.853 2.306H57.54l4.013-10.754h2.516Zm-2.8 6.572h3.04l-1.527-4.133-1.513 4.133Zm11.7 4.179h-2.202V10.623h4.402c2.47 0 4.012 1.17 4.012 3.386 0 1.633-.883 2.726-2.396 3.16l2.68 4.208h-2.516l-2.486-3.999h-1.497v3.999h.003Zm2.083-5.842c1.286 0 1.946-.553 1.946-1.513 0-.973-.66-1.526-1.946-1.526h-2.083v3.04h2.083Zm14.153-4.909 1.856 7.458 1.886-7.458h2.216L92.286 21.38H90.13l-1.902-7.235-1.903 7.235h-2.156l-2.89-10.754h2.293l1.873 7.458 1.856-7.458h1.903Zm10.836 10.751h-2.202V10.623h2.202v10.754Zm8.087-1.767c1.166 0 2.022-.733 2.319-1.932l2.067.69c-.63 1.946-2.157 3.175-4.389 3.175-2.906 0-5.019-2.292-5.019-5.541 0-3.25 2.113-5.542 5.019-5.542 2.232 0 3.759 1.229 4.389 3.175l-2.067.69c-.3-1.197-1.153-1.933-2.319-1.933-1.647 0-2.8 1.423-2.8 3.61 0 2.186 1.153 3.609 2.8 3.609Zm9.49-4.102 4.148-4.882h2.576l-4.028 4.598 4.282 6.156h-2.576l-3.159-4.493-1.243 1.41v3.085h-2.203V10.628h2.203v4.88Zm17.927-4.882 4.029 10.754h-2.233l-.853-2.306h-4.432l-.853 2.306h-2.187l4.013-10.754h2.516Zm-2.799 6.575h3.039l-1.527-4.133-1.512 4.133Zm13.506 2.409c1.166 0 2.022-.733 2.322-1.932l2.066.69c-.629 1.946-2.156 3.175-4.388 3.175-2.906 0-5.019-2.292-5.019-5.541 0-3.25 2.113-5.542 5.019-5.542 2.229 0 3.759 1.229 4.388 3.175l-2.066.69c-.3-1.197-1.153-1.933-2.322-1.933-1.647 0-2.8 1.423-2.8 3.61-.003 2.186 1.151 3.609 2.8 3.609Zm11.761-9.148c2.949 0 5.075 2.293 5.075 5.542 0 3.25-2.126 5.542-5.075 5.542-2.966 0-5.092-2.293-5.092-5.542 0-3.252 2.129-5.542 5.092-5.542Zm0 1.93c-1.693 0-2.876 1.407-2.876 3.61 0 2.202 1.183 3.609 2.876 3.609 1.676 0 2.859-1.407 2.859-3.61 0-2.202-1.18-3.609-2.859-3.609Zm8.003 4.688v-6.454h2.217v6.379c0 1.812.883 2.59 2.216 2.59 1.346 0 2.232-.78 2.232-2.59v-6.38h2.203v6.456c0 2.966-1.783 4.448-4.432 4.448-2.653 0-4.436-1.482-4.436-4.448Zm12.815.868c.793 1.123 1.946 1.753 3.129 1.753 1.123 0 1.947-.494 1.947-1.407 0-.99-1.02-1.123-2.636-1.483-1.603-.373-3.34-.883-3.34-3.01 0-2.052 1.767-3.339 3.999-3.339 1.857 0 3.31.824 4.059 1.903l-1.453 1.423c-.629-.883-1.466-1.483-2.666-1.483-1.049 0-1.766.51-1.766 1.287 0 .84.78 1.003 2.186 1.316 1.707.374 3.803.81 3.803 3.16 0 2.172-1.917 3.475-4.209 3.475-1.813 0-3.699-.823-4.569-2.126l1.516-1.47Zm15.182-5.42v8.852h-2.203v-8.852h-3.385v-1.902h8.954v1.902h-3.366Zm8.274 8.852h-2.202V10.626h2.202V21.38Zm8.08-1.77c1.167 0 2.023-.733 2.322-1.932l2.067.69c-.63 1.946-2.157 3.175-4.389 3.175-2.906 0-5.018-2.292-5.018-5.541 0-3.25 2.112-5.542 5.018-5.542 2.23 0 3.759 1.229 4.389 3.175l-2.067.69c-.299-1.197-1.153-1.933-2.322-1.933-1.647 0-2.8 1.423-2.8 3.61-.002 2.186 1.151 3.609 2.8 3.609Zm7.958-1.662c.793 1.123 1.946 1.753 3.129 1.753 1.124 0 1.947-.494 1.947-1.407 0-.99-1.02-1.123-2.636-1.483-1.603-.373-3.339-.883-3.339-3.01 0-2.052 1.766-3.339 3.998-3.339 1.857 0 3.31.824 4.059 1.903l-1.453 1.423c-.629-.883-1.466-1.483-2.666-1.483-1.049 0-1.766.51-1.766 1.287 0 .84.78 1.003 2.186 1.316 1.707.374 3.803.81 3.803 3.16 0 2.172-1.916 3.475-4.209 3.475-1.813 0-3.699-.823-4.569-2.126l1.516-1.47Z" class="text"/>
+    </svg>
+  </a>
+  <nav class="dnav"><menu class="dnav__menu">
+    <li><a class="dnav__link" href="#">Headphones</a></li>
+    <li><a class="dnav__link" href="#">Automotive</a></li>
+    <li><a class="dnav__link" href="#">Behind the sound</a></li>
+  </menu></nav>
+  <svg fill="none" viewBox="0 0 44 44" class="burger"><line x1="10" y1="16" x2="34" y2="16" stroke-width="1.5" stroke-linecap="round"/><line x1="10" y1="28" x2="34" y2="28" stroke-width="1.5" stroke-linecap="round"/></svg>
+</div></div>
+</header>
+
+<div class="layout layout--light"><div class="layout__inner">
+
+<!-- ===== HERO — STATIC IMAGE (pas de vidéo) ===== -->
+<section class="page-hero">
+  <div class="page-hero__bg" style="background-image:url(https://d3aq9k5clbjrty.cloudfront.net/heros/headphones-hero-mobile.avif)"></div>
+  <div class="page-hero__inner">
+    <div class="container">
+      <h2 class="page-hero__subtitle">
+        <div class="hero-title">
+          <span class="hero-line"><em>Audio</em> That</span>
+          <span class="hero-line">Takes You</span>
+          <span class="hero-line">
+            <svg fill="none" viewBox="0 0 200 8" width="200" height="8" style="transform:rotate(180deg)"><path d="M180 4H0" stroke="#FFFFFF"></path><path d="M200 0h-8v8h8V0Z" fill="#E9540D"></path></svg>
+            There
+          </span>
+        </div>
+      </h2>
+    </div>
+  </div>
+  <svg fill="none" viewBox="0 0 12 34" class="scroll-ind"><path d="M12 0 6 8.195 0 0h12Z" fill="#E9540D"/><path d="m12 25-6 8.195L0 25h12Z" fill="#FFF"/></svg>
+</section>
+
+<!-- ===== CONTENT ===== -->
+<div class="layout__content">
+
+<!-- ====== APERIO + BRAVURA — 2 COLUMN ALTERNATING ====== -->
+<div class="section t-light s-pad-lg">
+<div class="section__inner"><div class="container">
+<div style="display:flex;flex-direction:column;gap:8rem">
+
+  <!-- APERIO: video LEFT, text RIGHT -->
+  <div class="grid grid--gap-lg rv">
+    <div class="new-card">
+      <video autoplay muted playsinline loop src="https://d3aq9k5clbjrty.cloudfront.net/videos/video-4.mp4" class="new-card__video"></video>
+    </div>
+    <div class="cb cb--l">
+      <div class="cb__h">
+        <span class="cb__tag">Flagship Series</span>
+        <h2>
+          <span class="h-line">
+            <span>Aperio</span>
+            <svg fill="none" viewBox="0 0 200 11" width="200" height="11"><path d="M177 5.5H0" stroke="#222931"></path><circle cx="194.5" cy="5.5" r="5.5" fill="#E9540D"></circle></svg>
+          </span>
+        </h2>
+      </div>
+      <div class="cb__wrap">
+        <div class="cb__t">The APERIO takes our transducer technology into bold new territory. The results are like nothing you've heard before.</div>
+        <div class="cb__ctas"><a class="button" href="#"><span class="btn btn--pri"><span class="bt bt--in">See details</span><span class="bt bt--out" aria-hidden="true">See details</span></span></a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BRAVURA: video RIGHT, text LEFT (reversed) -->
+  <div class="grid grid--gap-lg rv" style="direction:rtl">
+    <div class="new-card" style="direction:ltr">
+      <video autoplay muted playsinline loop src="https://d3aq9k5clbjrty.cloudfront.net/videos/video-5.mp4" class="new-card__video"></video>
+    </div>
+    <div class="cb cb--l" style="direction:ltr">
+      <div class="cb__h">
+        <span class="cb__tag">Headphone systems</span>
+        <h2>
+          <span class="h-line">
+            <span>Bravura</span>
+            <svg fill="none" viewBox="0 0 200 12" width="200" height="12"><path d="M179 6H0" stroke="#222931"></path><path d="m191 0 8.195 6L191 12V0Z" fill="#E9540D"></path></svg>
+          </span>
+        </h2>
+      </div>
+      <div class="cb__wrap">
+        <div class="cb__t">From the Italian meaning brilliant performance, the BRAVURA brings you closer than ever to the music you love.</div>
+        <div class="cb__ctas"><a class="button" href="#"><span class="btn btn--pri"><span class="bt bt--in">See details</span><span class="bt bt--out" aria-hidden="true">See details</span></span></a></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div></div></div>
+
+<!-- DARK SECTION — GoldenSound + Sonoma + Reviews -->
+<div class="section t-dark s-pt-lg s-pb-sm">
+<div class="section__inner"><div class="container">
+<div style="display:flex;flex-direction:column;gap:8rem">
+
+
+  <!-- GoldenSound Feature Card -->
+  <div class="fc rv" style="background-image:url(https://d3aq9k5clbjrty.cloudfront.net/features/feature-1-mobile.avif);background-size:cover;background-position:center">
+    <div class="fc__ct"><div class="cb cb--d" style="max-width:500px">
+      <div class="cb__h">
+        <span class="cb__tag">Hear it anew</span>
+        <h2>
+          <span class="h-line">Aperio <em>GoldenSound</em></span><br>
+          <span class="h-line"><span>Signature</span>
+            <svg fill="none" viewBox="0 0 200 11" width="200" height="11"><path d="M177 5.5H0" stroke="#FFFFFF"></path><circle cx="194.5" cy="5.5" r="5.5" fill="#E9540D"></circle></svg>
+          </span>
+        </h2>
+      </div>
+      <div class="cb__t">A team of engineering experts. One audio connoisseur. The ultimate headphone sound.</div>
+      <div class="cb__ctas"><a class="button" href="#"><span class="btn btn--sec"><span class="bt bt--in">See details</span><span class="bt bt--out" aria-hidden="true">See details</span></span></a></div>
+    </div></div>
+  </div>
+
+  <!-- Sonoma Card -->
+  <div class="sonoma rv">
+    <div class="sonoma__img" style="background-image:url(https://d3aq9k5clbjrty.cloudfront.net/gallery/gallery-image-33.avif)"></div>
+    <div class="sonoma__ct">
+      <p class="sonoma__sub">Headphone systems</p>
+      <h3 class="sonoma__h">
+        <span>Sonoma Model One</span>
+        <svg fill="none" viewBox="0 0 200 12" width="150" height="12"><path d="M179 6H0" stroke="#FFFFFF"></path><path d="m191 0 8.195 6L191 12V0Z" fill="#E9540D"></path></svg>
+      </h3>
+      <p class="sonoma__desc">The paradigm shifter. Headphones, amplifier and DAC combine to bring you music as you've never heard it before.</p>
+      <div style="margin-top:2rem"><a class="button" href="#"><span class="btn btn--sec"><span class="bt bt--in">See details</span><span class="bt bt--out" aria-hidden="true">See details</span></span></a></div>
+    </div>
+  </div>
+
+  <!-- Review Section -->
+  <div class="rs rs--d rv">
+    <div class="rs__in">
+      <div class="rs__ag">
+        <div class="rs__a"><img alt="" src="https://d3aq9k5clbjrty.cloudfront.net/gallery/gallery-image-19.avif"></div>
+        <div class="rs__a"><video autoplay muted playsinline loop preload="none" src="https://d3aq9k5clbjrty.cloudfront.net/videos/video-3.mp4"></video></div>
+        <div class="rs__a"><video autoplay muted playsinline loop preload="none" src="https://d3aq9k5clbjrty.cloudfront.net/videos/video-6.mp4"></video></div>
+        <div class="rs__a"><img alt="" src="https://d3aq9k5clbjrty.cloudfront.net/gallery/gallery-image-18.avif"></div>
+      </div>
+      <div class="rs__q">
+        <h2>It really is incredible. The sound connects the listener to the music. Intense, vivid, and engrossing.</h2>
+        <p class="rs__cap"><span>Cheryl Tan</span><svg fill="none" viewBox="0 0 11 11" width="11" height="11"><circle cx="5.5" cy="5.5" r="5.5" fill="#FFF"/></svg><span>STEREONET</span></p>
+        <div style="margin-top:2rem"><a class="button" href="#"><span class="btn btn--sec"><span class="bt bt--in">All headphone reviews</span><span class="bt bt--out" aria-hidden="true">All headphone reviews</span></span></a></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div></div></div>
+
+<!-- AWARDS — light -->
+<div class="section t-light s-pad-md">
+<div class="section__inner"><div class="container">
+  <div class="awards rv">
+    <h2 class="awards__h">Awards</h2>
+    <p class="awards__desc">Acclaimed by experts and audiophiles around the world.</p>
+    <ul>
+      <li><a href="#"><h3>2025</h3><p>Hi-Fi Voice Reference Award - BRAVURA Headphone System</p></a></li>
+      <li><a href="#"><h3>2025</h3><p>StereoNet Applause Award - APERIO from Warwick Acoustics</p></a></li>
+      <li><a href="#"><h3>2024</h3><p>The BRAVURA is the Best Open-Back Headphone - Headphonesty</p></a></li>
+      <li><a href="#"><h3>2024</h3><p>HiFi+ Editor's Choice 25th Anniversary Winner Award - Sonoma Model One</p></a></li>
+      <li><a href="#"><h3>2023</h3><p>The Absolute Sound Editors' Choice Award 2023 - BRAVURA</p></a></li>
+    </ul>
+    <div class="awards__btn"><a class="button" href="#"><span class="btn btn--ter"><span class="bt bt--in">See all awards</span><span class="bt bt--out" aria-hidden="true">See all awards</span></span></a></div>
+  </div>
+</div></div></div>
+
+<!-- SIGN UP -->
+<div class="section s-pb-lg">
+<div class="section__inner"><div class="container">
+  <div class="su rv">
+    <div style="max-width:340px;margin-bottom:2rem"><h2 class="su__t">Stay in the loop</h2><p class="su__d">Be the first to hear about new products, events and special offers.</p></div>
+    <div style="display:flex;flex-direction:column;gap:1rem;width:100%;max-width:500px">
+      <div class="su__row"><div class="su__f"><input class="su__inp su__inp--first" type="text" placeholder=" " id="fn"><label class="su__lbl" for="fn">First name</label></div><div class="su__f"><input class="su__inp su__inp--last" type="text" placeholder=" " id="ln"><label class="su__lbl" for="ln">Last name</label></div></div>
+      <div class="su__f"><input class="su__inp" type="email" placeholder=" " id="em"><label class="su__lbl" for="em">Email address</label></div>
+      <div style="display:flex;justify-content:flex-end;margin-top:1rem"><button class="button" type="submit"><span class="btn btn--pri" style="height:5.2rem"><span class="bt bt--in">Sign up</span><span class="bt bt--out" aria-hidden="true">Sign up</span></span></button></div>
+    </div>
+  </div>
+</div></div></div>
+
+</div><!-- .layout__content -->
+
+<!-- FOOTER -->
+<footer class="footer"><div class="container">
+  <div class="footer__main">
+    <div><h3 class="fp__t">Company</h3><a class="fp__l" href="#">Behind the sound</a><a class="fp__l" href="#">Headphones</a><a class="fp__l" href="#">Automotive</a><a class="fp__l" href="#">Meet the team</a><a class="fp__l" href="#">Work for us</a></div>
+    <div><h3 class="fp__t">Latest</h3><a class="fp__l" href="#">News</a><a class="fp__l" href="#">Awards</a><a class="fp__l" href="#">Headphone reviews</a><a class="fp__l" href="#">Testimonials</a></div>
+    <div><h3 class="fp__t">Support</h3><a class="fp__l" href="#">FAQs</a><a class="fp__l" href="#">Contact</a><a class="fp__l" href="#">Drivers &amp; software</a><a class="fp__l" href="#">Manuals</a></div>
+    <div><h3 class="fp__t">Legal</h3><a class="fp__l" href="#">Privacy</a><a class="fp__l" href="#">Terms &amp; conditions</a><a class="fp__l" href="#">Sitemap</a></div>
+    <div style="min-width:200px"><h3 class="fp__t">Warwick Acoustics Ltd</h3><address class="fp__addr">Mira Technology Park<br>Watling Street, Nuneaton, Warwickshire,<br>CV10 0TU, United Kingdom</address></div>
+  </div>
+  <hr class="footer__line">
+  <div class="footer__base">
+    <svg fill="none" viewBox="0 0 60 61" class="footer__logo"><path d="M10.598 31.049c.904 2.806 3.03 9.379 4.497 9.379 1.462 0 3.588-6.573 4.498-9.379 2.075-6.42 4.426-13.693 10.422-13.693 5.995 0 8.351 7.273 10.426 13.693.905 2.806 3.031 9.379 4.498 9.379s3.588-6.573 4.498-9.379c1.87-5.786 3.644-11.245 7.692-13.09C52.329 7.79 41.985.75 29.989.75c-9.317 0-17.644 4.247-23.148 10.917a29.872 29.872 0 0 0-3.982 6.277c4.079 1.82 5.863 7.299 7.739 13.105Z" fill="#E9540D"/><path d="M30.004 60.75c16.57 0 29.997-13.432 29.997-29.998 0-2.325-.271-4.584-.772-6.756-1.41 1.43-2.913 6.066-3.854 8.975C53.3 39.39 50.95 46.664 44.95 46.664S36.597 39.39 34.522 32.97c-.904-2.806-3.03-9.38-4.498-9.38-1.461 0-3.588 6.574-4.497 9.38C23.452 39.39 21.1 46.664 15.1 46.664c-5.995 0-8.346-7.274-10.421-13.693-.951-2.944-2.48-7.652-3.895-9.016a30.14 30.14 0 0 0-.782 6.803 29.897 29.897 0 0 0 5.121 16.774C10.52 55.506 19.65 60.75 30.004 60.75Z" fill="#E9540D"/></svg>
+    <div class="footer__info">Registered in England No. 4451674<br>VAT No. GB 934 385 407<br>EORI No. 934 385 407000</div>
+  </div>
+</div></footer>
+
+</div></div>
+
+<script>
+!function(){var h=document.getElementById('header'),last=0,col=!1;window.addEventListener('scroll',function(){var y=window.pageYOffset;if(y>200){if(!col){h.classList.add('header--collapsed');col=!0}y<last-5?h.classList.add('header--peeked'):y>last+5&&h.classList.remove('header--peeked')}else{h.classList.remove('header--collapsed','header--peeked');col=!1}last=y})}();
+!function(){var obs=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting){en.target.classList.add('rv--vis');obs.unobserve(en.target)}})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});document.querySelectorAll('.rv').forEach(function(el){obs.observe(el)})}();
+document.querySelectorAll('video').forEach(function(v){var o=new IntersectionObserver(function(e){e[0].isIntersecting?v.play().catch(function(){}):v.pause()},{threshold:.3});o.observe(v)});
+</script>
+</body>
+</html>
