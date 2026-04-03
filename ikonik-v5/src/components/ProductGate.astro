@@ -8,13 +8,14 @@ interface Props {
   ctaLabel: string;
   ctaHref: string;
   videoSrc: string;
+  posterSrc?: string;
   accentType?: 'dot' | 'chevron';
   reversed?: boolean;
   theme?: 'light' | 'dark';
 }
 const {
   tag, title, description, ctaLabel, ctaHref,
-  videoSrc, accentType = 'dot', reversed = false, theme = 'light'
+  videoSrc, posterSrc, accentType = 'dot', reversed = false, theme = 'light'
 } = Astro.props;
 
 const strokeColor = theme === 'dark' ? '#FFFFFF' : '#222931';
@@ -26,7 +27,7 @@ const cbColor     = theme === 'dark' ? 'cb--d' : 'cb--l';
 
   <!-- Vidéo -->
   <div class="new-card" style={reversed ? 'direction:ltr' : ''}>
-    <video autoplay muted playsinline loop src={videoSrc} class="new-card__video"></video>
+    <video autoplay muted playsinline loop src={videoSrc} poster={posterSrc} class="new-card__video"></video>
   </div>
 
   <!-- Texte -->
