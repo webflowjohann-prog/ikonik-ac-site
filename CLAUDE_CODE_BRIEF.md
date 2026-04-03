@@ -73,7 +73,7 @@ Johann a validé cette direction après 3 itérations de prototypes.
    - Porte 1 (Créatif) : vidéo autoplay arrondie à gauche + texte à droite (tagline "PÔLE CRÉATIF", titre "IKONIK Créatif" + accent-line SVG dot, description : "Des films qui marquent, des images qui vendent. Production publicitaire, CGI photoréaliste, animation de marque — notre pipeline cinématique transforme chaque idée en contenu qui performe.", bouton "Découvrir le créatif")
    - Porte 2 (Tech) : texte à gauche + vidéo autoplay arrondie à droite (tagline "PÔLE TECH", titre "IKONIK Tech" + accent-line SVG chevron, description : "Des plateformes qui tournent, des systèmes qui convertissent. On construit vos outils métiers sur mesure — du CRM au SaaS — l'IA intégrée à chaque étape de votre chaîne de valeur.", bouton "Découvrir la tech")
 3. **QUOTE** — Citation centrée avec 2 dots orange au-dessus
-4. **TEXT CARDS** — 3 colonnes (card gradient blanc, heading uppercase, texte, image arrondie en bas)
+4. **TEXT CARDS** — 3 colonnes : Card 1 "Un seul studio, deux expertises" / Card 2 "Pensé pour convertir" / Card 3 "Construit pour durer" (gradient blanc, heading uppercase, texte descriptif, image/vidéo arrondie en bas)
 5. **SECTION SOMBRE** — Feature card plein écran avec vidéo/image de fond + content-block overlay
 6. **GALERIE ASYMÉTRIQUE** — 3 items (image + vidéo + image) avec décalage vertical
 7. **FEATURE CARD** — Image de fond avec titre + description overlay
