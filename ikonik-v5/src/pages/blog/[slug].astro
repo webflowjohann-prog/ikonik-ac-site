@@ -1,0 +1,228 @@
+---
+// blog/[slug].astro — Page article individuelle (Astro Content Collections)
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.data.slug },
+    props:  { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const formattedDate = new Date(post.data.date).toLocaleDateString('fr-FR', {
+  day: 'numeric', month: 'long', year: 'numeric'
+});
+---
+
+<Base
+  title={`${post.data.title} — IKONIK`}
+  description={post.data.excerpt}
+>
+  <Header />
+
+  <div class="layout layout--dark">
+    <div class="layout__inner">
+
+      <!-- HERO article -->
+      <section class="page-hero page-hero--article">
+        <div class="page-hero__bg" style="background-image:url(/images/feature-compromis.webp)"></div>
+        <div class="page-hero__inner">
+          <div class="container">
+            <div class="article-hero">
+              <div class="article-hero__meta">
+                <span class="article-hero__cat">{post.data.category}</span>
+                <span class="article-hero__sep">·</span>
+                <span class="article-hero__time">{post.data.read_time} min de lecture</span>
+              </div>
+              <h1 class="article-hero__title">{post.data.title}</h1>
+              <p class="article-hero__excerpt">{post.data.excerpt}</p>
+              <p class="article-hero__date">{formattedDate}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTENU -->
+      <div class="layout__content">
+        <div class="section t-light s-pad-lg">
+          <div class="section__inner">
+            <div class="container">
+              <div class="article-layout">
+
+                <!-- Corps de l'article -->
+                <article class="article-body prose">
+                  <Content />
+                </article>
+
+                <!-- Sidebar -->
+                <aside class="article-sidebar">
+                  <div class="article-tags">
+                    <p class="article-tags__label">Tags</p>
+                    <div class="article-tags__list">
+                      {post.data.tags.map((tag) => (
+                        <span class="article-tag">{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div class="article-cta">
+                    <p class="article-cta__label">Vous avez un projet ?</p>
+                    <p class="article-cta__text">On transforme les idées en résultats mesurables.</p>
+                    <a class="button" href="/contact">
+                      <span class="btn btn--pri">
+                        <span class="bt bt--in">Parlons-en</span>
+                        <span class="bt bt--out" aria-hidden="true">Parlons-en</span>
+                      </span>
+                    </a>
+                  </div>
+                </aside>
+
+              </div>
+
+              <!-- Nav retour -->
+              <div class="article-nav">
+                <a class="button" href="/blog">
+                  <span class="btn btn--ter">
+                    <span class="bt bt--in">← Tous les articles</span>
+                    <span class="bt bt--out" aria-hidden="true">← Tous les articles</span>
+                  </span>
+                </a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <Footer />
+
+</Base>
+
+<style>
+/* Hero article */
+.page-hero--article .page-hero__inner {
+  padding: 16rem 0 10rem;
+  align-items: flex-end;
+}
+.article-hero { max-width: 80rem; }
+.article-hero__meta {
+  align-items: center;
+  color: rgba(255,255,255,.7);
+  display: flex;
+  font-size: 1.2rem;
+  font-weight: 450;
+  gap: 1rem;
+  letter-spacing: .14em;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+.article-hero__cat { color: var(--accent); }
+.article-hero__title {
+  color: #fff;
+  font-size: 3.6rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  line-height: 4.4rem;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+@media (min-width: 768px) { .article-hero__title { font-size: 5.2rem; line-height: 6rem; } }
+.article-hero__excerpt {
+  color: rgba(255,255,255,.8);
+  font-size: 1.8rem;
+  font-weight: 300;
+  line-height: 3rem;
+  margin-bottom: 2rem;
+  max-width: 60rem;
+}
+.article-hero__date {
+  color: rgba(255,255,255,.5);
+  font-size: 1.2rem;
+  font-weight: 450;
+  letter-spacing: .1em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* Layout article + sidebar */
+.article-layout {
+  display: grid;
+  gap: 6rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 992px) {
+  .article-layout { grid-template-columns: 1fr 30rem; gap: 8rem; }
+}
+
+/* Corps markdown */
+.prose { color: var(--text); font-size: 1.8rem; font-weight: 300; line-height: 3.2rem; }
+.prose h2 { font-size: 2.8rem; font-weight: 600; letter-spacing: .04em; margin: 5rem 0 2rem; text-transform: uppercase; }
+.prose h3 { font-size: 2.2rem; font-weight: 600; letter-spacing: .04em; margin: 3rem 0 1.6rem; }
+.prose p  { margin-bottom: 2.4rem; }
+.prose ul, .prose ol { margin: 0 0 2.4rem 2.4rem; }
+.prose li { margin-bottom: .8rem; }
+.prose strong { font-weight: 600; }
+.prose a { color: var(--accent); text-decoration: underline; }
+.prose blockquote {
+  border-left: .3rem solid var(--accent);
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  margin: 3rem 0;
+  padding: 1rem 0 1rem 2.4rem;
+}
+.prose hr { border: none; border-top: 1px solid var(--muted); margin: 4rem 0; }
+
+/* Sidebar */
+.article-sidebar { display: flex; flex-direction: column; gap: 4rem; }
+
+.article-tags__label {
+  font-size: 1.2rem;
+  font-weight: 450;
+  letter-spacing: .14em;
+  margin-bottom: 1.2rem;
+  text-transform: uppercase;
+}
+.article-tags__list { display: flex; flex-wrap: wrap; gap: .8rem; }
+.article-tag {
+  background: var(--white);
+  border: 1px solid var(--muted);
+  border-radius: 80rem;
+  font-size: 1.2rem;
+  font-weight: 450;
+  letter-spacing: .06em;
+  padding: .4rem 1.2rem;
+}
+
+.article-cta {
+  background: var(--dark);
+  border-radius: 2rem;
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 3rem 2.4rem;
+}
+.article-cta__label { font-size: 1.2rem; font-weight: 450; letter-spacing: .14em; opacity: .6; text-transform: uppercase; margin: 0; }
+.article-cta__text  { font-size: 1.6rem; font-weight: 300; line-height: 2.6rem; margin: 0; }
+
+/* Nav retour */
+.article-nav { margin-top: 8rem; }
+</style>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('rv--vis'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.rv').forEach((el) => obs.observe(el));
+</script>
