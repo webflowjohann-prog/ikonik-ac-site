@@ -1,7 +1,6 @@
 ---
-// ProductGate.astro — 2 colonnes côte à côte (vidéo + texte)
-// CSS forcé en scoped pour éviter tout conflit avec global.css
-// Reversed : order CSS au lieu de direction:rtl
+// ProductGate.astro — grille 2 colonnes (vidéo + texte). CSS dans global.css.
+// Reversed : direction:rtl sur le wrapper, direction:ltr sur les enfants (exact référence)
 interface Props {
   tag: string;
   title: string;
@@ -23,112 +22,45 @@ const btnVariant  = theme === 'dark' ? 'btn--sec' : 'btn--pri';
 const cbColor     = theme === 'dark' ? 'cb--d' : 'cb--l';
 ---
 
-<div class={`pg${reversed ? ' pg--reversed' : ''} rv`}>
+<div class="grid grid--gap-lg rv" style={reversed ? 'direction:rtl' : ''}>
 
   <!-- Vidéo -->
-  <div class="pg__card">
-    <video autoplay muted playsinline loop src={videoSrc} class="pg__video"></video>
+  <div class="new-card" style={reversed ? 'direction:ltr' : ''}>
+    <video autoplay muted playsinline loop src={videoSrc} class="new-card__video"></video>
   </div>
 
   <!-- Texte -->
-  <div class={`pg__content ${cbColor}`}>
-    <span class="cb__tag">{tag}</span>
-    <h2 class="pg__title">
-      <span class="pg__title-line">
-        <span>{title}</span>
-        {accentType === 'dot' ? (
-          <svg fill="none" viewBox="0 0 200 11" width="140" height="11" aria-hidden="true">
-            <path d="M177 5.5H0" stroke={strokeColor}></path>
-            <circle cx="194.5" cy="5.5" r="5.5" fill="#e9540d"></circle>
-          </svg>
-        ) : (
-          <svg fill="none" viewBox="0 0 200 12" width="140" height="12" aria-hidden="true">
-            <path d="M179 6H0" stroke={strokeColor}></path>
-            <path d="m191 0 8.195 6L191 12V0Z" fill="#e9540d"></path>
-          </svg>
-        )}
-      </span>
-    </h2>
-    <p class="cb__t">{description}</p>
-    <div class="cb__ctas">
-      <a class="button" href={ctaHref}>
-        <span class={`btn ${btnVariant}`}>
-          <span class="bt bt--in">{ctaLabel}</span>
-          <span class="bt bt--out" aria-hidden="true">{ctaLabel}</span>
+  <div class={`cb ${cbColor}`} style={reversed ? 'direction:ltr' : ''}>
+    <div class="cb__h">
+      <span class="cb__tag">{tag}</span>
+      <h2>
+        <span class="h-line">
+          <span>{title}</span>
+          {accentType === 'dot' ? (
+            <svg fill="none" viewBox="0 0 200 11" width="140" height="11" aria-hidden="true">
+              <path d="M177 5.5H0" stroke={strokeColor}></path>
+              <circle cx="194.5" cy="5.5" r="5.5" fill="#e9540d"></circle>
+            </svg>
+          ) : (
+            <svg fill="none" viewBox="0 0 200 12" width="140" height="12" aria-hidden="true">
+              <path d="M179 6H0" stroke={strokeColor}></path>
+              <path d="m191 0 8.195 6L191 12V0Z" fill="#e9540d"></path>
+            </svg>
+          )}
         </span>
-      </a>
+      </h2>
+    </div>
+    <div class="cb__wrap">
+      <p class="cb__t">{description}</p>
+      <div class="cb__ctas">
+        <a class="button" href={ctaHref}>
+          <span class={`btn ${btnVariant}`}>
+            <span class="bt bt--in">{ctaLabel}</span>
+            <span class="bt bt--out" aria-hidden="true">{ctaLabel}</span>
+          </span>
+        </a>
+      </div>
     </div>
   </div>
 
 </div>
-
-<style>
-  /* Grille 2 colonnes — forcée en scoped pour certitude absolue */
-  .pg {
-    display: grid;
-    gap: 2rem;
-    grid-template-columns: 1fr;
-    align-items: center;
-  }
-  @media (min-width: 768px) {
-    .pg {
-      gap: 8rem;
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-  @media (min-width: 1200px) {
-    .pg { gap: 16rem; }
-  }
-
-  /* Reversed : on inverse l'ordre avec CSS order */
-  .pg--reversed .pg__card    { order: 2; }
-  .pg--reversed .pg__content { order: 1; }
-
-  /* Carte vidéo */
-  .pg__card {
-    background-color: #fff;
-    border-radius: 20px;
-    height: 400px;
-    overflow: hidden;
-    position: relative;
-  }
-  @media (min-width: 768px) { .pg__card { height: 600px; } }
-
-  .pg__video {
-    height: 100%;
-    left: 0;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-
-  /* Bloc texte */
-  .pg__content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 1.6rem;
-  }
-
-  /* Titre avec SVG accent sur la même ligne */
-  .pg__title {
-    font-size: 3.6rem;
-    font-weight: 600;
-    letter-spacing: .06em;
-    line-height: 4rem;
-    text-transform: uppercase;
-    margin: 0;
-  }
-  @media (min-width: 768px) { .pg__title { font-size: 5.2rem; line-height: 5.6rem; } }
-  @media (min-width: 992px)  { .pg__title { font-size: 6rem;   line-height: 6rem; } }
-
-  .pg__title-line {
-    align-items: center;
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 1.6rem;
-    line-height: 1;
-  }
-  @media (min-width: 768px) { .pg__title-line { gap: 2rem; } }
-</style>

@@ -1,0 +1,152 @@
+---
+// tech.astro — Pôle Tech IKONIK
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { supabase } from '../lib/supabase';
+
+const CDN = 'https://d3aq9k5clbjrty.cloudfront.net';
+
+let services: { title: string; description: string; tag?: string }[] = [];
+try {
+  const { data } = await supabase
+    .from('services')
+    .select('title, description, tag')
+    .eq('pole', 'tech')
+    .order('position');
+  if (data && data.length > 0) services = data;
+} catch (_) {}
+
+if (services.length === 0) {
+  services = [
+    { tag: 'Plateforme', title: 'SaaS Sectoriels', description: 'Plateformes métiers sur-mesure — CRM, LMS, marketplace. Développées 3x plus vite, sans dette technique.' },
+    { tag: 'Plateforme', title: 'Marketing OS', description: 'Système d\'exploitation marketing complet. Acquisition, nurturing, conversion — une plateforme unifiée.' },
+    { tag: 'Automatisation', title: 'Dashboards IA', description: 'Tableaux de bord intelligents avec analyse prédictive. Vos données transformées en décisions.' },
+    { tag: 'Automatisation', title: 'Automatisation', description: 'Workflows automatisés sur mesure. Eliminez les tâches répétitives et concentrez-vous sur la valeur.' },
+    { tag: 'Méthode', title: 'VibeCoding Studio©', description: 'Notre méthode de développement assisté IA. Full-stack, rapide, maintenable — sans compromis.' },
+    { tag: 'Intégration', title: 'Intégrations API', description: 'Connexion de vos outils existants — CRM, ERP, outils marketing. Un écosystème cohérent et fluide.' },
+  ];
+}
+---
+
+<Base title="Tech — IKONIK" description="Plateformes SaaS, CRM sectoriels, Marketing OS, dashboards IA, automatisation. VibeCoding Studio©.">
+
+  <Header />
+
+  <div class="layout layout--dark">
+    <div class="layout__inner">
+
+      <!-- HERO -->
+      <section class="page-hero">
+        <div class="page-hero__bg" style={`background-image:url(${CDN}/gallery/gallery-image-5.avif)`}></div>
+        <div class="page-hero__inner">
+          <div class="container">
+            <h1 class="page-hero__title">
+              <div class="hero-title">
+                <span class="hero-line"><em>Tech</em></span>
+                <span class="hero-line">
+                  <svg fill="none" viewBox="0 0 200 8" width="160" height="8" style="transform:rotate(180deg)">
+                    <path d="M180 4H0" stroke="#FFFFFF"></path>
+                    <path d="M200 0h-8v8h8V0Z" fill="#E9540D"></path>
+                  </svg>
+                  SaaS. IA. Systèmes.
+                </span>
+              </div>
+            </h1>
+          </div>
+        </div>
+        <svg fill="none" viewBox="0 0 12 34" class="scroll-ind" aria-hidden="true">
+          <path d="M12 0 6 8.195 0 0h12Z" fill="#E9540D"/>
+          <path d="m12 25-6 8.195L0 25h12Z" fill="#FFF"/>
+        </svg>
+      </section>
+
+      <!-- CONTENU -->
+      <div class="layout__content">
+
+        <!-- INTRO -->
+        <div class="section t-light s-pad-lg">
+          <div class="section__inner">
+            <div class="container">
+              <div class="grid grid--gap-lg rv" style="direction:rtl">
+                <div class="new-card" style="direction:ltr">
+                  <video autoplay muted playsinline loop src={`${CDN}/videos/video-5.mp4`} class="new-card__video"></video>
+                </div>
+                <div class="cb cb--l" style="direction:ltr">
+                  <div class="cb__h">
+                    <span class="cb__tag">Pôle Tech</span>
+                    <h2>
+                      <span class="h-line">
+                        <span>IKONIK Tech</span>
+                        <svg fill="none" viewBox="0 0 200 12" width="140" height="12">
+                          <path d="M179 6H0" stroke="#222931"></path>
+                          <path d="m191 0 8.195 6L191 12V0Z" fill="#E9540D"></path>
+                        </svg>
+                      </span>
+                    </h2>
+                  </div>
+                  <div class="cb__wrap">
+                    <p class="cb__t">Plateformes SaaS, CRM sectoriels, Marketing OS, dashboards IA, automatisation. VibeCoding Studio© — développement full-stack augmenté par l'IA, 3x plus rapide.</p>
+                    <div class="cb__ctas">
+                      <a class="button" href="/contact">
+                        <span class="btn btn--pri">
+                          <span class="bt bt--in">Lancer un projet</span>
+                          <span class="bt bt--out" aria-hidden="true">Lancer un projet</span>
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SERVICES -->
+        <div class="section t-light s-pb-lg">
+          <div class="section__inner">
+            <div class="container">
+              <h2 class="rv" style="font-size:3.6rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6rem">Nos services tech</h2>
+              <div class="services-grid">
+                {services.map((s) => (
+                  <div class="service-card rv">
+                    {s.tag && <span class="service-card__tag">{s.tag}</span>}
+                    <h3 class="service-card__title">{s.title}</h3>
+                    <p class="service-card__desc">{s.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA DARK -->
+        <div class="section t-dark s-pad-md">
+          <div class="section__inner">
+            <div class="container rv" style="text-align:center;color:#fff">
+              <p style="font-size:1.2rem;font-weight:450;letter-spacing:.16em;text-transform:uppercase;margin-bottom:2rem">VibeCoding Studio©</p>
+              <h2 style="font-size:3.6rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;max-width:800px;margin:0 auto 3rem">Votre plateforme livrée en 30 jours</h2>
+              <a class="button" href="/contact">
+                <span class="btn btn--sec">
+                  <span class="bt bt--in">Parler de votre projet</span>
+                  <span class="bt bt--out" aria-hidden="true">Parler de votre projet</span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <Footer />
+
+</Base>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('rv--vis'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.rv').forEach((el) => obs.observe(el));
+</script>

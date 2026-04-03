@@ -38,25 +38,6 @@
   </div>
 </header>
 
-<style>
-  .header__logo {
-    display: block;
-    height: 3.2rem;
-    /* mobile : logo carré seulement — on limite la largeur */
-    width: auto;
-  }
-  .header__logo-img {
-    display: block;
-    height: 3.2rem;
-    width: auto;
-    object-fit: contain;
-  }
-  /* Mobile : on cache le texte logo et on garde juste le roundel —
-     mais avec une image webp on laisse l'image se clipper naturellement */
-  @media (max-width: 991px) {
-    .header__logo { max-width: 4rem; overflow: hidden; }
-  }
-</style>
 
 <script>
   const header = document.getElementById('header');

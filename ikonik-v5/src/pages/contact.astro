@@ -1,0 +1,128 @@
+---
+// contact.astro — Formulaire de contact IKONIK
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const CDN = 'https://d3aq9k5clbjrty.cloudfront.net';
+---
+
+<Base title="Contact — IKONIK" description="Parlons de votre projet. IKONIK — studio créatif et tech en Normandie.">
+
+  <Header />
+
+  <div class="layout layout--dark">
+    <div class="layout__inner">
+
+      <!-- HERO -->
+      <section class="page-hero">
+        <div class="page-hero__bg" style={`background-image:url(${CDN}/gallery/gallery-image-8.avif)`}></div>
+        <div class="page-hero__inner">
+          <div class="container">
+            <h1 class="page-hero__title">
+              <div class="hero-title">
+                <span class="hero-line">Parlons de</span>
+                <span class="hero-line">
+                  <em>votre projet</em>
+                  <svg fill="none" viewBox="0 0 200 11" width="160" height="11">
+                    <path d="M177 5.5H0" stroke="#FFFFFF"></path>
+                    <circle cx="194.5" cy="5.5" r="5.5" fill="#E9540D"></circle>
+                  </svg>
+                </span>
+              </div>
+            </h1>
+          </div>
+        </div>
+        <svg fill="none" viewBox="0 0 12 34" class="scroll-ind" aria-hidden="true">
+          <path d="M12 0 6 8.195 0 0h12Z" fill="#E9540D"/>
+          <path d="m12 25-6 8.195L0 25h12Z" fill="#FFF"/>
+        </svg>
+      </section>
+
+      <!-- FORMULAIRE -->
+      <div class="layout__content">
+        <div class="section t-light s-pad-lg">
+          <div class="section__inner">
+            <div class="container">
+              <div class="grid grid--gap-lg rv">
+
+                <!-- Infos -->
+                <div class="cb cb--l">
+                  <div class="cb__h">
+                    <span class="cb__tag">Contact</span>
+                    <h2>
+                      <span class="h-line">
+                        <span>On construit ensemble</span>
+                        <svg fill="none" viewBox="0 0 200 11" width="100" height="11">
+                          <path d="M177 5.5H0" stroke="#222931"></path>
+                          <circle cx="194.5" cy="5.5" r="5.5" fill="#E9540D"></circle>
+                        </svg>
+                      </span>
+                    </h2>
+                  </div>
+                  <div class="cb__wrap">
+                    <p class="cb__t">Que vous ayez besoin d'un film IA, d'une plateforme SaaS ou d'un système marketing complet — parlons-en. Réponse sous 24h.</p>
+                    <p class="cb__t" style="margin-top:2rem">
+                      <a href="mailto:hello@ikonik-ac.com" style="color:var(--accent);font-weight:450">hello@ikonik-ac.com</a>
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Formulaire -->
+                <div class="rv">
+                  <form class="contact-form" id="contactForm">
+                    <label>
+                      Nom
+                      <input type="text" name="name" placeholder="Votre nom" required />
+                    </label>
+                    <label>
+                      Email
+                      <input type="email" name="email" placeholder="votre@email.com" required />
+                    </label>
+                    <label>
+                      Sujet
+                      <input type="text" name="subject" placeholder="Film IA, SaaS, automatisation…" />
+                    </label>
+                    <label>
+                      Message
+                      <textarea name="message" placeholder="Décrivez votre projet en quelques lignes…" required></textarea>
+                    </label>
+                    <div style="display:flex;justify-content:flex-end">
+                      <button class="button" type="submit">
+                        <span class="btn btn--pri" style="height:5.2rem">
+                          <span class="bt bt--in">Envoyer</span>
+                          <span class="bt bt--out" aria-hidden="true">Envoyer</span>
+                        </span>
+                      </button>
+                    </div>
+                    <p id="formMsg" style="display:none;font-size:1.4rem;color:var(--accent);text-align:right"></p>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <Footer />
+
+</Base>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('rv--vis'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.rv').forEach((el) => obs.observe(el));
+
+  const form = document.getElementById('contactForm') as HTMLFormElement | null;
+  const msg  = document.getElementById('formMsg');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (msg) { msg.textContent = 'Message envoyé — on revient vers vous sous 24h.'; msg.style.display = 'block'; }
+    form.reset();
+  });
+</script>

@@ -1,0 +1,96 @@
+---
+// blog/index.astro — Journal IKONIK
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import Footer from '../../components/Footer.astro';
+import { supabase } from '../../lib/supabase';
+
+const CDN = 'https://d3aq9k5clbjrty.cloudfront.net';
+
+let articles: { title: string; excerpt: string; slug: string; tag?: string; image_url?: string; published_at?: string }[] = [];
+try {
+  const { data } = await supabase
+    .from('blog_posts')
+    .select('title, excerpt, slug, tag, image_url, published_at')
+    .eq('published', true)
+    .order('published_at', { ascending: false });
+  if (data && data.length > 0) articles = data;
+} catch (_) {}
+
+if (articles.length === 0) {
+  articles = [
+    { tag: 'Films IA', title: 'Comment le FOOH révolutionne la pub outdoor en 2025', excerpt: 'Le Fake Out Of Home change les codes de la publicité extérieure. Voici comment nous l\'utilisons pour nos clients.', slug: 'fooh-fake-out-of-home-guide', image_url: `${CDN}/gallery/gallery-image-4.avif`, published_at: '2025-03-01' },
+    { tag: 'Tech', title: 'L\'IA va-t-elle remplacer les équipes de production vidéo ?', excerpt: 'Notre analyse honnête sur l\'impact de l\'IA générative sur les métiers créatifs et ce que ça change pour les marques.', slug: 'ia-revolution-production-video', image_url: `${CDN}/gallery/gallery-image-5.avif`, published_at: '2025-02-01' },
+    { tag: 'Studio', title: 'VibeCoding : développer une plateforme SaaS en 30 jours', excerpt: 'Retour d\'expérience sur notre méthode de développement assisté IA — pipeline, outils, résultats.', slug: 'vibecoding-saas-30-jours', image_url: `${CDN}/gallery/gallery-image-6.avif`, published_at: '2025-01-01' },
+  ];
+}
+---
+
+<Base title="Journal — IKONIK" description="Articles, analyses et retours d'expérience sur la création IA, le développement et le marketing.">
+
+  <Header />
+
+  <div class="layout layout--dark">
+    <div class="layout__inner">
+
+      <!-- HERO -->
+      <section class="page-hero">
+        <div class="page-hero__bg" style={`background-image:url(${CDN}/gallery/gallery-image-7.avif)`}></div>
+        <div class="page-hero__inner">
+          <div class="container">
+            <h1 class="page-hero__title">
+              <div class="hero-title">
+                <span class="hero-line">Journal</span>
+                <span class="hero-line">
+                  <em>IKONIK</em>
+                  <svg fill="none" viewBox="0 0 200 11" width="160" height="11">
+                    <path d="M177 5.5H0" stroke="#FFFFFF"></path>
+                    <circle cx="194.5" cy="5.5" r="5.5" fill="#E9540D"></circle>
+                  </svg>
+                </span>
+              </div>
+            </h1>
+          </div>
+        </div>
+        <svg fill="none" viewBox="0 0 12 34" class="scroll-ind" aria-hidden="true">
+          <path d="M12 0 6 8.195 0 0h12Z" fill="#E9540D"/>
+          <path d="m12 25-6 8.195L0 25h12Z" fill="#FFF"/>
+        </svg>
+      </section>
+
+      <!-- ARTICLES -->
+      <div class="layout__content">
+        <div class="section t-light s-pad-lg">
+          <div class="section__inner">
+            <div class="container">
+              <div class="articles-grid">
+                {articles.map((a) => (
+                  <ArticleCard
+                    tag={a.tag}
+                    title={a.title}
+                    excerpt={a.excerpt}
+                    href={`/blog/${a.slug}`}
+                    imageSrc={a.image_url}
+                    date={a.published_at ? new Date(a.published_at).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' }) : undefined}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <Footer />
+
+</Base>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('rv--vis'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.rv').forEach((el) => obs.observe(el));
+</script>

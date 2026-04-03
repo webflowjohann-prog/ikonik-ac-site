@@ -1,0 +1,150 @@
+---
+// studio.astro — Le Studio IKONIK (équipe, philosophie, projets)
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const CDN = 'https://d3aq9k5clbjrty.cloudfront.net';
+
+const valeurs = [
+  { label: 'Résultats', text: 'Chaque projet est une machine à résultats. Pas de décoration — de la performance mesurable.' },
+  { label: 'Vélocité', text: 'Composition Lock© et VibeCoding Studio© compressent les délais sans sacrifier la qualité.' },
+  { label: 'Fusion', text: 'Créatif et tech dans un seul studio. Les meilleures idées naissent à l\'intersection.' },
+];
+---
+
+<Base title="Studio — IKONIK" description="IKONIK : studio créatif et tech fondé par Johann en Normandie. Notre philosophie, notre équipe, notre approche.">
+
+  <Header />
+
+  <div class="layout layout--dark">
+    <div class="layout__inner">
+
+      <!-- HERO -->
+      <section class="page-hero">
+        <div class="page-hero__bg" style={`background-image:url(${CDN}/gallery/gallery-image-6.avif)`}></div>
+        <div class="page-hero__inner">
+          <div class="container">
+            <h1 class="page-hero__title">
+              <div class="hero-title">
+                <span class="hero-line">Le Studio</span>
+                <span class="hero-line">
+                  <em>IKONIK</em>
+                  <svg fill="none" viewBox="0 0 200 11" width="160" height="11">
+                    <path d="M177 5.5H0" stroke="#FFFFFF"></path>
+                    <circle cx="194.5" cy="5.5" r="5.5" fill="#E9540D"></circle>
+                  </svg>
+                </span>
+              </div>
+            </h1>
+          </div>
+        </div>
+        <svg fill="none" viewBox="0 0 12 34" class="scroll-ind" aria-hidden="true">
+          <path d="M12 0 6 8.195 0 0h12Z" fill="#E9540D"/>
+          <path d="m12 25-6 8.195L0 25h12Z" fill="#FFF"/>
+        </svg>
+      </section>
+
+      <!-- CONTENU -->
+      <div class="layout__content">
+
+        <!-- PHILOSOPHIE -->
+        <div class="section t-light s-pad-lg">
+          <div class="section__inner">
+            <div class="container">
+              <div class="grid grid--gap-lg rv">
+                <div class="new-card">
+                  <video autoplay muted playsinline loop src={`${CDN}/videos/video-1.mp4`} class="new-card__video"></video>
+                </div>
+                <div class="cb cb--l">
+                  <div class="cb__h">
+                    <span class="cb__tag">Notre philosophie</span>
+                    <h2>
+                      <span class="h-line">
+                        <span>Le système IKONIK</span>
+                        <svg fill="none" viewBox="0 0 200 11" width="120" height="11">
+                          <path d="M177 5.5H0" stroke="#222931"></path>
+                          <circle cx="194.5" cy="5.5" r="5.5" fill="#E9540D"></circle>
+                        </svg>
+                      </span>
+                    </h2>
+                  </div>
+                  <div class="cb__wrap">
+                    <p class="cb__t">Nous ne faisons pas de la communication — nous construisons des systèmes qui génèrent de la valeur. Créatif et tech fusionnés dans un seul studio. Chaque projet est une machine à résultats.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VALEURS -->
+        <div class="section t-light s-pb-lg">
+          <div class="section__inner">
+            <div class="container">
+              <h2 class="rv" style="font-size:3.6rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6rem">Ce qui nous définit</h2>
+              <div class="services-grid">
+                {valeurs.map((v) => (
+                  <div class="service-card rv">
+                    <span class="service-card__tag">Valeur</span>
+                    <h3 class="service-card__title">{v.label}</h3>
+                    <p class="service-card__desc">{v.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FONDATEUR -->
+        <div class="section t-dark s-pad-lg">
+          <div class="section__inner">
+            <div class="container">
+              <div class="grid grid--gap-lg rv" style="direction:rtl">
+                <div class="new-card" style="direction:ltr">
+                  <img src={`${CDN}/gallery/gallery-image-8.avif`} alt="Johann — Fondateur IKONIK" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;" loading="lazy" />
+                </div>
+                <div class="cb cb--d" style="direction:ltr">
+                  <div class="cb__h">
+                    <span class="cb__tag">Fondateur</span>
+                    <h2>
+                      <span class="h-line">
+                        <span>Johann</span>
+                        <svg fill="none" viewBox="0 0 200 12" width="120" height="12">
+                          <path d="M179 6H0" stroke="#FFFFFF"></path>
+                          <path d="m191 0 8.195 6L191 12V0Z" fill="#E9540D"></path>
+                        </svg>
+                      </span>
+                    </h2>
+                  </div>
+                  <div class="cb__wrap">
+                    <p class="cb__t">Réalisateur, développeur, entrepreneur. IKONIK est né de la conviction qu'un seul studio peut maîtriser l'image et le code — et que c'est cette fusion qui crée la vraie valeur.</p>
+                    <div class="cb__ctas">
+                      <a class="button" href="/contact">
+                        <span class="btn btn--sec">
+                          <span class="bt bt--in">Prendre contact</span>
+                          <span class="bt bt--out" aria-hidden="true">Prendre contact</span>
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <Footer />
+
+</Base>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('rv--vis'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.rv').forEach((el) => obs.observe(el));
+</script>

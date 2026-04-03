@@ -1,6 +1,5 @@
 ---
-// HeroVideo.astro — hero vidéo plein écran exact Warwick
-// Structure : home-hero > background (115% height, centré) > inner (texte)
+// HeroVideo.astro — hero vidéo plein écran. CSS dans global.css.
 interface Props {
   videoSrc: string;
   titleLines: string[];
@@ -11,148 +10,26 @@ const { videoSrc, titleLines, subtitle } = Astro.props;
 
 <section class="home-hero" id="hero">
 
-  <!-- Conteneur vidéo : 115% de hauteur, centré à -57% — exact Warwick home-hero__background -->
   <div class="home-hero__background">
-    <video
-      autoplay muted playsinline loop
-      class="home-hero__video"
-      src={videoSrc}
-      aria-hidden="true"
-    ></video>
+    <video autoplay muted playsinline loop class="home-hero__video" src={videoSrc} aria-hidden="true"></video>
   </div>
 
-  <!-- Overlay : gradient noir léger en haut, transparent au centre — exact Warwick -->
   <div class="home-hero__overlay" aria-hidden="true"></div>
 
-  <!-- Contenu centré -->
   <div class="home-hero__inner">
     <div class="container">
-      <h1 class="home-hero__title" id="heroTitle">
+      <h1 class="home-hero__title">
         {titleLines.map((line, i) => (
           <span class="hero-title-line" style={`animation-delay:${0.2 + i * 0.2}s`}>{line}</span>
         ))}
       </h1>
-      {subtitle && (
-        <p class="home-hero__subtitle" id="heroSub">{subtitle}</p>
-      )}
+      {subtitle && <p class="home-hero__subtitle">{subtitle}</p>}
     </div>
   </div>
 
-  <!-- Scroll indicator -->
   <svg fill="none" viewBox="0 0 12 34" class="home-hero__scroll-indicator" aria-hidden="true">
     <path d="M12 0 6 8.195 0 0h12Z" fill="#e9540d"/>
     <path d="m12 25-6 8.195L0 25h12Z" fill="#fff"/>
   </svg>
 
 </section>
-
-<style>
-  /* Conteneur section — height:100vh fixe comme Warwick */
-  .home-hero {
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-  }
-
-  /* Vidéo : 115% hauteur, centrée — exact Warwick home-hero__background */
-  .home-hero__background {
-    height: 115%;
-    left: 50%;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -57%);
-    width: 100%;
-    z-index: 1;
-  }
-  .home-hero__video {
-    height: 100%;
-    left: 0;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-
-  /* Overlay exact Warwick : gradient noir léger en haut, transparent au centre */
-  .home-hero__overlay {
-    background: linear-gradient(180deg, rgba(0,0,0,.4), transparent 50%);
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 2;
-  }
-
-  /* Inner texte : centré, au-dessus de l'overlay */
-  .home-hero__inner {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: center;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 5;
-  }
-
-  /* Titre : exact Warwick home-hero__title */
-  .home-hero__title {
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    font-size: 5.6rem;
-    font-weight: 600;
-    gap: 0;
-    letter-spacing: .06em;
-    line-height: 6.8rem;
-    margin: 0 0 .7rem;
-    text-align: center;
-    text-transform: uppercase;
-  }
-  @media (min-width: 768px) { .home-hero__title { font-size: 10.4rem; line-height: 12.8rem; margin-bottom: 0; } }
-  @media (min-width: 992px)  { .home-hero__title { font-size: 12rem; line-height: 14.4rem; } }
-
-  /* Chaque ligne animée */
-  .hero-title-line {
-    animation: moveUpAndFadeIn 1s ease-in-out forwards;
-    display: block;
-    opacity: 0;
-    transform: translateY(15px);
-  }
-
-  /* Sous-titre */
-  .home-hero__subtitle {
-    animation: moveUpAndFadeIn 1s ease-in-out forwards;
-    animation-delay: .8s;
-    color: #fff;
-    font-size: 2.4rem;
-    font-weight: 450;
-    letter-spacing: .06em;
-    line-height: 3.6rem;
-    margin: 2rem 0 0;
-    opacity: 0;
-    text-align: center;
-  }
-  @media (min-width: 768px) { .home-hero__subtitle { font-size: 2.8rem; line-height: 4rem; } }
-  @media (min-width: 992px)  { .home-hero__subtitle { font-size: 3.2rem; line-height: 4.4rem; } }
-
-  /* Scroll indicator — exact Warwick */
-  .home-hero__scroll-indicator {
-    animation: fadeIn 2s ease-in-out forwards;
-    animation-delay: 2s;
-    bottom: 10%;
-    opacity: 0;
-    position: absolute;
-    right: 50%;
-    transform: translateX(-50%);
-    width: 10px;
-    z-index: 5;
-  }
-  @media (min-width: 992px) {
-    .home-hero__scroll-indicator { right: -10%; transform: translateX(0); }
-  }
-</style>
