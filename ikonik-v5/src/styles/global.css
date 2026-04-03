@@ -318,6 +318,7 @@ h1 em, h2 em, h3 em {
   letter-spacing: .06em;
   line-height: 2.6rem;
   max-width: 340px;
+  text-align: justify;
 }
 @media (min-width: 768px) { .cb__t { font-size: 1.8rem; letter-spacing: .06em; line-height: 3rem; } }
 
