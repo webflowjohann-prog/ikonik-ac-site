@@ -1,5 +1,8 @@
 ---
-// HeroVideo.astro — exact Warwick home-hero with "Make it IKONIK" title
+// HeroVideo.astro — hero vidéo plein écran. Titre statique HTML + animations CSS.
+// Ligne 1 : "Make" (serif italic) + "It" (sans uppercase) sur la même ligne
+// Ligne 2 : Logo IKONIK blanc en image
+// Ligne 3 : Sous-titre fade-in
 interface Props {
   videoSrc: string;
   subtitle?: string;
@@ -8,21 +11,40 @@ const { videoSrc, subtitle } = Astro.props;
 ---
 
 <section class="home-hero" id="hero">
+
   <div class="home-hero__background">
     <video autoplay muted playsinline loop src={videoSrc} aria-hidden="true"></video>
   </div>
+
   <div class="home-hero__inner">
-    <h1 class="home-hero__title" id="heroTitle"></h1>
+
+    <!-- Ligne 1 : Make It — flex row, baseline alignés -->
+    <div class="home-hero__line1">
+      <em class="home-hero__make">Make</em>
+      <span class="home-hero__it">It</span>
+    </div>
+
+    <!-- Ligne 2 : Logo IKONIK image -->
+    <div class="home-hero__line2">
+      <img
+        src="/images/LOGO_IKONIK_blanc.webp"
+        alt="IKONIK"
+        class="home-hero__logo"
+      />
+    </div>
+
+    <!-- Ligne 3 : Sous-titre -->
     {subtitle && (
-      <h2 class="home-hero__subtitle">
-        <span>{subtitle}</span>
-      </h2>
+      <p class="home-hero__subtitle">{subtitle}</p>
     )}
+
   </div>
+
   <svg fill="none" viewBox="0 0 12 34" class="home-hero__scroll-indicator" aria-hidden="true">
     <path d="M12 0 6 8.195 0 0h12Z" fill="#e9540d"/>
     <path d="m12 25-6 8.195L0 25h12Z" fill="#fff"/>
   </svg>
+
 </section>
 
 <style>
@@ -32,15 +54,16 @@ const { videoSrc, subtitle } = Astro.props;
     position: relative;
     width: 100%;
   }
+  /* Overlay gradient */
   .home-hero::after {
     background: linear-gradient(180deg, rgba(0,0,0,.4), transparent 50%);
     content: "";
-    height: 100%;
     inset: 0;
     position: absolute;
-    width: 100%;
     z-index: 4;
   }
+
+  /* Vidéo : 115% hauteur, centrée — exact Warwick */
   .home-hero__background {
     height: 115%;
     left: 50%;
@@ -55,10 +78,13 @@ const { videoSrc, subtitle } = Astro.props;
     object-fit: cover;
     width: 100%;
   }
+
+  /* Inner centré */
   .home-hero__inner {
     align-items: center;
     display: flex;
     flex-direction: column;
+    gap: 1.2rem;
     height: 100%;
     justify-content: center;
     left: 0;
@@ -67,70 +93,79 @@ const { videoSrc, subtitle } = Astro.props;
     width: 100%;
     z-index: 5;
   }
-  .home-hero__title {
+
+  /* Ligne 1 : "Make It" sur la même ligne */
+  .home-hero__line1 {
+    align-items: baseline;
+    animation: moveUpAndFadeIn 1s ease-in-out forwards;
+    animation-delay: .3s;
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    opacity: 0;
+  }
+  .home-hero__make {
+    color: var(--white);
+    font-family: var(--serif);
+    font-size: 7.2rem;
+    font-style: italic;
+    font-weight: 900;
+    letter-spacing: .02em;
+    line-height: 1;
+    text-transform: none;
+  }
+  @media (min-width: 768px) { .home-hero__make { font-size: 13rem; } }
+  @media (min-width: 992px)  { .home-hero__make { font-size: 16rem; } }
+
+  .home-hero__it {
     color: var(--white);
     font-family: var(--sans);
     font-size: 5.6rem;
     font-weight: 600;
     letter-spacing: .06em;
-    line-height: 6.8rem;
-    margin: 0 0 .7rem;
-    overflow: hidden;
-    text-align: center;
+    line-height: 1;
     text-transform: uppercase;
   }
-  @media (min-width: 768px) { .home-hero__title { font-size: 10.4rem; line-height: 12.8rem; } }
-  @media (min-width: 992px) { .home-hero__title { font-size: 12rem; line-height: 14.4rem; } }
+  @media (min-width: 768px) { .home-hero__it { font-size: 10.4rem; } }
+  @media (min-width: 992px)  { .home-hero__it { font-size: 12rem; } }
 
-  /* "Make" = serif italic like Warwick "Hear" */
-  .home-hero__title :global(em) {
-    font-family: var(--serif);
-    font-size: 6.8rem;
-    font-style: italic;
-    font-weight: 900;
-    letter-spacing: .02em;
-    line-height: 8rem;
-    text-transform: none;
-  }
-  @media (min-width: 768px) { .home-hero__title :global(em) { font-size: 12.8rem; line-height: 15.2rem; } }
-  @media (min-width: 992px) { .home-hero__title :global(em) { font-size: 15rem; line-height: 18rem; } }
-
-  .home-hero__title :global(.letter) {
-    display: inline-block;
-    margin: 0 -10px;
+  /* Ligne 2 : Logo image */
+  .home-hero__line2 {
+    animation: moveUpAndFadeIn 1s ease-in-out forwards;
+    animation-delay: .7s;
     opacity: 0;
-    overflow: visible;
-    padding: 0 10px;
-    transform: translateY(10%) translateZ(0);
   }
-  .home-hero__title :global(.letters) {
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+  .home-hero__logo {
+    display: block;
+    height: 6rem;
+    max-width: 90vw;
+    object-fit: contain;
+    width: auto;
   }
+  @media (min-width: 768px) { .home-hero__logo { height: 9rem; } }
+  @media (min-width: 992px)  { .home-hero__logo { height: 12rem; } }
 
+  /* Ligne 3 : Sous-titre */
   .home-hero__subtitle {
+    animation: moveUpAndFadeIn 1s ease-in-out forwards;
+    animation-delay: 1.2s;
     color: var(--white);
     font-family: var(--sans);
     font-size: 2.4rem;
     font-weight: 450;
     letter-spacing: .06em;
     line-height: 3.6rem;
-    margin: 0;
+    margin: .8rem 0 0;
+    opacity: 0;
     text-align: center;
   }
   @media (min-width: 768px) { .home-hero__subtitle { font-size: 2.8rem; line-height: 4rem; } }
-  @media (min-width: 992px) { .home-hero__subtitle { font-size: 3.2rem; line-height: 4.4rem; } }
+  @media (min-width: 992px)  { .home-hero__subtitle { font-size: 3.2rem; line-height: 4.4rem; } }
 
-  .home-hero__subtitle span {
-    animation: fadeIn 2s ease-in-out forwards;
-    animation-delay: 2.5s;
-    opacity: 0;
-  }
-
+  /* Scroll indicator */
   .home-hero__scroll-indicator {
     animation: fadeIn 2s ease-in-out forwards;
-    animation-delay: 2s;
+    animation-delay: 2.5s;
     bottom: 10%;
     opacity: 0;
     position: absolute;
@@ -141,32 +176,3 @@ const { videoSrc, subtitle } = Astro.props;
   }
   @media (min-width: 992px) { .home-hero__scroll-indicator { right: 4rem; transform: none; } }
 </style>
-
-<script>
-  // Letter-by-letter animation for "Make it IKONIK"
-  // "Make" = italic (em tag), "it IKONIK" = uppercase sans
-  const title = document.getElementById('heroTitle');
-  if (title) {
-    const words = [
-      { text: 'Make', italic: true, delay: 0.6 },
-      { text: 'it', italic: false, delay: 1.2 },
-      { text: 'IKONIK', italic: false, delay: 1.5 }
-    ];
-
-    words.forEach((w, wi) => {
-      const wrap = w.italic ? document.createElement('em') : document.createElement('span');
-      const letters = document.createElement('span');
-      letters.className = 'letters';
-      w.text.split('').forEach((c, ci) => {
-        const s = document.createElement('span');
-        s.className = 'letter';
-        s.textContent = c;
-        s.style.animation = `fadeIn 0.5s ${w.delay + ci * 0.08}s ease-out forwards`;
-        letters.appendChild(s);
-      });
-      wrap.appendChild(letters);
-      title.appendChild(wrap);
-      if (wi < words.length - 1) title.appendChild(document.createTextNode(' '));
-    });
-  }
-</script>
