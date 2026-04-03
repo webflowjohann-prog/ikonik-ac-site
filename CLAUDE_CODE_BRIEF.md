@@ -13,6 +13,14 @@
 
 ### Deux pôles
 
+**IKONIK Créatif — 6 services validés :**
+- Films publicitaires : Spots TV, films de marque, publicités digitales. Du brief au rendu final — tournage réel, direction artistique, post-production cinématique.
+- Documentaires & Interviews : Capturer l'authenticité. Documentaires corporate, portraits, témoignages — des récits qui donnent de la profondeur à votre marque.
+- Films IA & FOOH : Fake Out Of Home, spots générés par IA, environnements CGI photoréalistes. Le contenu viral de demain, produit aujourd'hui.
+- Contenu animé : Animation 2D/3D, motion design, univers visuels stylisés. Des formats qui captent l'attention là où la vidéo classique ne suffit plus.
+- Contenu social : Formats courts, Reels, stories, carrousels. Des volumes calibrés pour chaque plateforme, sans sacrifier la qualité.
+- UGC IA : Contenu authentique généré par l'intelligence artificielle. Des visuels crédibles, sans casting, sans tournage — l'efficacité au service de la créativité.
+
 **IKONIK Créatif :** Films IA, FOOH, animés, art & print, contenu social, UGC IA
 **IKONIK Tech :** Plateformes SaaS, CRM sectoriels, Marketing OS, dashboards IA, automatisation, apps communautaires
 
