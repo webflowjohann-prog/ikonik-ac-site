@@ -7,31 +7,40 @@ import { supabase } from '../lib/supabase';
 
 const CDN = 'https://d3aq9k5clbjrty.cloudfront.net';
 
-// Fetch services créatifs depuis Supabase (fallback statique si vide)
+// Fetch services créatifs depuis Supabase
 let services: { title: string; description: string; tag?: string }[] = [];
 try {
   const { data } = await supabase
     .from('services')
-    .select('title, description, tag')
-    .eq('pole', 'creatif')
-    .order('position');
-  if (data && data.length > 0) services = data;
+    .select('title, description')
+    .eq('category', 'creatif')
+    .order('id');
+  if (data && data.length > 0) {
+    services = data.map((s: any) => {
+      let tag = 'Production';
+      if (s.title.includes('social') || s.title.includes('Social') || s.title.includes('UGC')) tag = 'Contenu';
+      if (s.title.includes('animé') || s.title.includes('Animé') || s.title.includes('Contenu animé')) tag = 'Production IA';
+      if (s.title.includes('Films IA') || s.title.includes('FOOH')) tag = 'Production IA';
+      if (s.title.includes('Documentaires') || s.title.includes('Films publicitaires')) tag = 'Production vidéo';
+      return { ...s, tag };
+    });
+  }
 } catch (_) {}
 
-// Fallback statique
+// Fallback statique avec textes validés par Johann
 if (services.length === 0) {
   services = [
-    { tag: 'Production', title: 'Films IA', description: 'Films publicitaires génératifs — IA + mise en scène cinématique. Du brief au rendu final en temps record.' },
-    { tag: 'Production', title: 'FOOH', description: 'Fake Out Of Home — publicité extérieure impossible rendue réelle. Viral, mémorable, partageable.' },
-    { tag: 'Production', title: 'Animés & Art', description: 'Animation 2D/3D, motion design, art numérique. Des univers visuels cohérents et impactants.' },
-    { tag: 'Contenu', title: 'Contenu Social', description: 'Formats courts, Reels, stories, UGC IA. Volumes de contenu élevés sans sacrifice de qualité.' },
-    { tag: 'Contenu', title: 'UGC IA', description: "User Generated Content synthétique. Authenticité à l'échelle — sans casting, sans tournage." },
-    { tag: 'Méthode', title: 'Composition Lock©', description: 'Notre workflow de production propriétaire. Délais réduits de 60%, qualité cinématique garantie.' },
+    { tag: 'Production vidéo', title: 'Films publicitaires', description: 'Spots TV, films de marque, publicités digitales. Du brief au rendu final — tournage réel, direction artistique, post-production cinématique.' },
+    { tag: 'Production vidéo', title: 'Documentaires & Interviews', description: "Capturer l'authenticité. Documentaires corporate, portraits, témoignages — des récits qui donnent de la profondeur à votre marque." },
+    { tag: 'Production IA', title: 'Films IA & FOOH', description: "Fake Out Of Home, spots générés par IA, environnements CGI photoréalistes. Le contenu viral de demain, produit aujourd'hui." },
+    { tag: 'Production IA', title: 'Contenu animé', description: "Animation 2D/3D, motion design, univers visuels stylisés. Des formats qui captent l'attention là où la vidéo classique ne suffit plus." },
+    { tag: 'Contenu', title: 'Contenu social', description: 'Formats courts, Reels, stories, carrousels. Des volumes calibrés pour chaque plateforme, sans sacrifier la qualité.' },
+    { tag: 'Contenu', title: 'UGC IA', description: "Contenu authentique généré par l'intelligence artificielle. Des visuels crédibles, sans casting, sans tournage — l'efficacité au service de la créativité." },
   ];
 }
 ---
 
-<Base title="Créatif — IKONIK" description="Films IA, FOOH, animés, contenu social. Composition Lock© — notre workflow de production propriétaire.">
+<Base title="Créatif — IKONIK" description="Films publicitaires, documentaires, FOOH, contenu animé, contenu social, UGC IA. Production vidéo et production IA par IKONIK.">
 
   <Header />
 
@@ -88,7 +97,7 @@ if (services.length === 0) {
                     </h2>
                   </div>
                   <div class="cb__wrap">
-                    <p class="cb__t">Films IA, FOOH, animés, art & print, contenu social, UGC IA. Notre workflow propriétaire Composition Lock© réduit les délais de 60% sans compromis sur la qualité cinématique.</p>
+                    <p class="cb__t">Des films qui marquent, des images qui vendent. Production publicitaire, CGI photoréaliste, animation de marque — notre pipeline cinématique transforme chaque idée en contenu qui performe.</p>
                     <div class="cb__ctas">
                       <a class="button" href="/contact">
                         <span class="btn btn--pri">
@@ -126,8 +135,8 @@ if (services.length === 0) {
         <div class="section t-dark s-pad-md">
           <div class="section__inner">
             <div class="container rv" style="text-align:center;color:#fff">
-              <p style="font-size:1.2rem;font-weight:450;letter-spacing:.16em;text-transform:uppercase;margin-bottom:2rem">Composition Lock©</p>
-              <h2 style="font-size:3.6rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;max-width:800px;margin:0 auto 3rem">Le pipeline cinématique qui fait la différence</h2>
+              <p style="font-size:1.2rem;font-weight:450;letter-spacing:.16em;text-transform:uppercase;margin-bottom:2rem">Votre projet créatif</p>
+              <h2 style="font-size:3.6rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;max-width:800px;margin:0 auto 3rem">Donnons vie à votre vision</h2>
               <a class="button" href="/contact">
                 <span class="btn btn--sec">
                   <span class="bt bt--in">Parler de votre projet</span>
