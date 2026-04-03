@@ -318,7 +318,7 @@ h1 em, h2 em, h3 em {
   letter-spacing: .06em;
   line-height: 2.6rem;
   max-width: 340px;
-  text-align: justify;
+  text-align: left;
 }
 @media (min-width: 768px) { .cb__t { font-size: 1.8rem; letter-spacing: .06em; line-height: 3rem; } }
 
@@ -603,11 +603,13 @@ h1 em, h2 em, h3 em {
 
 /* Warwick review quote font = sans weight 300 */
 .rs__q h2 {
+  font-family: var(--serif);
   font-size: 2.8rem;
-  font-weight: 300;
-  letter-spacing: .06em;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: .02em;
   line-height: 3.6rem;
-  text-align: justify;
+  text-align: left;
 }
 @media (min-width: 768px) { .rs__q h2 { font-size: 3.6rem; line-height: 4.8rem; } }
 @media (min-width: 992px)  { .rs__q h2 { font-size: 4rem;   line-height: 5.2rem; } }
