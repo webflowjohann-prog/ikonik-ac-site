@@ -68,7 +68,7 @@ Johann a validé cette direction après 3 itérations de prototypes.
 
 ### Architecture de la Home Page V5 (validée par Johann)
 
-1. **HERO** — Vidéo plein écran (comme home Warwick), overlay sombre en gradient, titre lettre-par-lettre, sous-titre fade-in
+1. **HERO** — Vidéo plein écran (comme home Warwick), overlay gradient léger `linear-gradient(180deg, rgba(0,0,0,.4), transparent 50%)`, titre **"*Make* it IKONIK"** lettre-par-lettre ("Make" en serif italic Playfair Display comme "Hear" de Warwick, "it IKONIK" en sans uppercase Outfit 600), sous-titre **"Créer. Construire. Vendre."** en fade-in décalé
 2. **DEUX PORTES CRÉATIF / TECH** — Layout alterné comme la page Headphones de Warwick (APERIO/BRAVURA) :
    - Porte 1 (Créatif) : vidéo autoplay arrondie à gauche + texte à droite (tagline uppercase, titre + accent-line SVG, description, bouton pill)
    - Porte 2 (Tech) : texte à gauche + vidéo autoplay arrondie à droite (inversé)

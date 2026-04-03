@@ -1,35 +1,172 @@
 ---
-// HeroVideo.astro — hero vidéo plein écran. CSS dans global.css.
+// HeroVideo.astro — exact Warwick home-hero with "Make it IKONIK" title
 interface Props {
   videoSrc: string;
-  titleLines: string[];
   subtitle?: string;
 }
-const { videoSrc, titleLines, subtitle } = Astro.props;
+const { videoSrc, subtitle } = Astro.props;
 ---
 
 <section class="home-hero" id="hero">
-
   <div class="home-hero__background">
-    <video autoplay muted playsinline loop class="home-hero__video" src={videoSrc} aria-hidden="true"></video>
+    <video autoplay muted playsinline loop src={videoSrc} aria-hidden="true"></video>
   </div>
-
-  <div class="home-hero__overlay" aria-hidden="true"></div>
-
   <div class="home-hero__inner">
-    <div class="container">
-      <h1 class="home-hero__title">
-        {titleLines.map((line, i) => (
-          <span class="hero-title-line" style={`animation-delay:${0.2 + i * 0.2}s`}>{line}</span>
-        ))}
-      </h1>
-      {subtitle && <p class="home-hero__subtitle">{subtitle}</p>}
-    </div>
+    <h1 class="home-hero__title" id="heroTitle"></h1>
+    {subtitle && (
+      <h2 class="home-hero__subtitle">
+        <span>{subtitle}</span>
+      </h2>
+    )}
   </div>
-
   <svg fill="none" viewBox="0 0 12 34" class="home-hero__scroll-indicator" aria-hidden="true">
     <path d="M12 0 6 8.195 0 0h12Z" fill="#e9540d"/>
     <path d="m12 25-6 8.195L0 25h12Z" fill="#fff"/>
   </svg>
-
 </section>
+
+<style>
+  .home-hero {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+  .home-hero::after {
+    background: linear-gradient(180deg, rgba(0,0,0,.4), transparent 50%);
+    content: "";
+    height: 100%;
+    inset: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 4;
+  }
+  .home-hero__background {
+    height: 115%;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -57%);
+    width: 100%;
+    z-index: 2;
+  }
+  .home-hero__background video {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+  .home-hero__inner {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+  }
+  .home-hero__title {
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 5.6rem;
+    font-weight: 600;
+    letter-spacing: .06em;
+    line-height: 6.8rem;
+    margin: 0 0 .7rem;
+    overflow: hidden;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  @media (min-width: 768px) { .home-hero__title { font-size: 10.4rem; line-height: 12.8rem; } }
+  @media (min-width: 992px) { .home-hero__title { font-size: 12rem; line-height: 14.4rem; } }
+
+  /* "Make" = serif italic like Warwick "Hear" */
+  .home-hero__title :global(em) {
+    font-family: var(--serif);
+    font-size: 6.8rem;
+    font-style: italic;
+    font-weight: 900;
+    letter-spacing: .02em;
+    line-height: 8rem;
+    text-transform: none;
+  }
+  @media (min-width: 768px) { .home-hero__title :global(em) { font-size: 12.8rem; line-height: 15.2rem; } }
+  @media (min-width: 992px) { .home-hero__title :global(em) { font-size: 15rem; line-height: 18rem; } }
+
+  .home-hero__title :global(.letter) {
+    display: inline-block;
+    margin: 0 -10px;
+    opacity: 0;
+    overflow: visible;
+    padding: 0 10px;
+    transform: translateY(10%) translateZ(0);
+  }
+  .home-hero__title :global(.letters) {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  .home-hero__subtitle {
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 2.4rem;
+    font-weight: 450;
+    letter-spacing: .06em;
+    line-height: 3.6rem;
+    margin: 0;
+    text-align: center;
+  }
+  @media (min-width: 768px) { .home-hero__subtitle { font-size: 2.8rem; line-height: 4rem; } }
+  @media (min-width: 992px) { .home-hero__subtitle { font-size: 3.2rem; line-height: 4.4rem; } }
+
+  .home-hero__subtitle span {
+    animation: fadeIn 2s ease-in-out forwards;
+    animation-delay: 2.5s;
+    opacity: 0;
+  }
+
+  .home-hero__scroll-indicator {
+    animation: fadeIn 2s ease-in-out forwards;
+    animation-delay: 2s;
+    bottom: 10%;
+    opacity: 0;
+    position: absolute;
+    right: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    z-index: 6;
+  }
+  @media (min-width: 992px) { .home-hero__scroll-indicator { right: 4rem; transform: none; } }
+</style>
+
+<script>
+  // Letter-by-letter animation for "Make it IKONIK"
+  // "Make" = italic (em tag), "it IKONIK" = uppercase sans
+  const title = document.getElementById('heroTitle');
+  if (title) {
+    const words = [
+      { text: 'Make', italic: true, delay: 0.6 },
+      { text: 'it', italic: false, delay: 1.2 },
+      { text: 'IKONIK', italic: false, delay: 1.5 }
+    ];
+
+    words.forEach((w, wi) => {
+      const wrap = w.italic ? document.createElement('em') : document.createElement('span');
+      const letters = document.createElement('span');
+      letters.className = 'letters';
+      w.text.split('').forEach((c, ci) => {
+        const s = document.createElement('span');
+        s.className = 'letter';
+        s.textContent = c;
+        s.style.animation = `fadeIn 0.5s ${w.delay + ci * 0.08}s ease-out forwards`;
+        letters.appendChild(s);
+      });
+      wrap.appendChild(letters);
+      title.appendChild(wrap);
+      if (wi < words.length - 1) title.appendChild(document.createTextNode(' '));
+    });
+  }
+</script>
