@@ -1,24 +1,24 @@
 ---
-// TextCard.astro — card 3 colonnes avec gradient blanc
+// TextCard.astro — card 3 colonnes (exact Warwick .text-card)
 interface Props {
   label: string;
-  title: string;
   description: string;
   imageSrc?: string;
   videoSrc?: string;
 }
-const { label, title, description, imageSrc, videoSrc } = Astro.props;
+const { label, description, imageSrc, videoSrc } = Astro.props;
 ---
 
 <div class="tc rv">
-  <span class="tc__label">{label}</span>
-  <h3 class="tc__h">{title}</h3>
-  <p style="font-size:1.5rem;font-weight:300;letter-spacing:.06em;line-height:2.4rem;color:var(--gray)">{description}</p>
+  <div>
+    <span class="tc__label">{label}</span>
+    <p class="tc__h">{description}</p>
+  </div>
   {(imageSrc || videoSrc) && (
     <div class="tc__img">
       {videoSrc
         ? <video autoplay muted playsinline loop src={videoSrc}></video>
-        : <img src={imageSrc} alt={title} loading="lazy" />
+        : <img src={imageSrc} alt={label} loading="lazy" />
       }
     </div>
   )}

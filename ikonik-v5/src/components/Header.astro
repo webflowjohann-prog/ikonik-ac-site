@@ -1,5 +1,6 @@
 ---
-// Header.astro — exact Warwick: fixe, collapse au scroll down > 200px, peek au scroll up
+// Header.astro — fixe, collapse > 200px scroll down, peek scroll up
+// Logo : LOGO_IKONIK_blanc.webp
 ---
 
 <header class="header" id="header">
@@ -7,10 +8,16 @@
     <div class="header__inner">
 
       <a class="header__logo" href="/" aria-label="IKONIK">
-        <span class="header__logo-text">IKONIK</span>
+        <img
+          src="/LOGO_IKONIK_blanc.webp"
+          alt="IKONIK"
+          class="header__logo-img"
+          width="160"
+          height="32"
+        />
       </a>
 
-      <nav class="dnav">
+      <nav class="dnav" aria-label="Navigation principale">
         <menu class="dnav__menu">
           <li><a class="dnav__link" href="/creatif">Créatif</a></li>
           <li><a class="dnav__link" href="/tech">Tech</a></li>
@@ -20,10 +27,10 @@
         </menu>
       </nav>
 
-      <button class="burger" aria-label="Menu" id="burgerBtn">
-        <svg fill="none" viewBox="0 0 44 44">
-          <line x1="10" y1="16" x2="34" y2="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="10" y1="28" x2="34" y2="28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <button class="burger" aria-label="Ouvrir le menu" id="burgerBtn">
+        <svg fill="none" viewBox="0 0 44 44" width="44" height="44" aria-hidden="true">
+          <line x1="10" y1="16" x2="34" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="10" y1="28" x2="34" y2="28" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
       </button>
 
@@ -32,50 +39,53 @@
 </header>
 
 <style>
-  .header__logo-text {
-    color: var(--white);
-    font-family: var(--sans);
-    font-size: 2rem;
-    font-weight: 600;
-    letter-spacing: .3em;
-    text-transform: uppercase;
-    animation: fadeIn 1.5s ease-in-out forwards;
-    animation-delay: 1s;
-    opacity: 0;
+  .header__logo {
+    display: block;
+    height: 3.2rem;
+    /* mobile : logo carré seulement — on limite la largeur */
+    width: auto;
   }
-  .burger {
-    color: var(--white);
+  .header__logo-img {
+    display: block;
+    height: 3.2rem;
+    width: auto;
+    object-fit: contain;
   }
-  :global(.header--collapsed) .header__logo-text {
-    color: var(--white);
-  }
-  :global(.header--collapsed) .burger {
-    color: var(--white);
+  /* Mobile : on cache le texte logo et on garde juste le roundel —
+     mais avec une image webp on laisse l'image se clipper naturellement */
+  @media (max-width: 991px) {
+    .header__logo { max-width: 4rem; overflow: hidden; }
   }
 </style>
 
 <script>
-  // Exact Warwick scroll behavior: collapse at 200px, peek on scroll up
   const header = document.getElementById('header');
-  let lastY = 0;
-  let collapsed = false;
+  let lastY = window.scrollY;
+  let ticking = false;
+  const THRESHOLD = 200;
 
   window.addEventListener('scroll', () => {
-    const y = window.pageYOffset;
-    if (y > 200) {
-      if (!collapsed) {
-        header?.classList.add('header--collapsed');
-        collapsed = true;
-      }
-      if (y < lastY - 5) {
-        header?.classList.add('header--peeked');
-      } else if (y > lastY + 5) {
-        header?.classList.remove('header--peeked');
-      }
-    } else {
-      header?.classList.remove('header--collapsed', 'header--peeked');
-      collapsed = false;
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const y = window.scrollY;
+
+        if (y > lastY && y > THRESHOLD) {
+          // Scroll DOWN + dépassé le seuil → collapse
+          header?.classList.add('header--collapsed');
+          header?.classList.remove('header--peeked');
+        } else if (y < lastY && y > THRESHOLD) {
+          // Scroll UP (toujours en bas de page) → peek avec fond dark
+          header?.classList.remove('header--collapsed');
+          header?.classList.add('header--peeked');
+        } else if (y <= THRESHOLD) {
+          // Remonté en haut → reset
+          header?.classList.remove('header--collapsed', 'header--peeked');
+        }
+
+        lastY = y;
+        ticking = false;
+      });
+      ticking = true;
     }
-    lastY = y;
   });
 </script>

@@ -21,6 +21,6 @@ const { tag, title, excerpt, href, imageSrc, date } = Astro.props;
     {tag && <span class="article-card__tag">{tag}</span>}
     <h3 class="article-card__title">{title}</h3>
     {excerpt && <p class="article-card__excerpt">{excerpt}</p>}
-    {date && <p style="font-size:1.2rem;font-weight:450;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-top:auto">{date}</p>}
+    {date && <p class="article-card__date">{date}</p>}
   </div>
 </a>
