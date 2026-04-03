@@ -275,7 +275,7 @@ h1 em, h2 em, h3 em {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 480px;
+  max-width: 420px;
 }
 .cb--d { color: var(--white); }
 .cb--l { color: var(--text); }
@@ -317,11 +317,11 @@ h1 em, h2 em, h3 em {
   font-weight: 300;
   letter-spacing: .06em;
   line-height: 2.6rem;
-  max-width: 380px;
+  max-width: 340px;
 }
 @media (min-width: 768px) { .cb__t { font-size: 1.8rem; letter-spacing: .06em; line-height: 3rem; } }
 
-.cb__wrap  { max-width: 420px; }
+.cb__wrap  { max-width: 380px; }
 .cb__ctas  { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 3.2rem; }
 
 /* ── BUTTON ───────────────────────────────────────────────────── */
