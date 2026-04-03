@@ -493,6 +493,7 @@ h1 em, h2 em, h3 em {
   letter-spacing: .06em;
   line-height: 2.6rem;
   margin-top: 1.2rem;
+  text-align: justify;
 }
 @media (min-width: 768px) { .tc__h { font-size: 1.8rem; line-height: 3rem; } }
 
@@ -606,6 +607,7 @@ h1 em, h2 em, h3 em {
   font-weight: 300;
   letter-spacing: .06em;
   line-height: 3.6rem;
+  text-align: justify;
 }
 @media (min-width: 768px) { .rs__q h2 { font-size: 3.6rem; line-height: 4.8rem; } }
 @media (min-width: 992px)  { .rs__q h2 { font-size: 4rem;   line-height: 5.2rem; } }
@@ -826,6 +828,7 @@ h1 em, h2 em, h3 em {
   font-weight: 300;
   letter-spacing: .06em;
   line-height: 2.2rem;
+  text-align: justify;
 }
 .article-card__date {
   color: var(--gray);
@@ -1118,4 +1121,5 @@ h1 em, h2 em, h3 em {
   letter-spacing: .06em;
   line-height: 2.6rem;
   margin: 0;
+  text-align: justify;
 }
