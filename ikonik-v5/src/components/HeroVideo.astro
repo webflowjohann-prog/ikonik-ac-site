@@ -1,140 +1,175 @@
 ---
-// HeroVideo.astro — vidéo plein écran, titre lettre-par-lettre
+// HeroVideo.astro — exact Warwick home-hero: vidéo plein écran, titre centré, overlay léger
 interface Props {
   videoSrc: string;
-  videoSrcMobile?: string;
   titleLines: string[];
   subtitle?: string;
 }
-const { videoSrc, videoSrcMobile, titleLines, subtitle } = Astro.props;
+const { videoSrc, titleLines, subtitle } = Astro.props;
 ---
 
-<section class="hero-video" id="hero">
-  <div class="hero-video__bg">
-    <video
-      autoplay muted playsinline loop
-      class="hero-video__vid"
-      src={videoSrc}
-      aria-hidden="true"
-    ></video>
-    <div class="hero-video__overlay"></div>
+<section class="home-hero">
+  <div class="home-hero__bg">
+    <video autoplay muted playsinline loop src={videoSrc}></video>
   </div>
-
-  <div class="hero-video__inner">
-    <div class="container">
-      <h1 class="hero-video__title" id="heroTitle">
-        {titleLines.map((line) => (
-          <span class="hero-title-line">{line}</span>
-        ))}
-      </h1>
-      {subtitle && <p class="hero-video__sub" id="heroSub">{subtitle}</p>}
-    </div>
+  <div class="home-hero__inner">
+    <h1 class="home-hero__title" id="heroTitle"></h1>
+    {subtitle && (
+      <h2 class="home-hero__sub">
+        <span>{subtitle}</span>
+      </h2>
+    )}
   </div>
-
-  <svg fill="none" viewBox="0 0 12 34" class="scroll-ind" aria-hidden="true">
+  <svg fill="none" viewBox="0 0 12 34" class="home-hero__scroll" aria-hidden="true">
     <path d="M12 0 6 8.195 0 0h12Z" fill="#E9540D"/>
     <path d="m12 25-6 8.195L0 25h12Z" fill="#FFF"/>
   </svg>
 </section>
 
 <style>
-  .hero-video {
-    align-items: center;
-    color: var(--white);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 100vh;
+  /* Exact Warwick .home-hero structure */
+  .home-hero {
+    height: 100vh;
     overflow: hidden;
     position: relative;
     width: 100%;
-    z-index: 3;
   }
-  .hero-video__bg {
+  /* Dark gradient overlay on top */
+  .home-hero::after {
+    background: linear-gradient(180deg, rgba(0,0,0,.4), transparent 50%);
+    content: "";
+    height: 100%;
     inset: 0;
     position: absolute;
-    z-index: 1;
-  }
-  .hero-video__vid {
-    height: 100%;
-    left: 0;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
     width: 100%;
-    animation: scaleIn 3s ease-in-out forwards;
-    transform: scale(1.1);
+    z-index: 4;
   }
-  .hero-video__overlay {
-    background: linear-gradient(180deg, rgba(21,28,36,.6) 0%, rgba(21,28,36,.2) 60%, rgba(21,28,36,.5) 100%);
-    height: 100%;
-    left: 0;
+  /* Video background — oversized for zoom effect */
+  .home-hero__bg {
+    height: 115%;
+    left: 50%;
     position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 1;
-  }
-  .hero-video__inner {
-    display: flex;
-    max-width: 100%;
-    padding: 16rem 0 10rem;
-    position: relative;
+    top: 50%;
+    transform: translate(-50%, -57%);
     width: 100%;
     z-index: 2;
   }
-  @media (min-width: 992px) { .hero-video__inner { padding: 20rem 0 14rem; } }
-
-  .hero-video__title {
+  .home-hero__bg video {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+  /* Centered content */
+  .home-hero__inner {
+    align-items: center;
     display: flex;
     flex-direction: column;
-    gap: .5rem;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+  }
+  /* Title — Warwick exact sizes */
+  .home-hero__title {
+    color: var(--white);
     font-family: var(--sans);
-    font-size: 5.2rem;
+    font-size: 5.6rem;
     font-weight: 600;
     letter-spacing: .06em;
-    line-height: 5.6rem;
+    line-height: 6.8rem;
+    margin: 0 0 .7rem;
+    overflow: hidden;
+    text-align: center;
     text-transform: uppercase;
   }
-  @media (min-width: 768px) { .hero-video__title { font-size: 8rem; line-height: 8.4rem; } }
-  @media (min-width: 992px)  { .hero-video__title { font-size: 10rem; line-height: 10.4rem; } }
-
-  .hero-title-line {
-    display: block;
+  @media (min-width: 768px) { .home-hero__title { font-size: 10.4rem; line-height: 12.8rem; } }
+  @media (min-width: 992px) { .home-hero__title { font-size: 12rem; line-height: 14.4rem; } }
+  /* em = serif italic for emotional words */
+  .home-hero__title :global(em) {
+    font-family: var(--serif);
+    font-size: 6.8rem;
+    font-style: italic;
+    font-weight: 900;
+    letter-spacing: .02em;
+    line-height: 8rem;
+    text-transform: none;
+  }
+  @media (min-width: 768px) { .home-hero__title :global(em) { font-size: 12.8rem; line-height: 15.2rem; } }
+  @media (min-width: 992px) { .home-hero__title :global(em) { font-size: 15rem; line-height: 18rem; } }
+  /* Letter animation */
+  .home-hero__title :global(.letter) {
+    display: inline-block;
+    margin: 0 -10px;
     opacity: 0;
-    transform: translateY(20px);
+    overflow: visible;
+    padding: 0 10px;
+    transform: translateY(10%) translateZ(0);
   }
-  .hero-title-line.visible {
-    animation: moveUpAndFadeIn .8s ease-in-out forwards;
+  .home-hero__title :global(.letters) {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
   }
-
-  .hero-video__sub {
-    font-size: 1.6rem;
-    font-weight: 300;
-    letter-spacing: .08em;
-    line-height: 2.6rem;
-    margin-top: 2rem;
-    max-width: 60rem;
+  /* Subtitle */
+  .home-hero__sub {
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 2.4rem;
+    font-weight: 450;
+    letter-spacing: .06em;
+    line-height: 3.6rem;
+    margin: 0;
+    text-align: center;
+  }
+  @media (min-width: 768px) { .home-hero__sub { font-size: 2.8rem; line-height: 4rem; } }
+  @media (min-width: 992px) { .home-hero__sub { font-size: 3.2rem; line-height: 4.4rem; } }
+  .home-hero__sub span {
+    animation: fadeIn 2s ease-in-out forwards;
+    animation-delay: 2s;
     opacity: 0;
-    text-transform: uppercase;
   }
-  .hero-video__sub.visible {
-    animation: fadeIn 1s ease-in-out forwards;
-    animation-delay: .6s;
+  /* Scroll indicator */
+  .home-hero__scroll {
+    animation: fadeIn 2s ease-in-out forwards;
+    animation-delay: 2s;
+    bottom: 10%;
+    opacity: 0;
+    position: absolute;
+    right: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    z-index: 6;
   }
-  @media (min-width: 768px) { .hero-video__sub { font-size: 1.8rem; } }
+  @media (min-width: 992px) { .home-hero__scroll { right: 4rem; transform: none; } }
 </style>
 
-<script>
-  // Lettre-par-lettre : on anime chaque ligne en cascade
-  const lines = document.querySelectorAll('.hero-title-line');
-  lines.forEach((line, i) => {
-    setTimeout(() => {
-      line.classList.add('visible');
-    }, 200 + i * 200);
-  });
-
-  const sub = document.getElementById('heroSub');
-  if (sub) {
-    setTimeout(() => sub.classList.add('visible'), 800);
+<script define:vars={{ titleLines }}>
+  // Letter-by-letter animation — exact Warwick
+  const title = document.getElementById('heroTitle');
+  if (title) {
+    const words = titleLines.map((line, i) => ({
+      text: line.replace(/\./g, ''),
+      italic: false,
+      delay: 0.6 + i * 0.5
+    }));
+    
+    words.forEach((w, wi) => {
+      const wrap = document.createElement('span');
+      const letters = document.createElement('span');
+      letters.className = 'letters';
+      w.text.split('').forEach((c, ci) => {
+        const s = document.createElement('span');
+        s.className = 'letter';
+        s.textContent = c;
+        s.style.animation = `fadeIn 0.5s ${w.delay + ci * 0.06}s ease-out forwards`;
+        letters.appendChild(s);
+      });
+      wrap.appendChild(letters);
+      title.appendChild(wrap);
+      if (wi < words.length - 1) title.appendChild(document.createTextNode(' '));
+    });
   }
 </script>
