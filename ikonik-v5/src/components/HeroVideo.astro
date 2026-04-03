@@ -1,0 +1,140 @@
+---
+// HeroVideo.astro — vidéo plein écran, titre lettre-par-lettre
+interface Props {
+  videoSrc: string;
+  videoSrcMobile?: string;
+  titleLines: string[];
+  subtitle?: string;
+}
+const { videoSrc, videoSrcMobile, titleLines, subtitle } = Astro.props;
+---
+
+<section class="hero-video" id="hero">
+  <div class="hero-video__bg">
+    <video
+      autoplay muted playsinline loop
+      class="hero-video__vid"
+      src={videoSrc}
+      aria-hidden="true"
+    ></video>
+    <div class="hero-video__overlay"></div>
+  </div>
+
+  <div class="hero-video__inner">
+    <div class="container">
+      <h1 class="hero-video__title" id="heroTitle">
+        {titleLines.map((line) => (
+          <span class="hero-title-line">{line}</span>
+        ))}
+      </h1>
+      {subtitle && <p class="hero-video__sub" id="heroSub">{subtitle}</p>}
+    </div>
+  </div>
+
+  <svg fill="none" viewBox="0 0 12 34" class="scroll-ind" aria-hidden="true">
+    <path d="M12 0 6 8.195 0 0h12Z" fill="#E9540D"/>
+    <path d="m12 25-6 8.195L0 25h12Z" fill="#FFF"/>
+  </svg>
+</section>
+
+<style>
+  .hero-video {
+    align-items: center;
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    z-index: 3;
+  }
+  .hero-video__bg {
+    inset: 0;
+    position: absolute;
+    z-index: 1;
+  }
+  .hero-video__vid {
+    height: 100%;
+    left: 0;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    animation: scaleIn 3s ease-in-out forwards;
+    transform: scale(1.1);
+  }
+  .hero-video__overlay {
+    background: linear-gradient(180deg, rgba(21,28,36,.6) 0%, rgba(21,28,36,.2) 60%, rgba(21,28,36,.5) 100%);
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+  }
+  .hero-video__inner {
+    display: flex;
+    max-width: 100%;
+    padding: 16rem 0 10rem;
+    position: relative;
+    width: 100%;
+    z-index: 2;
+  }
+  @media (min-width: 992px) { .hero-video__inner { padding: 20rem 0 14rem; } }
+
+  .hero-video__title {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    font-family: var(--sans);
+    font-size: 5.2rem;
+    font-weight: 600;
+    letter-spacing: .06em;
+    line-height: 5.6rem;
+    text-transform: uppercase;
+  }
+  @media (min-width: 768px) { .hero-video__title { font-size: 8rem; line-height: 8.4rem; } }
+  @media (min-width: 992px)  { .hero-video__title { font-size: 10rem; line-height: 10.4rem; } }
+
+  .hero-title-line {
+    display: block;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .hero-title-line.visible {
+    animation: moveUpAndFadeIn .8s ease-in-out forwards;
+  }
+
+  .hero-video__sub {
+    font-size: 1.6rem;
+    font-weight: 300;
+    letter-spacing: .08em;
+    line-height: 2.6rem;
+    margin-top: 2rem;
+    max-width: 60rem;
+    opacity: 0;
+    text-transform: uppercase;
+  }
+  .hero-video__sub.visible {
+    animation: fadeIn 1s ease-in-out forwards;
+    animation-delay: .6s;
+  }
+  @media (min-width: 768px) { .hero-video__sub { font-size: 1.8rem; } }
+</style>
+
+<script>
+  // Lettre-par-lettre : on anime chaque ligne en cascade
+  const lines = document.querySelectorAll('.hero-title-line');
+  lines.forEach((line, i) => {
+    setTimeout(() => {
+      line.classList.add('visible');
+    }, 200 + i * 200);
+  });
+
+  const sub = document.getElementById('heroSub');
+  if (sub) {
+    setTimeout(() => sub.classList.add('visible'), 800);
+  }
+</script>

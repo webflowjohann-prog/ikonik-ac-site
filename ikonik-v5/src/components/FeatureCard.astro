@@ -1,0 +1,67 @@
+---
+// FeatureCard.astro — card plein écran image/vidéo + overlay texte
+interface Props {
+  tag?: string;
+  titleParts: string[];       // tableau de lignes du titre
+  description?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  bgImage?: string;
+  bgVideo?: string;
+  theme?: 'light' | 'dark';
+  accentType?: 'dot' | 'chevron';
+}
+const {
+  tag, titleParts, description, ctaLabel, ctaHref,
+  bgImage, bgVideo, theme = 'dark', accentType = 'dot'
+} = Astro.props;
+
+const btnVariant = theme === 'dark' ? 'btn--sec' : 'btn--pri';
+const strokeColor = theme === 'dark' ? '#FFFFFF' : '#222931';
+---
+
+<div
+  class="fc rv"
+  style={bgImage ? `background-image:url(${bgImage});background-size:cover;background-position:center` : ''}
+>
+  {bgVideo && (
+    <video autoplay muted playsinline loop class="fc__video" src={bgVideo}></video>
+  )}
+  <div class="fc__ct">
+    <div class={`cb cb--${theme === 'dark' ? 'd' : 'l'}`} style="max-width:500px">
+      <div class="cb__h">
+        {tag && <span class="cb__tag">{tag}</span>}
+        <h2>
+          {titleParts.map((part, i) => (
+            <span class="h-line">
+              <span set:html={part}></span>
+              {i === titleParts.length - 1 && (
+                accentType === 'dot'
+                  ? <svg fill="none" viewBox="0 0 200 11" width="160" height="11"><path d="M177 5.5H0" stroke={strokeColor}></path><circle cx="194.5" cy="5.5" r="5.5" fill="#E9540D"></circle></svg>
+                  : <svg fill="none" viewBox="0 0 200 12" width="160" height="12"><path d="M179 6H0" stroke={strokeColor}></path><path d="m191 0 8.195 6L191 12V0Z" fill="#E9540D"></path></svg>
+              )}
+            </span>
+          ))}
+        </h2>
+      </div>
+      {description && <div class="cb__t">{description}</div>}
+      {ctaLabel && ctaHref && (
+        <div class="cb__ctas">
+          <a class="button" href={ctaHref}>
+            <span class={`btn ${btnVariant}`}>
+              <span class="bt bt--in">{ctaLabel}</span>
+              <span class="bt bt--out" aria-hidden="true">{ctaLabel}</span>
+            </span>
+          </a>
+        </div>
+      )}
+    </div>
+  </div>
+</div>
+
+<style>
+  .fc__video {
+    height: 100%; left: 0; object-fit: cover;
+    position: absolute; top: 0; width: 100%; z-index: -1;
+  }
+</style>

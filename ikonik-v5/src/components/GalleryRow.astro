@@ -1,0 +1,23 @@
+---
+// GalleryRow.astro — galerie asymétrique 3 items (image + vidéo + image)
+interface GalleryItem {
+  type: 'image' | 'video';
+  src: string;
+  alt?: string;
+}
+interface Props {
+  items: GalleryItem[];
+}
+const { items } = Astro.props;
+---
+
+<div class="gallery-row rv">
+  {items.map((item) => (
+    <div class="gallery-row__item">
+      {item.type === 'video'
+        ? <video autoplay muted playsinline loop src={item.src}></video>
+        : <img src={item.src} alt={item.alt ?? ''} loading="lazy" />
+      }
+    </div>
+  ))}
+</div>

@@ -1,0 +1,247 @@
+---
+// index.astro — Home Page IKONIK V5
+// Structure validée par Johann : Hero + 2 Portes + Quote + TextCards + FeatureCard + Gallery + ReviewSection + SignUp + Articles + Footer
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import HeroVideo from '../components/HeroVideo.astro';
+import ProductGate from '../components/ProductGate.astro';
+import Quote from '../components/Quote.astro';
+import TextCard from '../components/TextCard.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import GalleryRow from '../components/GalleryRow.astro';
+import ReviewSection from '../components/ReviewSection.astro';
+import SignUp from '../components/SignUp.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import Footer from '../components/Footer.astro';
+
+// Assets Warwick CDN (remplacés par assets IKONIK ultérieurement)
+const CDN = 'https://d3aq9k5clbjrty.cloudfront.net';
+---
+
+<Base title="IKONIK — Nous construisons les outils, les contenus et les systèmes qui font vendre.">
+
+  <Header />
+
+  <div class="layout layout--dark">
+    <div class="layout__inner">
+
+      <!-- 1. HERO — vidéo plein écran -->
+      <HeroVideo
+        videoSrc={`${CDN}/videos/Home-Hero-Mobile-v2.mp4`}
+        titleLines={['Créatif.', 'Tech.', 'Résultats.']}
+        subtitle="Nous construisons les outils, les contenus et les systèmes qui font vendre."
+      />
+
+      <!-- CONTENU PRINCIPAL -->
+      <div class="layout__content">
+
+        <!-- 2. LES DEUX PORTES CRÉATIF / TECH -->
+        <div class="section t-light s-pad-lg">
+          <div class="section__inner">
+            <div class="container">
+              <div style="display:flex;flex-direction:column;gap:8rem">
+
+                <!-- Porte 1 : CRÉATIF (vidéo gauche, texte droite) -->
+                <ProductGate
+                  tag="Pôle Créatif"
+                  title="IKONIK Créatif"
+                  description="Films IA, FOOH, animés, art & print, contenu social, UGC IA. Composition Lock© — notre workflow de production propriétaire."
+                  ctaLabel="Découvrir le créatif"
+                  ctaHref="/creatif"
+                  videoSrc={`${CDN}/videos/video-4.mp4`}
+                  accentType="dot"
+                  reversed={false}
+                />
+
+                <!-- Porte 2 : TECH (texte gauche, vidéo droite — inversé) -->
+                <ProductGate
+                  tag="Pôle Tech"
+                  title="IKONIK Tech"
+                  description="Plateformes SaaS, CRM sectoriels, Marketing OS, dashboards IA, automatisation. VibeCoding Studio© — développement assisté IA."
+                  ctaLabel="Découvrir la tech"
+                  ctaHref="/tech"
+                  videoSrc={`${CDN}/videos/video-5.mp4`}
+                  accentType="chevron"
+                  reversed={true}
+                />
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. QUOTE -->
+        <div class="section t-light s-pad-md">
+          <div class="section__inner">
+            <div class="container">
+              <Quote
+                text="Nous ne faisons pas de la communication — nous construisons des systèmes qui génèrent de la valeur."
+                author="Johann — Fondateur IKONIK"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. TEXT CARDS — 3 colonnes -->
+        <div class="section t-light s-pb-lg">
+          <div class="section__inner">
+            <div class="container">
+              <div class="text-cards">
+                <TextCard
+                  label="Composition Lock©"
+                  title="Workflow de production"
+                  description="Un pipeline cinématique propriétaire qui réduit les délais de production de 60% sans compromis sur la qualité."
+                  videoSrc={`${CDN}/videos/video-1.mp4`}
+                />
+                <TextCard
+                  label="VibeCoding Studio©"
+                  title="Dev assisté IA"
+                  description="Développement full-stack augmenté par l'IA. Des plateformes métiers construites 3x plus vite, sans dette technique."
+                  imageSrc={`${CDN}/gallery/gallery-image-4.avif`}
+                />
+                <TextCard
+                  label="Pipeline Cinématique©"
+                  title="Production vidéo IA"
+                  description="Du brief au rendu final — films IA, FOOH, animés. La qualité cinématique au service de la performance commerciale."
+                  imageSrc={`${CDN}/gallery/gallery-image-5.avif`}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. SECTION SOMBRE — Feature card plein écran -->
+        <div class="section t-dark s-pt-lg s-pb-sm">
+          <div class="section__inner">
+            <div class="container">
+              <div style="display:flex;flex-direction:column;gap:8rem">
+
+                <FeatureCard
+                  tag="Notre approche"
+                  titleParts={['Le système', 'IKONIK']}
+                  description="Créatif et tech fusionnés dans un seul studio. Chaque projet est une machine à résultats."
+                  ctaLabel="Notre philosophie"
+                  ctaHref="/studio"
+                  bgImage={`${CDN}/features/feature-1-mobile.avif`}
+                  theme="dark"
+                  accentType="dot"
+                />
+
+                <!-- 6. GALERIE ASYMÉTRIQUE -->
+                <GalleryRow
+                  items={[
+                    { type: 'image', src: `${CDN}/gallery/gallery-image-6.avif`, alt: 'IKONIK Créatif' },
+                    { type: 'video', src: `${CDN}/videos/video-3.mp4` },
+                    { type: 'image', src: `${CDN}/gallery/gallery-image-7.avif`, alt: 'IKONIK Tech' },
+                  ]}
+                />
+
+                <!-- 7. FEATURE CARD 2 -->
+                <FeatureCard
+                  tag="Résultats clients"
+                  titleParts={['Des projets', 'qui vendent']}
+                  description="Films IA, plateformes SaaS, automatisation marketing — mesurés, optimisés, déployés."
+                  ctaLabel="Voir les projets"
+                  ctaHref="/studio"
+                  bgImage={`${CDN}/gallery/gallery-image-8.avif`}
+                  theme="dark"
+                  accentType="chevron"
+                />
+
+                <!-- 8. REVIEW SECTION -->
+                <ReviewSection
+                  media={[
+                    { type: 'image', src: `${CDN}/gallery/gallery-image-19.avif` },
+                    { type: 'video', src: `${CDN}/videos/video-6.mp4` },
+                    { type: 'image', src: `${CDN}/gallery/gallery-image-18.avif` },
+                    { type: 'video', src: `${CDN}/videos/video-1.mp4` },
+                  ]}
+                  quote="Une agence rare qui comprend à la fois l'image et le code. Ils ont transformé notre acquisition en 3 mois."
+                  author="Client confidentiel"
+                  source="E-commerce / Mode"
+                  ctaLabel="Voir les témoignages"
+                  ctaHref="/studio"
+                  theme="dark"
+                />
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9. SIGN UP -->
+        <div class="section s-pad-md">
+          <div class="section__inner">
+            <div class="container">
+              <SignUp />
+            </div>
+          </div>
+        </div>
+
+        <!-- 10. ARTICLES -->
+        <div class="section t-light s-pb-lg">
+          <div class="section__inner">
+            <div class="container">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6rem">
+                <h2 style="font-size:3.6rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Journal</h2>
+                <a class="button" href="/blog">
+                  <span class="btn btn--ter">
+                    <span class="bt bt--in">Tous les articles</span>
+                    <span class="bt bt--out" aria-hidden="true">Tous les articles</span>
+                  </span>
+                </a>
+              </div>
+              <div class="articles-grid">
+                <ArticleCard
+                  tag="Films IA"
+                  title="Comment le FOOH révolutionne la pub outdoor en 2025"
+                  excerpt="Le Fake Out Of Home change les codes de la publicité extérieure. Voici comment nous l'utilisons pour nos clients."
+                  href="/blog/fooh-fake-out-of-home-guide"
+                  imageSrc={`${CDN}/gallery/gallery-image-4.avif`}
+                  date="Mars 2025"
+                />
+                <ArticleCard
+                  tag="Tech"
+                  title="L'IA va-t-elle remplacer les équipes de production vidéo ?"
+                  excerpt="Notre analyse honnête sur l'impact de l'IA générative sur les métiers créatifs et ce que ça change pour les marques."
+                  href="/blog/ia-revolution-production-video"
+                  imageSrc={`${CDN}/gallery/gallery-image-5.avif`}
+                  date="Février 2025"
+                />
+                <ArticleCard
+                  tag="Studio"
+                  title="VibeCoding : développer une plateforme SaaS en 30 jours"
+                  excerpt="Retour d'expérience sur notre méthode de développement assisté IA — pipeline, outils, résultats."
+                  href="/blog"
+                  imageSrc={`${CDN}/gallery/gallery-image-6.avif`}
+                  date="Janvier 2025"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- .layout__content -->
+    </div>
+  </div>
+
+  <Footer />
+
+</Base>
+
+<script>
+  // Scroll reveal — IntersectionObserver
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('rv--vis');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  document.querySelectorAll('.rv').forEach((el) => observer.observe(el));
+</script>

@@ -1,0 +1,63 @@
+---
+// Footer.astro — fond sombre, colonnes de liens, logo roundel
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__main">
+
+      <div>
+        <p class="fp__t">Services</p>
+        <a class="fp__l" href="/creatif">Films IA & FOOH</a>
+        <a class="fp__l" href="/creatif">Animés & Art</a>
+        <a class="fp__l" href="/creatif">Contenu Social & UGC</a>
+        <a class="fp__l" href="/tech">Plateformes SaaS</a>
+        <a class="fp__l" href="/tech">Marketing OS</a>
+        <a class="fp__l" href="/tech">Automatisation</a>
+      </div>
+
+      <div>
+        <p class="fp__t">Studio</p>
+        <a class="fp__l" href="/studio">Notre histoire</a>
+        <a class="fp__l" href="/studio">L'équipe</a>
+        <a class="fp__l" href="/blog">Journal</a>
+        <a class="fp__l" href="/contact">Contact</a>
+      </div>
+
+      <div>
+        <p class="fp__t">Technos</p>
+        <a class="fp__l" href="#">Composition Lock©</a>
+        <a class="fp__l" href="#">VibeCoding Studio©</a>
+        <a class="fp__l" href="#">Pipeline Cinématique©</a>
+      </div>
+
+      <div>
+        <p class="fp__t">Contact</p>
+        <address class="fp__addr">
+          IKONIK<br>
+          Normandie, France
+        </address>
+        <a class="fp__l" href="mailto:hello@ikonik-ac.com" style="margin-top:1.2rem">hello@ikonik-ac.com</a>
+      </div>
+
+    </div>
+
+    <hr class="footer__line" />
+
+    <div class="footer__base">
+      <a href="/" class="footer__logo" aria-label="IKONIK">
+        <svg fill="none" viewBox="0 0 60 60" width="60" height="60">
+          <circle cx="30" cy="30" r="29" fill="#E9540D"/>
+          <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle"
+            font-family="Outfit" font-size="14" font-weight="700" fill="#fff" letter-spacing="1">IK</text>
+        </svg>
+      </a>
+      <div class="footer__info">
+        <p>© {year} IKONIK — Tous droits réservés</p>
+        <p>Normandie, France</p>
+      </div>
+    </div>
+
+  </div>
+</footer>

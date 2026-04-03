@@ -1,0 +1,59 @@
+---
+// ReviewSection.astro — grille 2x2 asymétrique + citation
+interface ReviewMedia {
+  type: 'image' | 'video';
+  src: string;
+  alt?: string;
+}
+interface Props {
+  media: ReviewMedia[];
+  quote: string;
+  author?: string;
+  source?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  theme?: 'light' | 'dark';
+}
+const { media, quote, author, source, ctaLabel, ctaHref, theme = 'light' } = Astro.props;
+const rsClass = theme === 'dark' ? 'rs rs--d' : 'rs';
+const btnVariant = theme === 'dark' ? 'btn--sec' : 'btn--pri';
+---
+
+<div class={`${rsClass} rv`}>
+  <div class="rs__in">
+    <div class="rs__ag">
+      {media.map((item) => (
+        <div class="rs__a">
+          {item.type === 'video'
+            ? <video autoplay muted playsinline loop preload="none" src={item.src}></video>
+            : <img alt={item.alt ?? ''} src={item.src} loading="lazy" />
+          }
+        </div>
+      ))}
+    </div>
+    <div class="rs__q">
+      <h2>{quote}</h2>
+      {(author || source) && (
+        <p class="rs__cap">
+          {author && <span>{author}</span>}
+          {author && source && (
+            <svg fill="none" viewBox="0 0 11 11" width="11" height="11">
+              <circle cx="5.5" cy="5.5" r="5.5" fill={theme === 'dark' ? '#FFF' : 'var(--text)'}/>
+            </svg>
+          )}
+          {source && <span>{source}</span>}
+        </p>
+      )}
+      {ctaLabel && ctaHref && (
+        <div style="margin-top:2rem">
+          <a class="button" href={ctaHref}>
+            <span class={`btn ${btnVariant}`}>
+              <span class="bt bt--in">{ctaLabel}</span>
+              <span class="bt bt--out" aria-hidden="true">{ctaLabel}</span>
+            </span>
+          </a>
+        </div>
+      )}
+    </div>
+  </div>
+</div>

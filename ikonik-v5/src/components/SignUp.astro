@@ -1,0 +1,65 @@
+---
+// SignUp.astro — card blanche arrondie avec formulaire Supabase
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'Restez dans la boucle',
+  description = 'Soyez les premiers informés de nos nouveaux projets, services et offres.'
+} = Astro.props;
+---
+
+<div class="su rv">
+  <div style="max-width:340px;margin-bottom:2rem">
+    <h2 class="su__t">{title}</h2>
+    <p class="su__d">{description}</p>
+  </div>
+  <form class="su__form" id="signupForm" style="display:flex;flex-direction:column;gap:1rem;width:100%;max-width:500px">
+    <div class="su__row">
+      <div class="su__f">
+        <input class="su__inp su__inp--first" type="text" placeholder=" " id="fn" name="firstName" required>
+        <label class="su__lbl" for="fn">Prénom</label>
+      </div>
+      <div class="su__f">
+        <input class="su__inp su__inp--last" type="text" placeholder=" " id="ln" name="lastName" required>
+        <label class="su__lbl" for="ln">Nom</label>
+      </div>
+    </div>
+    <div class="su__f">
+      <input class="su__inp" type="email" placeholder=" " id="em" name="email" required>
+      <label class="su__lbl" for="em">Adresse email</label>
+    </div>
+    <div style="display:flex;justify-content:flex-end;margin-top:1rem">
+      <button class="button" type="submit" id="signupBtn">
+        <span class="btn btn--pri" style="height:5.2rem">
+          <span class="bt bt--in">S'inscrire</span>
+          <span class="bt bt--out" aria-hidden="true">S'inscrire</span>
+        </span>
+      </button>
+    </div>
+    <p id="signupMsg" style="display:none;font-size:1.4rem;color:var(--accent);text-align:right;margin-top:.5rem"></p>
+  </form>
+</div>
+
+<script>
+  import { supabase } from '../lib/supabase';
+
+  const form = document.getElementById('signupForm') as HTMLFormElement | null;
+  const msg  = document.getElementById('signupMsg') as HTMLParagraphElement | null;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const { error } = await supabase.from('newsletter').insert({
+      first_name: data.get('firstName'),
+      last_name:  data.get('lastName'),
+      email:      data.get('email'),
+    });
+    if (msg) {
+      msg.style.display = 'block';
+      msg.textContent = error ? 'Une erreur est survenue. Réessayez.' : 'Merci — vous êtes inscrit !';
+    }
+    if (!error) form.reset();
+  });
+</script>
