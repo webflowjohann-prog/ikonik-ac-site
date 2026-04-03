@@ -70,8 +70,8 @@ Johann a validé cette direction après 3 itérations de prototypes.
 
 1. **HERO** — Vidéo plein écran (comme home Warwick), overlay gradient léger `linear-gradient(180deg, rgba(0,0,0,.4), transparent 50%)`, titre **"*Make* it IKONIK"** lettre-par-lettre ("Make" en serif italic Playfair Display comme "Hear" de Warwick, "it IKONIK" en sans uppercase Outfit 600), sous-titre **"Créer. Construire. Vendre."** en fade-in décalé
 2. **DEUX PORTES CRÉATIF / TECH** — Layout alterné comme la page Headphones de Warwick (APERIO/BRAVURA) :
-   - Porte 1 (Créatif) : vidéo autoplay arrondie à gauche + texte à droite (tagline uppercase, titre + accent-line SVG, description, bouton pill)
-   - Porte 2 (Tech) : texte à gauche + vidéo autoplay arrondie à droite (inversé)
+   - Porte 1 (Créatif) : vidéo autoplay arrondie à gauche + texte à droite (tagline "PÔLE CRÉATIF", titre "IKONIK Créatif" + accent-line SVG dot, description : "Des films qui marquent, des images qui vendent. Production publicitaire, CGI photoréaliste, animation de marque — notre pipeline cinématique transforme chaque idée en contenu qui performe.", bouton "Découvrir le créatif")
+   - Porte 2 (Tech) : texte à gauche + vidéo autoplay arrondie à droite (tagline "PÔLE TECH", titre "IKONIK Tech" + accent-line SVG chevron, description : "Des plateformes qui tournent, des systèmes qui convertissent. On construit vos outils métiers sur mesure — du CRM au SaaS — l'IA intégrée à chaque étape de votre chaîne de valeur.", bouton "Découvrir la tech")
 3. **QUOTE** — Citation centrée avec 2 dots orange au-dessus
 4. **TEXT CARDS** — 3 colonnes (card gradient blanc, heading uppercase, texte, image arrondie en bas)
 5. **SECTION SOMBRE** — Feature card plein écran avec vidéo/image de fond + content-block overlay
