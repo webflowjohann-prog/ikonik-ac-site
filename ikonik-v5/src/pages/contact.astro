@@ -1,5 +1,5 @@
 ---
-// contact.astro — IKONIK OS · Page Contact avec formulaire intelligent
+// contact.astro — IKONIK OS · Page Contact redesign
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -20,7 +20,7 @@ import Footer from '../components/Footer.astro';
                   <em>votre projet</em>
                   <svg fill="none" viewBox="0 0 200 11" width="160" height="11">
                     <path d="M177 5.5H0" stroke="#FFFFFF"></path>
-                    <circle cx="194.5" cy="5.5" r="5.5" fill="#E9540D"></circle>
+                    <circle cx="194.5" cy="5.5" r="5.5" fill="#b8963e"></circle>
                   </svg>
                 </span>
               </div>
@@ -34,67 +34,159 @@ import Footer from '../components/Footer.astro';
           <div class="section__inner">
             <div class="container">
               <div class="contact-layout rv">
+
+                <!-- FORMULAIRE -->
                 <div class="contact-form-wrap">
-                  <span class="cb__tag" style="display:block;margin-bottom:1.6rem">Contact</span>
-                  <h2 class="contact-heading">Décrivez votre <em>projet</em></h2>
-                  <p class="contact-sub">On revient vers vous sous 24h avec une première analyse.</p>
+                  <div class="contact-form-header">
+                    <span class="contact-tag">Contact</span>
+                    <h2 class="contact-heading">Décrivez votre <em>projet</em></h2>
+                    <p class="contact-sub">Remplissez le formulaire ci-dessous. On revient vers vous sous 24h avec une première analyse.</p>
+                  </div>
 
                   <form id="contact-form" class="contact-form">
-                    <div class="form-row">
-                      <div class="form-group"><label for="prenom">Prénom</label><input type="text" id="prenom" name="prenom" required placeholder="Votre prénom" /></div>
-                      <div class="form-group"><label for="nom">Nom</label><input type="text" id="nom" name="nom" required placeholder="Votre nom" /></div>
-                    </div>
-                    <div class="form-row">
-                      <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" required placeholder="vous@entreprise.com" /></div>
-                      <div class="form-group"><label for="telephone">Téléphone</label><input type="tel" id="telephone" name="telephone" placeholder="+33 6 00 00 00 00" /></div>
-                    </div>
-                    <div class="form-group"><label for="entreprise">Entreprise</label><input type="text" id="entreprise" name="entreprise" placeholder="Nom de votre entreprise" /></div>
-
-                    <div class="form-group">
-                      <label>Type de projet</label>
-                      <div class="radio-group">
-                        <label class="radio-card"><input type="radio" name="type_projet" value="creatif" /><span class="radio-card__inner"><span class="radio-card__title">Créatif</span><span class="radio-card__desc">Film, animation, contenu</span></span></label>
-                        <label class="radio-card"><input type="radio" name="type_projet" value="tech" /><span class="radio-card__inner"><span class="radio-card__title">Tech</span><span class="radio-card__desc">Site, SaaS, CRM, IA</span></span></label>
-                        <label class="radio-card"><input type="radio" name="type_projet" value="les-deux" checked /><span class="radio-card__inner"><span class="radio-card__title">Les deux</span><span class="radio-card__desc">Créatif + Tech</span></span></label>
+                    <div class="form-section">
+                      <div class="form-row">
+                        <div class="form-group">
+                          <label for="prenom">Prénom</label>
+                          <input type="text" id="prenom" name="prenom" required placeholder="Votre prénom" />
+                        </div>
+                        <div class="form-group">
+                          <label for="nom">Nom</label>
+                          <input type="text" id="nom" name="nom" required placeholder="Votre nom" />
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group">
+                          <label for="email">Email</label>
+                          <input type="email" id="email" name="email" required placeholder="vous@entreprise.com" />
+                        </div>
+                        <div class="form-group">
+                          <label for="telephone">Téléphone</label>
+                          <input type="tel" id="telephone" name="telephone" placeholder="+33 6 00 00 00 00" />
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="entreprise">Entreprise</label>
+                        <input type="text" id="entreprise" name="entreprise" placeholder="Nom de votre entreprise" />
                       </div>
                     </div>
 
-                    <div class="form-group">
-                      <label>Budget estimé</label>
-                      <div class="radio-group radio-group--budget">
-                        <label class="radio-pill"><input type="radio" name="budget" value="moins-5k" /><span>&lt; 5K€</span></label>
-                        <label class="radio-pill"><input type="radio" name="budget" value="5k-15k" /><span>5K — 15K€</span></label>
-                        <label class="radio-pill"><input type="radio" name="budget" value="15k-50k" /><span>15K — 50K€</span></label>
-                        <label class="radio-pill"><input type="radio" name="budget" value="plus-50k" /><span>50K€+</span></label>
-                        <label class="radio-pill"><input type="radio" name="budget" value="non-precise" checked /><span>À définir</span></label>
+                    <div class="form-divider"></div>
+
+                    <div class="form-section">
+                      <div class="form-group">
+                        <label>Type de projet</label>
+                        <div class="radio-group">
+                          <label class="radio-card">
+                            <input type="radio" name="type_projet" value="creatif" />
+                            <span class="radio-card__inner">
+                              <span class="radio-card__icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                              </span>
+                              <span class="radio-card__title">Créatif</span>
+                              <span class="radio-card__desc">Film, animation, contenu</span>
+                            </span>
+                          </label>
+                          <label class="radio-card">
+                            <input type="radio" name="type_projet" value="tech" />
+                            <span class="radio-card__inner">
+                              <span class="radio-card__icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                              </span>
+                              <span class="radio-card__title">Tech</span>
+                              <span class="radio-card__desc">Site, SaaS, CRM, IA</span>
+                            </span>
+                          </label>
+                          <label class="radio-card">
+                            <input type="radio" name="type_projet" value="les-deux" checked />
+                            <span class="radio-card__inner">
+                              <span class="radio-card__icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                              </span>
+                              <span class="radio-card__title">Les deux</span>
+                              <span class="radio-card__desc">Créatif + Tech</span>
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label>Budget estimé</label>
+                        <div class="radio-group radio-group--budget">
+                          <label class="radio-pill"><input type="radio" name="budget" value="moins-5k" /><span>&lt; 5K€</span></label>
+                          <label class="radio-pill"><input type="radio" name="budget" value="5k-15k" /><span>5 — 15K€</span></label>
+                          <label class="radio-pill"><input type="radio" name="budget" value="15k-50k" /><span>15 — 50K€</span></label>
+                          <label class="radio-pill"><input type="radio" name="budget" value="plus-50k" /><span>50K€+</span></label>
+                          <label class="radio-pill"><input type="radio" name="budget" value="non-precise" checked /><span>À définir</span></label>
+                        </div>
                       </div>
                     </div>
 
-                    <div class="form-group"><label for="message">Votre projet</label><textarea id="message" name="message" rows="5" placeholder="Décrivez votre projet, vos objectifs, votre calendrier..."></textarea></div>
+                    <div class="form-divider"></div>
 
-                    <button type="submit" class="form-submit" id="submit-btn">
-                      <span class="form-submit__text">Envoyer ma demande</span>
-                      <span class="form-submit__loading" style="display:none">Envoi en cours...</span>
-                    </button>
+                    <div class="form-section">
+                      <div class="form-group">
+                        <label for="message">Votre projet</label>
+                        <textarea id="message" name="message" rows="5" placeholder="Décrivez votre projet, vos objectifs, votre calendrier..."></textarea>
+                      </div>
+
+                      <button type="submit" class="form-submit" id="submit-btn">
+                        <span class="form-submit__text">Envoyer ma demande</span>
+                        <span class="form-submit__loading" style="display:none">
+                          <span class="spinner"></span>
+                          Envoi en cours...
+                        </span>
+                        <svg class="form-submit__arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                      </button>
+                    </div>
 
                     <div id="form-success" class="form-success" style="display:none">
-                      <div class="form-success__icon">✓</div>
-                      <h3>Message envoyé</h3>
+                      <div class="form-success__icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                      </div>
+                      <h3>Demande envoyée</h3>
                       <p>Nous revenons vers vous sous 24h avec une première analyse de votre projet.</p>
                     </div>
                     <div id="form-error" class="form-error" style="display:none">
-                      <p>Une erreur est survenue. Contactez-nous à <a href="mailto:contact@ikonik-ac.com">contact@ikonik-ac.com</a></p>
+                      <p>Une erreur est survenue. Contactez-nous directement à <a href="mailto:contact@ikonik-ac.com">contact@ikonik-ac.com</a></p>
                     </div>
                   </form>
                 </div>
 
-                <div class="contact-info">
-                  <div class="info-card rv"><h3 class="info-card__title">IKONIK</h3><p class="info-card__text">Studio créatif & tech</p><p class="info-card__text">Normandie, France</p></div>
-                  <div class="info-card rv"><h3 class="info-card__title">Email</h3><a href="mailto:contact@ikonik-ac.com" class="info-card__link">contact@ikonik-ac.com</a></div>
-                  <div class="info-card rv"><h3 class="info-card__title">Téléphone</h3><a href="tel:+33660657056" class="info-card__link">+33 6 60 65 70 56</a></div>
-                  <div class="info-card rv"><h3 class="info-card__title">Réseaux</h3><div class="info-card__socials"><a href="https://www.instagram.com/ikonik_artisan_creatif/" target="_blank" rel="noopener">Instagram</a><a href="https://www.linkedin.com/in/%E2%9C%85-johann-langenberg-production-video/" target="_blank" rel="noopener">LinkedIn</a></div></div>
-                  <div class="info-card info-card--accent rv"><p class="info-card__quote">"Je prends 2 projets de cette envergure par mois. Le calendrier a une fenêtre."</p><p class="info-card__author">— Johann, Fondateur</p></div>
-                </div>
+                <!-- SIDEBAR INFO -->
+                <aside class="contact-aside">
+                  <div class="aside-block rv">
+                    <span class="aside-label">Studio</span>
+                    <p class="aside-value">IKONIK Artisan Créatif</p>
+                    <p class="aside-detail">Normandie, France</p>
+                  </div>
+                  <div class="aside-block rv">
+                    <span class="aside-label">Email</span>
+                    <a href="mailto:contact@ikonik-ac.com" class="aside-link">contact@ikonik-ac.com</a>
+                  </div>
+                  <div class="aside-block rv">
+                    <span class="aside-label">Téléphone</span>
+                    <a href="tel:+33660657056" class="aside-link">+33 6 60 65 70 56</a>
+                  </div>
+                  <div class="aside-block rv">
+                    <span class="aside-label">Réseaux</span>
+                    <div class="aside-socials">
+                      <a href="https://www.instagram.com/ikonik_artisan_creatif/" target="_blank" rel="noopener" class="social-link">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+                        Instagram
+                      </a>
+                      <a href="https://www.linkedin.com/in/%E2%9C%85-johann-langenberg-production-video/" target="_blank" rel="noopener" class="social-link">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                        LinkedIn
+                      </a>
+                    </div>
+                  </div>
+                  <div class="aside-block aside-block--cta rv">
+                    <p class="aside-cta-text">Vous préférez en discuter de vive voix ?</p>
+                    <a href="/booking" class="aside-cta-btn">Réserver un créneau</a>
+                  </div>
+                </aside>
+
               </div>
             </div>
           </div>
@@ -103,15 +195,15 @@ import Footer from '../components/Footer.astro';
         <!-- NEWSLETTER -->
         <div class="section t-dark s-pad-md">
           <div class="section__inner">
-            <div class="container rv" style="text-align:center;color:#fff;max-width:600px;margin:0 auto">
-              <p style="font-size:1.2rem;font-weight:450;letter-spacing:.16em;text-transform:uppercase;margin-bottom:2rem">Newsletter</p>
-              <h2 style="font-size:2.8rem;font-weight:600;letter-spacing:.06em;margin-bottom:1.6rem">Restez connecté</h2>
-              <p style="color:var(--gray);font-size:1.5rem;margin-bottom:3rem">Recevez nos analyses et retours d'expérience. Pas de spam — du contenu qui compte.</p>
-              <form id="newsletter-form" style="display:flex;gap:1.2rem;max-width:480px;margin:0 auto">
-                <input type="email" id="nl-email" required placeholder="votre@email.com" style="flex:1;padding:1.4rem 2rem;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-size:1.5rem;font-family:var(--sans);outline:none" />
-                <button type="submit" style="padding:1.4rem 2.8rem;border-radius:12px;border:none;background:var(--accent);color:#fff;font-size:1.4rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;white-space:nowrap">S'inscrire</button>
+            <div class="container rv newsletter-section">
+              <span class="nl-tag">Newsletter</span>
+              <h2 class="nl-heading">Restez <em>connecté</em></h2>
+              <p class="nl-sub">Tendances IA, production vidéo, tech. Pas de spam, que de la valeur.</p>
+              <form id="newsletter-form" class="nl-form">
+                <input type="email" id="nl-email" required placeholder="votre@email.com" class="nl-input" />
+                <button type="submit" class="nl-btn">S'inscrire</button>
               </form>
-              <p id="nl-success" style="display:none;color:#4BB2F2;margin-top:1.6rem;font-size:1.4rem">Inscription confirmée. Bienvenue.</p>
+              <p id="nl-success" class="nl-success">Inscription confirmée. Bienvenue.</p>
             </div>
           </div>
         </div>
@@ -122,56 +214,176 @@ import Footer from '../components/Footer.astro';
   <Footer />
 </Base>
 
-<style>
-.contact-layout{display:grid;gap:6rem;grid-template-columns:1fr}
-@media(min-width:992px){.contact-layout{grid-template-columns:1.4fr 1fr;gap:8rem}}
-.contact-heading{font-family:var(--sans);font-size:3.2rem;font-weight:600;letter-spacing:.04em;line-height:4rem;margin:0 0 1.2rem}
-.contact-heading em{font-family:var(--serif);font-style:italic;font-weight:400}
-.contact-sub{color:var(--gray);font-size:1.5rem;line-height:2.4rem;margin:0 0 4rem}
-.form-row{display:grid;gap:2rem;grid-template-columns:1fr 1fr}
-@media(max-width:600px){.form-row{grid-template-columns:1fr}}
-.form-group{margin-bottom:2.4rem}
-.form-group label{color:var(--text);display:block;font-size:1.2rem;font-weight:500;letter-spacing:.1em;margin-bottom:.8rem;text-transform:uppercase}
-.form-group input,.form-group textarea{background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.1);border-radius:12px;color:var(--text);font-family:var(--sans);font-size:1.5rem;padding:1.4rem 2rem;transition:border-color .3s,box-shadow .3s;width:100%}
-.form-group input:focus,.form-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(233,84,13,.1);outline:none}
-.form-group textarea{resize:vertical}
-.radio-group{display:grid;gap:1.2rem;grid-template-columns:repeat(3,1fr)}
-@media(max-width:600px){.radio-group{grid-template-columns:1fr}}
-.radio-card{cursor:pointer}
-.radio-card input{display:none}
-.radio-card__inner{background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.1);border-radius:12px;display:block;padding:1.6rem;text-align:center;transition:border-color .3s,background .3s}
-.radio-card input:checked+.radio-card__inner{background:rgba(233,84,13,.06);border-color:var(--accent)}
-.radio-card__title{color:var(--text);display:block;font-size:1.5rem;font-weight:600;margin-bottom:.4rem}
-.radio-card__desc{color:var(--gray);display:block;font-size:1.2rem}
-.radio-group--budget{display:flex;flex-wrap:wrap;gap:.8rem;grid-template-columns:unset}
-.radio-pill{cursor:pointer}
-.radio-pill input{display:none}
-.radio-pill span{background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.1);border-radius:40px;color:var(--gray);display:inline-block;font-size:1.3rem;padding:.8rem 1.8rem;transition:all .3s}
-.radio-pill input:checked+span{background:rgba(233,84,13,.06);border-color:var(--accent);color:var(--accent);font-weight:500}
-.form-submit{background:var(--accent);border:none;border-radius:12px;color:#fff;cursor:pointer;font-family:var(--sans);font-size:1.5rem;font-weight:600;letter-spacing:.08em;margin-top:1rem;padding:1.6rem 4rem;text-transform:uppercase;transition:background .3s,transform .2s;width:100%}
-.form-submit:hover{background:#d04a0b}
-.form-submit:active{transform:scale(.98)}
-.form-submit:disabled{cursor:wait;opacity:.7}
-.form-success{background:rgba(75,178,242,.08);border:1px solid rgba(75,178,242,.3);border-radius:16px;margin-top:2rem;padding:3rem;text-align:center}
-.form-success__icon{background:#4BB2F2;border-radius:50%;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:2rem;height:48px;margin-bottom:1.6rem;width:48px}
-.form-success h3{font-size:2rem;margin:0 0 .8rem}
-.form-success p{color:var(--gray);font-size:1.4rem;margin:0}
-.form-error{background:rgba(233,84,13,.08);border:1px solid rgba(233,84,13,.3);border-radius:12px;margin-top:2rem;padding:1.6rem 2rem}
-.form-error p{color:var(--accent);font-size:1.4rem;margin:0}
-.form-error a{color:var(--accent)}
-.contact-info{display:flex;flex-direction:column;gap:2.4rem}
-.info-card{border-bottom:1px solid rgba(0,0,0,.06);padding-bottom:2.4rem}
-.info-card:last-child{border-bottom:none}
-.info-card__title{color:var(--text);font-size:1.2rem;font-weight:500;letter-spacing:.14em;margin:0 0 .8rem;text-transform:uppercase}
-.info-card__text{color:var(--gray);font-size:1.5rem;line-height:2.4rem;margin:0}
-.info-card__link{color:var(--text);font-size:1.5rem;text-decoration:none;transition:color .3s}
-.info-card__link:hover{color:var(--accent)}
-.info-card__socials{display:flex;gap:2rem}
-.info-card__socials a{color:var(--text);font-size:1.5rem;text-decoration:none;transition:color .3s}
-.info-card__socials a:hover{color:var(--accent)}
-.info-card--accent{background:rgba(0,0,0,.03);border:none;border-radius:16px;padding:3rem}
-.info-card__quote{color:var(--text);font-family:var(--serif);font-size:1.8rem;font-style:italic;line-height:2.8rem;margin:0 0 1.2rem}
-.info-card__author{color:var(--accent);font-size:1.2rem;font-weight:500;letter-spacing:.1em;margin:0;text-transform:uppercase}
+<style is:global>
+/* ═══════════════════════════════════════════════
+   CONTACT PAGE — Gold palette, refined UX
+   ═══════════════════════════════════════════════ */
+
+/* ── Gold tokens ────────────────────────────── */
+.contact-layout { --gold: #b8963e; --gold-light: #d4b062; --gold-bg: rgba(184,150,62,.06); --gold-border: rgba(184,150,62,.35); --gold-glow: rgba(184,150,62,.12); }
+
+/* ── Layout ─────────────────────────────────── */
+.contact-layout { display: grid; gap: 4rem; grid-template-columns: 1fr; max-width: 1100px; margin: 0 auto; }
+@media(min-width:992px) { .contact-layout { grid-template-columns: 1.5fr 1fr; gap: 8rem; align-items: start; } }
+
+/* ── Form header ────────────────────────────── */
+.contact-tag { display: inline-block; font-size: 1.1rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+.contact-heading { font-family: var(--sans); font-size: 3.2rem; font-weight: 600; letter-spacing: .02em; line-height: 1.2; margin: 0 0 1.2rem; color: var(--text); }
+.contact-heading em { font-family: var(--serif); font-style: italic; font-weight: 400; }
+.contact-sub { color: var(--gray); font-size: 1.5rem; line-height: 2.4rem; margin: 0 0 3.6rem; }
+
+/* ── Form sections & divider ────────────────── */
+.form-section { padding: .4rem 0; }
+.form-divider { height: 1px; background: rgba(0,0,0,.06); margin: .8rem 0; }
+.form-row { display: grid; gap: 2rem; grid-template-columns: 1fr 1fr; }
+@media(max-width:600px) { .form-row { grid-template-columns: 1fr; } }
+.form-group { margin-bottom: 2.4rem; }
+.form-group label { color: var(--text); display: block; font-size: 1.15rem; font-weight: 500; letter-spacing: .08em; margin-bottom: .8rem; text-transform: uppercase; }
+
+/* ── Inputs ──────────────────────────────────── */
+.contact-form input,
+.contact-form textarea {
+  background: #fff; border: 1px solid rgba(0,0,0,.1); border-radius: 10px;
+  color: var(--text); font-family: var(--sans); font-size: 1.5rem;
+  padding: 1.4rem 1.8rem; transition: border-color .3s, box-shadow .3s; width: 100%;
+}
+.contact-form input:focus,
+.contact-form textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); outline: none; }
+.contact-form input::placeholder,
+.contact-form textarea::placeholder { color: rgba(0,0,0,.28); }
+.contact-form textarea { resize: vertical; min-height: 12rem; }
+
+/* ── Radio cards (type de projet) ───────────── */
+.radio-group { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); }
+@media(max-width:600px) { .radio-group { grid-template-columns: 1fr; } }
+.radio-card { cursor: pointer; }
+.radio-card input { display: none; }
+.radio-card__inner {
+  background: #fff; border: 1px solid rgba(0,0,0,.08); border-radius: 12px;
+  display: flex; flex-direction: column; align-items: center; gap: .4rem;
+  padding: 2rem 1.2rem; text-align: center;
+  transition: border-color .3s, background .3s, box-shadow .3s;
+}
+.radio-card__inner:hover { border-color: rgba(0,0,0,.18); }
+.radio-card input:checked + .radio-card__inner {
+  background: var(--gold-bg); border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold);
+}
+.radio-card__icon { color: var(--gray); transition: color .3s; margin-bottom: .2rem; }
+.radio-card input:checked + .radio-card__inner .radio-card__icon { color: var(--gold); }
+.radio-card__title { color: var(--text); display: block; font-size: 1.4rem; font-weight: 600; }
+.radio-card__desc { color: var(--gray); display: block; font-size: 1.15rem; }
+
+/* ── Radio pills (budget) ───────────────────── */
+.radio-group--budget { display: flex; flex-wrap: wrap; gap: .8rem; grid-template-columns: unset; }
+.radio-pill { cursor: pointer; }
+.radio-pill input { display: none; }
+.radio-pill span {
+  background: #fff; border: 1px solid rgba(0,0,0,.1); border-radius: 40px;
+  color: var(--gray); display: inline-block; font-size: 1.3rem;
+  padding: .8rem 1.8rem; transition: all .3s; user-select: none;
+}
+.radio-pill span:hover { border-color: rgba(0,0,0,.2); }
+.radio-pill input:checked + span {
+  background: var(--gold-bg); border-color: var(--gold); color: var(--gold-light); font-weight: 600;
+}
+
+/* ── Submit button ──────────────────────────── */
+.form-submit {
+  align-items: center; background: var(--gold); border: none; border-radius: 10px;
+  color: #fff; cursor: pointer; display: inline-flex; gap: 1rem;
+  font-family: var(--sans); font-size: 1.5rem; font-weight: 600;
+  justify-content: center; letter-spacing: .06em; margin-top: .8rem;
+  padding: 1.6rem 3.6rem; text-transform: uppercase;
+  transition: background .3s, transform .15s; width: 100%;
+}
+.form-submit:hover { background: #a6862f; }
+.form-submit:active { transform: scale(.98); }
+.form-submit:disabled { cursor: wait; opacity: .65; }
+.form-submit__arrow { transition: transform .3s; }
+.form-submit:hover .form-submit__arrow { transform: translateX(4px); }
+.spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .6s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Success / Error ────────────────────────── */
+.form-success {
+  background: var(--gold-bg); border: 1px solid var(--gold-border); border-radius: 16px;
+  margin-top: 2rem; padding: 3.6rem; text-align: center;
+}
+.form-success__icon {
+  background: var(--gold); border-radius: 50%; color: #fff; display: inline-flex;
+  align-items: center; justify-content: center; height: 48px; width: 48px; margin-bottom: 1.6rem;
+}
+.form-success h3 { font-size: 2rem; margin: 0 0 .8rem; color: var(--text); }
+.form-success p { color: var(--gray); font-size: 1.4rem; margin: 0; }
+.form-error {
+  background: rgba(200,50,30,.06); border: 1px solid rgba(200,50,30,.2);
+  border-radius: 12px; margin-top: 2rem; padding: 1.6rem 2rem;
+}
+.form-error p { color: #a03020; font-size: 1.4rem; margin: 0; }
+.form-error a { color: #a03020; font-weight: 600; }
+
+/* ── Sidebar ────────────────────────────────── */
+.contact-aside { display: flex; flex-direction: column; gap: 0; }
+@media(min-width:992px) { .contact-aside { position: sticky; top: 12rem; } }
+.aside-block { padding: 2rem 0; border-bottom: 1px solid rgba(0,0,0,.06); }
+.aside-block:first-child { padding-top: 0; }
+.aside-block:last-child { border-bottom: none; }
+.aside-label {
+  display: block; font-size: 1.05rem; font-weight: 500; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--gray); margin-bottom: .6rem;
+}
+.aside-value { color: var(--text); font-size: 1.6rem; font-weight: 500; margin: 0; line-height: 1.4; }
+.aside-detail { color: var(--gray); font-size: 1.4rem; margin: .2rem 0 0; }
+.aside-link {
+  color: var(--text); font-size: 1.5rem; text-decoration: none;
+  transition: color .3s; display: inline-block;
+}
+.aside-link:hover { color: var(--gold); }
+.aside-socials { display: flex; gap: 2rem; }
+.social-link {
+  display: inline-flex; align-items: center; gap: .6rem;
+  color: var(--text); font-size: 1.4rem; text-decoration: none; transition: color .3s;
+}
+.social-link:hover { color: var(--gold); }
+
+/* ── CTA block (booking) ────────────────────── */
+.aside-block--cta {
+  background: rgba(0,0,0,.025); border: none; border-radius: 14px;
+  padding: 2.4rem; margin-top: .8rem; text-align: center;
+}
+.aside-cta-text { color: var(--gray); font-size: 1.35rem; margin: 0 0 1.4rem; line-height: 1.5; }
+.aside-cta-btn {
+  display: inline-block; padding: 1rem 2.4rem; border: 1px solid var(--gold);
+  border-radius: 8px; color: var(--gold); font-size: 1.3rem; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase; text-decoration: none;
+  transition: background .3s, color .3s;
+}
+.aside-cta-btn:hover { background: var(--gold); color: #fff; }
+
+/* ── Newsletter section ─────────────────────── */
+.newsletter-section { text-align: center; max-width: 560px; margin: 0 auto; color: #fff; }
+.nl-tag { display: block; font-size: 1.1rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #d4b062; margin-bottom: 1.6rem; }
+.nl-heading { font-family: var(--sans); font-size: 2.8rem; font-weight: 600; letter-spacing: .04em; margin-bottom: 1.2rem; color: #fff; }
+.nl-heading em { font-family: var(--serif); font-style: italic; font-weight: 400; }
+.nl-sub { color: rgba(255,255,255,.5); font-size: 1.4rem; margin-bottom: 2.4rem; line-height: 1.6; }
+.nl-form { display: flex; gap: 1rem; max-width: 440px; margin: 0 auto; }
+.nl-input {
+  flex: 1; padding: 1.3rem 1.8rem; border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06);
+  color: #fff; font-size: 1.5rem; font-family: var(--sans); outline: none;
+  transition: border-color .3s;
+}
+.nl-input:focus { border-color: rgba(212,176,98,.5); }
+.nl-input::placeholder { color: rgba(255,255,255,.3); }
+.nl-btn {
+  padding: 1.3rem 2.6rem; border-radius: 10px; border: none;
+  background: #b8963e; color: #fff; font-size: 1.3rem; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase; cursor: pointer;
+  white-space: nowrap; transition: background .3s;
+}
+.nl-btn:hover { background: #a6862f; }
+.nl-success { display: none; color: #d4b062; margin-top: 1.6rem; font-size: 1.4rem; }
+@media(max-width:500px) { .nl-form { flex-direction: column; } }
 </style>
 
 <script is:inline>
@@ -184,30 +396,44 @@ document.getElementById('contact-form').addEventListener('submit',async function
   var b=document.getElementById('submit-btn');
   b.disabled=true;
   b.querySelector('.form-submit__text').style.display='none';
-  b.querySelector('.form-submit__loading').style.display='inline';
+  b.querySelector('.form-submit__arrow').style.display='none';
+  b.querySelector('.form-submit__loading').style.display='inline-flex';
+  var data={
+    prenom:document.getElementById('prenom').value,
+    nom:document.getElementById('nom').value,
+    email:document.getElementById('email').value,
+    telephone:document.getElementById('telephone').value||null,
+    entreprise:document.getElementById('entreprise').value||null,
+    type_projet:document.querySelector('input[name="type_projet"]:checked')?.value||'les-deux',
+    budget:document.querySelector('input[name="budget"]:checked')?.value||'non-precise',
+    message:document.getElementById('message').value||null,
+    source:'site-contact',page_origine:window.location.pathname
+  };
   try{
-    var r=await fetch(SB+'/rest/v1/contacts',{method:'POST',headers:H,body:JSON.stringify({
-      prenom:document.getElementById('prenom').value,
-      nom:document.getElementById('nom').value,
-      email:document.getElementById('email').value,
-      telephone:document.getElementById('telephone').value||null,
-      entreprise:document.getElementById('entreprise').value||null,
-      type_projet:document.querySelector('input[name="type_projet"]:checked')?.value||'les-deux',
-      budget:document.querySelector('input[name="budget"]:checked')?.value||'non-precise',
-      message:document.getElementById('message').value||null,
-      source:'site-contact',page_origine:window.location.pathname
-    })});
-    if(r.ok){document.getElementById('contact-form').style.display='none';document.getElementById('form-success').style.display='block';
-        if(window.ikonikTrack)window.ikonikTrack('lead_created',{description:'Contact form submitted',type_projet:data.type_projet,budget:data.budget,email_hash:btoa(data.email)})}
-    else throw new Error()
-  }catch(err){document.getElementById('form-error').style.display='block';b.disabled=false;b.querySelector('.form-submit__text').style.display='inline';b.querySelector('.form-submit__loading').style.display='none'}
+    var r=await fetch(SB+'/rest/v1/contacts',{method:'POST',headers:H,body:JSON.stringify(data)});
+    if(r.ok){
+      document.getElementById('contact-form').style.display='none';
+      document.getElementById('form-success').style.display='block';
+      if(window.ikonikTrack)window.ikonikTrack('lead_created',{description:'Contact form submitted',type_projet:data.type_projet,budget:data.budget,email_hash:btoa(data.email)});
+    } else throw new Error();
+  }catch(err){
+    document.getElementById('form-error').style.display='block';
+    b.disabled=false;
+    b.querySelector('.form-submit__text').style.display='inline';
+    b.querySelector('.form-submit__arrow').style.display='inline';
+    b.querySelector('.form-submit__loading').style.display='none';
+  }
 });
 
 document.getElementById('newsletter-form').addEventListener('submit',async function(e){
   e.preventDefault();
-  try{await fetch(SB+'/rest/v1/newsletter_subscribers',{method:'POST',headers:H,body:JSON.stringify({email:document.getElementById('nl-email').value,source:'site-newsletter'})});
-  document.getElementById('newsletter-form').style.display='none';document.getElementById('nl-success').style.display='block';
-  if(window.ikonikTrack)window.ikonikTrack('newsletter_signup',{description:'Newsletter subscription',email_hash:btoa(email)})}catch(err){}
+  var email=document.getElementById('nl-email').value;
+  try{
+    await fetch(SB+'/rest/v1/newsletter_subscribers',{method:'POST',headers:H,body:JSON.stringify({email:email,source:'site-newsletter'})});
+    document.getElementById('newsletter-form').style.display='none';
+    document.getElementById('nl-success').style.display='block';
+    if(window.ikonikTrack)window.ikonikTrack('newsletter_signup',{description:'Newsletter subscription',email_hash:btoa(email)});
+  }catch(err){}
 });
 </script>
 <script>
