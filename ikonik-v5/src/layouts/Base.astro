@@ -1,6 +1,7 @@
 ---
 // Base.astro — layout principal IKONIK V5
 import '../styles/global.css';
+import IkoAssistant from '../components/IkoAssistant.astro';
 
 interface Props {
   title?: string;
@@ -53,6 +54,9 @@ const {
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <slot />
+
+  <!-- IKO — Assistant IA IKONIK -->
+  <IkoAssistant />
 
   <!-- IKONIK OS — Cookie Consent Banner (RGPD) -->
   <div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;padding:2rem;background:rgba(21,28,36,.96);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.08)">
