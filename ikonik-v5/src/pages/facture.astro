@@ -86,58 +86,15 @@ select.form__inp{appearance:auto}
 .btn--secondary{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text)}
 .btn:disabled{opacity:.4;cursor:wait}
 
-/* PREVIEW (Print & Screen) */
+/* PREVIEW */
 .preview{display:none}
-.preview-screen{display:block;background:#fff;border-radius:12px;margin-top:2rem;overflow:hidden}
-.preview-screen .preview-inner{padding:0}
-
-/* Preview design — matches email template */
-.preview-inner{font-family:Georgia,'Times New Roman',serif;color:#1a1a1a;background:#fff}
-.pv-header{background:linear-gradient(135deg,#e8e0f0 0%,#d5c8e8 40%,#c9b8e0 100%);padding:40px 48px 32px;display:flex;justify-content:space-between;align-items:flex-start}
-.pv-logo{display:flex;flex-direction:column}
-.pv-logo-name{font-family:Georgia,serif;font-size:36px;font-weight:700;color:#1a1a1a;letter-spacing:2px;line-height:1}
-.pv-logo-tagline{font-family:Georgia,serif;font-size:13px;font-style:italic;color:#b8963e;margin-top:4px;letter-spacing:1px}
-.pv-doc-type{text-align:right}
-.pv-doc-type h2{font-family:Georgia,serif;font-size:28px;font-weight:400;color:#1a1a1a;margin:0}
-.pv-doc-type .pv-doc-num{font-size:13px;color:#666;margin-top:6px}
-.pv-doc-type .pv-doc-date{font-size:13px;color:#666;margin-top:2px}
-
-.pv-body{padding:40px 48px}
-.pv-parties{display:flex;justify-content:space-between;gap:40px;margin-bottom:40px}
-.pv-from,.pv-to{flex:1}
-.pv-section-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#b8963e;margin-bottom:10px;font-family:system-ui,sans-serif}
-.pv-from p,.pv-to p{font-size:13px;line-height:2;color:#333;margin:0}
-.pv-from strong,.pv-to strong{font-size:14px;color:#1a1a1a}
-.pv-to{background:#faf8f5;border-radius:8px;padding:20px 24px}
-
-.pv-table{width:100%;border-collapse:collapse;margin-bottom:32px}
-.pv-table thead{border-bottom:2px solid #b8963e}
-.pv-table th{font-family:system-ui,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#b8963e;padding:12px 16px;text-align:left}
-.pv-table th.num{text-align:right}
-.pv-table td{font-size:13px;padding:14px 16px;border-bottom:1px solid #f0ede8;color:#333}
-.pv-table td.num{text-align:right;font-variant-numeric:tabular-nums}
-.pv-table tbody tr:last-child td{border-bottom:none}
-
-.pv-totals-wrap{display:flex;justify-content:flex-end;margin-bottom:40px}
-.pv-totals{width:280px}
-.pv-totals-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13px;color:#555}
-.pv-totals-row.big{border-top:2px solid #b8963e;padding-top:12px;margin-top:4px;font-size:18px;font-weight:700;color:#1a1a1a}
-
-.pv-conditions{background:#faf8f5;border-radius:8px;padding:20px 24px;margin-bottom:40px;font-size:12px;color:#666;line-height:1.8}
-.pv-conditions strong{color:#333;display:block;margin-bottom:4px;font-size:11px;letter-spacing:1px;text-transform:uppercase;font-family:system-ui,sans-serif}
-
-.pv-footer{border-top:1px solid #e8e4de;padding-top:20px;text-align:center;font-size:10px;color:#999;line-height:2}
-.pv-footer .pv-footer-brand{font-family:Georgia,serif;font-size:14px;color:#b8963e;font-weight:700;letter-spacing:1px;margin-bottom:6px}
-
 @media print{
   body{background:#fff!important;color:#000!important}
-  .auth,.app__header,.tabs,.form,.app__nav,.preview-actions{display:none!important}
+  .auth,.app__header,.tabs,.form,.app__nav{display:none!important}
   .app{display:block!important;padding:0!important;max-width:none!important}
-  .preview,.preview-screen{display:block!important}
-  .preview-screen{border-radius:0;margin:0}
-  .pv-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .pv-to,.pv-conditions{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  thead{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .preview{display:block!important}
+  [onclick="window.print()"],[onclick="closePreview()"]{display:none!important}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
 }
 </style>
 </head>
@@ -329,70 +286,79 @@ function previewInvoice(){
     var price=parseFloat(l.querySelector('.l-price').value)||0;
     if(desc)lines.push({description:desc,quantite:qty,prix_unitaire:price,total:qty*price});
   });
-  var sousTotal=lines.reduce(function(a,l){return a+l.total},0);
-  var tvaPct=parseFloat(document.getElementById('inv-tva').value)||0;
-  var tva=sousTotal*(tvaPct/100);
-  var total=sousTotal+tva;
+  var st=lines.reduce(function(a,l){return a+l.total},0);
+  var tp=parseFloat(document.getElementById('inv-tva').value)||0;
+  var tv=st*(tp/100);var tt=st+tv;
   var type=document.getElementById('inv-type').value;
-  var typeLabel=type==='devis'?'Devis':type==='avoir'?'Avoir':'Facture';
-  var echeance=document.getElementById('inv-echeance').value;
-  var dateEmission=document.getElementById('inv-date').value;
-  var dateObj=new Date(dateEmission);
-  var dateEch=new Date(dateObj);dateEch.setDate(dateEch.getDate()+parseInt(echeance));
-  var dateFr=function(d){return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'})};
+  var tl=type==='devis'?'Devis':type==='avoir'?'Avoir':'Facture';
+  var ej=document.getElementById('inv-echeance').value;
+  var de=document.getElementById('inv-date').value;
+  var d1=new Date(de);var d2=new Date(d1);d2.setDate(d2.getDate()+parseInt(ej));
+  var df=function(d){return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'})};
+  var cn=document.getElementById('inv-client').value||'Client';
+  var ca=document.getElementById('inv-adresse').value||'';
+  var ce=document.getElementById('inv-email').value||'';
+  var cs=document.getElementById('inv-siret').value;
 
-  var html='<div class="preview-inner">';
+  var linesHtml='';
+  lines.forEach(function(l){
+    linesHtml+='<tr><td style="padding:14px 16px;border-bottom:1px solid #f0ede8;color:#333;font-size:13px">'+l.description+'</td><td style="padding:14px 16px;border-bottom:1px solid #f0ede8;color:#333;font-size:13px;text-align:right">'+l.quantite+'</td><td style="padding:14px 16px;border-bottom:1px solid #f0ede8;color:#333;font-size:13px;text-align:right">'+fmt(l.prix_unitaire)+'</td><td style="padding:14px 16px;border-bottom:1px solid #f0ede8;color:#333;font-size:13px;text-align:right;font-weight:500">'+fmt(l.total)+'</td></tr>';
+  });
 
-  // HEADER gradient lavande + logo typo
-  html+='<div class="pv-header">';
-  html+='<div class="pv-logo"><span class="pv-logo-name">IKONIK</span><span class="pv-logo-tagline">Artisan Cr\u00e9atif</span></div>';
-  html+='<div class="pv-doc-type"><h2>'+typeLabel+'</h2><div class="pv-doc-num">N\u00b0 \u00e0 g\u00e9n\u00e9rer</div><div class="pv-doc-date">'+dateFr(dateObj)+'</div></div>';
-  html+='</div>';
+  var h='<div style="background:#fff;border-radius:12px;overflow:hidden;font-family:Georgia,Times New Roman,serif;color:#1a1a1a;max-width:800px;margin:2rem auto">';
+
+  // HEADER
+  h+='<div style="background:linear-gradient(135deg,#e8e0f0 0%,#d5c8e8 40%,#c9b8e0 100%);padding:40px 48px 32px;display:flex;justify-content:space-between;align-items:flex-start">';
+  h+='<div><div style="font-size:36px;font-weight:700;color:#1a1a1a;letter-spacing:2px;line-height:1">IKONIK</div><div style="font-size:13px;font-style:italic;color:#b8963e;margin-top:4px;letter-spacing:1px">Artisan Cr\u00e9atif</div></div>';
+  h+='<div style="text-align:right"><div style="font-size:28px;font-weight:400;color:#1a1a1a">'+tl+'</div><div style="font-size:13px;color:#666;margin-top:6px">N\u00b0 (auto)</div><div style="font-size:13px;color:#666;margin-top:2px">'+df(d1)+'</div></div>';
+  h+='</div>';
 
   // BODY
-  html+='<div class="pv-body">';
+  h+='<div style="padding:40px 48px">';
 
-  // Parties
-  html+='<div class="pv-parties">';
-  html+='<div class="pv-from"><div class="pv-section-label">\u00c9metteur</div><p><strong>IKONIK</strong><br>Johann Langenberg<br>Micro-entreprise<br>Normandie, France<br>contact@ikonik-ac.com<br>+33 6 60 65 70 56<br>SIRET : \u00c0 compl\u00e9ter</p></div>';
-  html+='<div class="pv-to"><div class="pv-section-label">Client</div><p><strong>'+(document.getElementById('inv-client').value||'Client')+'</strong><br>'+(document.getElementById('inv-adresse').value||'')+'<br>'+(document.getElementById('inv-email').value||'')+(document.getElementById('inv-siret').value?'<br>SIRET : '+document.getElementById('inv-siret').value:'')+'</p></div>';
-  html+='</div>';
+  // PARTIES
+  h+='<div style="display:flex;justify-content:space-between;gap:40px;margin-bottom:40px">';
+  h+='<div style="flex:1"><div style="font-family:system-ui,sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#b8963e;margin-bottom:10px">\u00c9metteur</div><div style="font-size:13px;line-height:2;color:#333"><strong style="font-size:14px;color:#1a1a1a">IKONIK</strong><br>Johann Langenberg<br>Micro-entreprise<br>Normandie, France<br>contact@ikonik-ac.com<br>+33 6 60 65 70 56</div></div>';
+  h+='<div style="flex:1;background:#faf8f5;border-radius:8px;padding:20px 24px"><div style="font-family:system-ui,sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#b8963e;margin-bottom:10px">Client</div><div style="font-size:13px;line-height:2;color:#333"><strong style="font-size:14px;color:#1a1a1a">'+cn+'</strong><br>'+ca+'<br>'+ce+(cs?'<br>SIRET : '+cs:'')+'</div></div>';
+  h+='</div>';
 
-  // Table
-  html+='<table class="pv-table"><thead><tr><th>Description</th><th class="num">Quantit\u00e9</th><th class="num">Prix unit. HT</th><th class="num">Total HT</th></tr></thead><tbody>';
-  lines.forEach(function(l){html+='<tr><td>'+l.description+'</td><td class="num">'+l.quantite+'</td><td class="num">'+fmt(l.prix_unitaire)+'</td><td class="num">'+fmt(l.total)+'</td></tr>'});
-  html+='</tbody></table>';
+  // TABLE
+  h+='<table style="width:100%;border-collapse:collapse;margin-bottom:32px">';
+  h+='<thead><tr style="border-bottom:2px solid #b8963e"><th style="font-family:system-ui,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#b8963e;padding:12px 16px;text-align:left">Description</th><th style="font-family:system-ui,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#b8963e;padding:12px 16px;text-align:right">Quantit\u00e9</th><th style="font-family:system-ui,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#b8963e;padding:12px 16px;text-align:right">Prix unit. HT</th><th style="font-family:system-ui,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#b8963e;padding:12px 16px;text-align:right">Total HT</th></tr></thead>';
+  h+='<tbody>'+linesHtml+'</tbody></table>';
 
-  // Totals
-  html+='<div class="pv-totals-wrap"><div class="pv-totals">';
-  html+='<div class="pv-totals-row"><span>Sous-total HT</span><span>'+fmt(sousTotal)+'</span></div>';
-  html+='<div class="pv-totals-row"><span>TVA ('+tvaPct+'%)</span><span>'+fmt(tva)+'</span></div>';
-  html+='<div class="pv-totals-row big"><span>Total TTC</span><span>'+fmt(total)+'</span></div>';
-  html+='</div></div>';
+  // TOTALS
+  h+='<div style="display:flex;justify-content:flex-end;margin-bottom:40px"><div style="width:280px">';
+  h+='<div style="display:flex;justify-content:space-between;padding:8px 0;font-size:13px;color:#555"><span>Sous-total HT</span><span>'+fmt(st)+'</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:8px 0;font-size:13px;color:#555"><span>TVA ('+tp+'%)</span><span>'+fmt(tv)+'</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:12px 0 8px;font-size:18px;font-weight:700;color:#1a1a1a;border-top:2px solid #b8963e;margin-top:4px"><span>Total TTC</span><span>'+fmt(tt)+'</span></div>';
+  h+='</div></div>';
 
-  // Conditions
-  html+='<div class="pv-conditions"><strong>Conditions</strong>';
-  html+='Paiement \u00e0 '+echeance+' jours \u2014 \u00c9ch\u00e9ance : '+dateFr(dateEch)+'<br>';
-  html+='Virement bancaire ou ch\u00e8que \u00e0 l\u2019ordre de Johann Langenberg<br>';
-  html+='En cas de retard de paiement, une p\u00e9nalit\u00e9 de 3x le taux d\u2019int\u00e9r\u00eat l\u00e9gal sera appliqu\u00e9e, ainsi qu\u2019une indemnit\u00e9 forfaitaire de 40\u20ac pour frais de recouvrement.</div>';
+  // CONDITIONS
+  h+='<div style="background:#faf8f5;border-radius:8px;padding:20px 24px;margin-bottom:40px;font-size:12px;color:#666;line-height:1.8"><strong style="display:block;margin-bottom:4px;font-size:11px;letter-spacing:1px;text-transform:uppercase;font-family:system-ui,sans-serif;color:#333">Conditions</strong>';
+  h+='Paiement \u00e0 '+ej+' jours. \u00c9ch\u00e9ance : '+df(d2)+'<br>';
+  h+='Virement bancaire ou ch\u00e8que \u00e0 l\u2019ordre de Johann Langenberg<br>';
+  h+='P\u00e9nalit\u00e9 de retard : 3x le taux d\u2019int\u00e9r\u00eat l\u00e9gal + indemnit\u00e9 forfaitaire de 40\u20ac.</div>';
 
-  // Footer
-  html+='<div class="pv-footer"><div class="pv-footer-brand">IKONIK</div>';
-  html+='Johann Langenberg \u2014 Micro-entreprise \u2014 SIRET : \u00c0 compl\u00e9ter<br>';
-  html+='contact@ikonik-ac.com \u2014 +33 6 60 65 70 56 \u2014 ikonik-ac.com</div>';
+  // FOOTER
+  h+='<div style="border-top:1px solid #e8e4de;padding-top:20px;text-align:center;font-size:10px;color:#999;line-height:2">';
+  h+='<div style="font-size:14px;color:#b8963e;font-weight:700;letter-spacing:1px;margin-bottom:6px">IKONIK</div>';
+  h+='Johann Langenberg \u2014 Micro-entreprise<br>contact@ikonik-ac.com \u2014 +33 6 60 65 70 56 \u2014 ikonik-ac.com</div>';
 
-  html+='</div></div>';
+  h+='</div></div>';
 
-  // Show on-screen preview with actions
-  var previewEl=document.getElementById('preview');
-  previewEl.className='preview-screen';
-  previewEl.innerHTML=html+'<div class="preview-actions" style="padding:20px;display:flex;gap:12px;justify-content:center;background:var(--bg)"><button class="btn btn--primary" onclick="window.print()">Imprimer / PDF</button><button class="btn btn--secondary" onclick="closePreview()">Fermer l\u2019aper\u00e7u</button></div>';
-  previewEl.scrollIntoView({behavior:'smooth'});
+  // Buttons
+  h+='<div style="padding:20px;display:flex;gap:12px;justify-content:center;background:#0D1117"><button class="btn btn--primary" onclick="window.print()">Imprimer / PDF</button><button class="btn btn--secondary" onclick="closePreview()">Fermer</button></div>';
+
+  var el=document.getElementById('preview');
+  el.style.display='block';
+  el.innerHTML=h;
+  el.scrollIntoView({behavior:'smooth'});
 }
 
 function closePreview(){
   var p=document.getElementById('preview');
-  p.className='preview';
+  p.style.display='none';
   p.innerHTML='';
 }
 
