@@ -26,7 +26,7 @@ const btnVariant = theme === 'dark' ? 'btn--sec' : 'btn--pri';
         <div class="rs__a">
           {item.type === 'video'
             ? <video autoplay muted playsinline loop preload="none" src={item.src}></video>
-            : <img alt={item.alt ?? ''} src={item.src} loading="lazy" />
+            : <img src={item.src} alt={item.alt || 'Avis client IKONIK'} loading="lazy" />
           }
         </div>
       ))}
