@@ -1215,3 +1215,121 @@ h1 em, h2 em, h3 em {
   background: var(--accent);
   transform: translate(-50%, -50%) scale(1.1);
 }
+
+/* ── CASE STUDIES ──────────────────────────────────────────── */
+.case-study {
+  display: grid;
+  gap: 4rem;
+  grid-template-columns: 1fr;
+  margin-bottom: 10rem;
+  align-items: center;
+}
+.case-study:last-child { margin-bottom: 0; }
+@media (min-width: 992px) {
+  .case-study { grid-template-columns: 1fr 1fr; gap: 6rem; }
+}
+
+.case-study--reverse .case-study__visuals { order: 1; }
+@media (min-width: 992px) {
+  .case-study--reverse .case-study__visuals { order: 2; }
+  .case-study--reverse .case-study__content { order: 1; }
+}
+
+.case-study__grid {
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: 1fr 1fr;
+}
+.case-study__placeholder {
+  align-items: flex-end;
+  aspect-ratio: 4/3;
+  border-radius: 16px;
+  color: rgba(255,255,255,0.7);
+  display: flex;
+  overflow: hidden;
+  padding: 1.6rem;
+  position: relative;
+  transition: transform .4s var(--ease);
+}
+.case-study__placeholder span {
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.case-study__placeholder:hover {
+  transform: scale(1.03);
+}
+
+.case-study__cat {
+  color: var(--accent);
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  margin-bottom: 1.6rem;
+  text-transform: uppercase;
+}
+.case-study__title {
+  font-family: var(--sans);
+  font-size: 2.8rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  line-height: 3.6rem;
+  margin: 0 0 2.4rem;
+}
+.case-study__title em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+}
+.case-study__desc {
+  color: var(--gray);
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: .04em;
+  line-height: 2.6rem;
+  margin: 0 0 1.6rem;
+}
+
+.case-study__kpis {
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  border-top: 1px solid rgba(0,0,0,.08);
+  display: flex;
+  gap: 3rem;
+  margin: 3rem 0;
+  padding: 2.4rem 0;
+}
+.case-study__kpi {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+.case-study__kpi-value {
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  line-height: 1;
+}
+.case-study__kpi-label {
+  color: var(--gray);
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.case-study__arch {
+  background: rgba(0,0,0,.03);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  color: var(--gray);
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: .04em;
+  line-height: 2.2rem;
+  margin: 0;
+  padding: 1.6rem 2rem;
+}
