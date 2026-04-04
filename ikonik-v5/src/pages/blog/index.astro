@@ -63,6 +63,7 @@ const sorted = posts.sort((a, b) =>
                     title={post.data.title}
                     excerpt={post.data.excerpt}
                     href={`/blog/${post.data.slug}`}
+                    color={post.data.color}
                     date={new Date(post.data.date).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}
                   />
                 ))}

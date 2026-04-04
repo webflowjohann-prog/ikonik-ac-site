@@ -9,7 +9,7 @@ const blog = defineCollection({
     category:     z.string(),
     tags:         z.array(z.string()).default([]),
     excerpt:      z.string(),
-    image_prompt: z.string().optional(),
+    color:        z.string().optional(),
     author:       z.string().default('IKONIK'),
     date:         z.string(),
     read_time:    z.number(),

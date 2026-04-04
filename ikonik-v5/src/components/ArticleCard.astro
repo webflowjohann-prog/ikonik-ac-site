@@ -1,26 +1,50 @@
 ---
-// ArticleCard.astro — card article avec image hover
+// ArticleCard.astro — card article avec bandeau couleur par catégorie
 interface Props {
   tag?: string;
   title: string;
   excerpt?: string;
   href: string;
   imageSrc?: string;
+  color?: string;
   date?: string;
 }
-const { tag, title, excerpt, href, imageSrc, date } = Astro.props;
+const { tag, title, excerpt, href, imageSrc, color, date } = Astro.props;
 ---
 
 <a class="article-card rv" href={href}>
+  {color && !imageSrc && (
+    <div class="article-card__color" style={`background-color:${color}`}>
+      {tag && <span class="article-card__color-tag">{tag}</span>}
+    </div>
+  )}
   {imageSrc && (
     <div class="article-card__img">
       <img src={imageSrc} alt={title} loading="lazy" />
     </div>
   )}
   <div class="article-card__body">
-    {tag && <span class="article-card__tag">{tag}</span>}
+    {tag && !color && <span class="article-card__tag">{tag}</span>}
     <h3 class="article-card__title">{title}</h3>
     {excerpt && <p class="article-card__excerpt">{excerpt}</p>}
     {date && <p class="article-card__date">{date}</p>}
   </div>
 </a>
+
+<style>
+  .article-card__color {
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    align-items: flex-end;
+    height: 180px;
+    padding: 2rem;
+    position: relative;
+  }
+  .article-card__color-tag {
+    color: rgba(255,255,255,0.85);
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+</style>
