@@ -54,9 +54,9 @@ const { videoSrc, subtitle } = Astro.props;
     position: relative;
     width: 100%;
   }
-  /* Overlay gradient — haut uniquement pour lisibilité du texte */
+  /* Overlay gradient — bleu marine IKONIK, bottom hidden by layout__content z-index */
   .home-hero::after {
-    background: linear-gradient(180deg, rgba(21,28,36,.5) 0%, rgba(21,28,36,.2) 40%, transparent 70%);
+    background: linear-gradient(180deg, rgba(21,28,36,.5) 0%, transparent 50%, rgba(21,28,36,.3) 100%);
     content: "";
     inset: 0;
     position: absolute;

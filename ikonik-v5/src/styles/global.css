@@ -209,7 +209,7 @@ h1 em, h2 em, h3 em {
   margin-top: -60px;
   overflow-x: clip;
   position: relative;
-  z-index: 3;
+  z-index: 10;
 }
 
 .section         { position: relative; }
