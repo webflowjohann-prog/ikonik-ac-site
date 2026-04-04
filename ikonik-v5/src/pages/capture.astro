@@ -1,83 +1,107 @@
 ---
-// capture.astro — IKONIK OS · Capture Mobile
-// Ouvre la caméra, compresse l'image, stocke dans Supabase
+// capture.astro — IKONIK OS · Capture Mobile + Brain
 import Base from '../layouts/Base.astro';
 ---
-
-<Base title="Capture — IKONIK OS" description="Capture et stockage de documents">
+<Base title="Capture — IKONIK OS" description="Capture, veille et boîte à idées">
 <div class="cap">
   <div class="cap__header">
     <img src="/images/LOGO_IKONIK_blanc.webp" alt="IKONIK" class="cap__logo" />
-    <span class="cap__badge">OS</span>
+    <span class="cap__badge">BRAIN</span>
   </div>
 
-  <!-- STEP 1: Choose category -->
-  <div id="step-1" class="cap__step">
-    <h1 class="cap__title">Capturer un document</h1>
-    <p class="cap__sub">Choisissez la catégorie puis prenez la photo.</p>
+  <!-- MODE SELECTOR -->
+  <div id="mode-select" class="cap__step">
+    <h1 class="cap__title">IKONIK Brain</h1>
+    <p class="cap__sub">Capture, veille, inspiration — tout au même endroit.</p>
+    <div class="cap__modes">
+      <button class="cap__mode" data-mode="photo">
+        <span class="cap__mode-icon">📷</span>
+        <span class="cap__mode-name">Photo</span>
+        <span class="cap__mode-desc">Facture, document, référence visuelle</span>
+      </button>
+      <button class="cap__mode" data-mode="link">
+        <span class="cap__mode-icon">🔗</span>
+        <span class="cap__mode-name">Lien web</span>
+        <span class="cap__mode-desc">Sauvegarder une page pour la R&D</span>
+      </button>
+      <button class="cap__mode" data-mode="idea">
+        <span class="cap__mode-icon">💡</span>
+        <span class="cap__mode-name">Idée</span>
+        <span class="cap__mode-desc">Note rapide, inspiration, boîte à idées</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- PHOTO MODE -->
+  <div id="mode-photo" class="cap__step" style="display:none">
+    <div class="cap__back" onclick="backToModes()">← Retour</div>
+    <h2 class="cap__section-title">📷 Capture photo</h2>
     <div class="cap__cats">
-      <button class="cap__cat" data-cat="comptabilite" data-sub="facture-fournisseur">
-        <span class="cap__cat-icon">📄</span>
-        <span class="cap__cat-name">Facture fournisseur</span>
-      </button>
-      <button class="cap__cat" data-cat="comptabilite" data-sub="note-frais">
-        <span class="cap__cat-icon">🧾</span>
-        <span class="cap__cat-name">Note de frais</span>
-      </button>
-      <button class="cap__cat" data-cat="projets" data-sub="reference-visuelle">
-        <span class="cap__cat-icon">📸</span>
-        <span class="cap__cat-name">Référence projet</span>
-      </button>
-      <button class="cap__cat" data-cat="projets" data-sub="contrat">
-        <span class="cap__cat-icon">📝</span>
-        <span class="cap__cat-name">Contrat / Brief</span>
-      </button>
-      <button class="cap__cat" data-cat="perso" data-sub="document-admin">
-        <span class="cap__cat-icon">🪪</span>
-        <span class="cap__cat-name">Document admin</span>
-      </button>
-      <button class="cap__cat" data-cat="perso" data-sub="autre">
-        <span class="cap__cat-icon">📎</span>
-        <span class="cap__cat-name">Autre</span>
-      </button>
+      <button class="cap__cat" data-cat="comptabilite" data-sub="facture-fournisseur"><span>📄</span><span>Facture</span></button>
+      <button class="cap__cat" data-cat="comptabilite" data-sub="note-frais"><span>🧾</span><span>Note de frais</span></button>
+      <button class="cap__cat" data-cat="projets" data-sub="reference-visuelle"><span>📸</span><span>Référence</span></button>
+      <button class="cap__cat" data-cat="projets" data-sub="contrat"><span>📝</span><span>Contrat</span></button>
+      <button class="cap__cat" data-cat="perso" data-sub="document-admin"><span>🪪</span><span>Admin</span></button>
+      <button class="cap__cat" data-cat="perso" data-sub="autre"><span>📎</span><span>Autre</span></button>
     </div>
-  </div>
-
-  <!-- STEP 2: Camera + preview -->
-  <div id="step-2" class="cap__step" style="display:none">
-    <div class="cap__back" id="back-btn">← Retour</div>
-    <div id="selected-cat" class="cap__selected"></div>
-    
-    <label class="cap__camera-btn" id="camera-label">
-      <input type="file" accept="image/*" capture="environment" id="camera-input" style="display:none" />
-      <span class="cap__camera-icon">📷</span>
-      <span>Prendre la photo</span>
-    </label>
-
-    <label class="cap__camera-btn cap__camera-btn--secondary" id="gallery-label">
-      <input type="file" accept="image/*" id="gallery-input" style="display:none" />
-      <span class="cap__camera-icon">🖼️</span>
-      <span>Choisir depuis la galerie</span>
-    </label>
-
-    <div id="preview-zone" style="display:none">
-      <canvas id="preview-canvas" class="cap__preview"></canvas>
-      <div class="cap__meta">
-        <input type="text" id="doc-title" placeholder="Titre du document (optionnel)" class="cap__input" />
-        <p id="file-info" class="cap__info"></p>
+    <div id="photo-capture" style="display:none">
+      <div id="photo-cat-label" class="cap__selected"></div>
+      <label class="cap__camera-btn"><input type="file" accept="image/*" capture="environment" id="camera-input" style="display:none" /><span>📷 Prendre la photo</span></label>
+      <label class="cap__camera-btn cap__camera-btn--sec"><input type="file" accept="image/*" id="gallery-input" style="display:none" /><span>🖼️ Depuis la galerie</span></label>
+      <div id="photo-preview" style="display:none">
+        <canvas id="preview-canvas" class="cap__preview"></canvas>
+        <input type="text" id="photo-title" placeholder="Titre (optionnel)" class="cap__input" />
+        <p id="photo-info" class="cap__info"></p>
+        <button class="cap__upload" id="photo-upload">Envoyer</button>
       </div>
-      <button id="upload-btn" class="cap__upload">
-        <span id="upload-text">Envoyer</span>
-        <span id="upload-loading" style="display:none">Compression & envoi...</span>
-      </button>
     </div>
   </div>
 
-  <!-- STEP 3: Success -->
-  <div id="step-3" class="cap__step" style="display:none">
+  <!-- LINK MODE -->
+  <div id="mode-link" class="cap__step" style="display:none">
+    <div class="cap__back" onclick="backToModes()">← Retour</div>
+    <h2 class="cap__section-title">🔗 Sauvegarder un lien</h2>
+    <input type="url" id="link-url" placeholder="https://..." class="cap__input cap__input--lg" />
+    <div class="cap__tags-row">
+      <button class="cap__tag-btn" data-tag="ia">IA</button>
+      <button class="cap__tag-btn" data-tag="video">Vidéo</button>
+      <button class="cap__tag-btn" data-tag="design">Design</button>
+      <button class="cap__tag-btn" data-tag="tech">Tech</button>
+      <button class="cap__tag-btn" data-tag="business">Business</button>
+      <button class="cap__tag-btn" data-tag="creatif">Créatif</button>
+    </div>
+    <input type="text" id="link-title" placeholder="Titre ou note (optionnel)" class="cap__input" />
+    <textarea id="link-note" placeholder="Pourquoi c'est intéressant ? En quoi ça peut améliorer un projet ?" rows="3" class="cap__input"></textarea>
+    <button class="cap__upload" id="link-save">Sauvegarder le lien</button>
+  </div>
+
+  <!-- IDEA MODE -->
+  <div id="mode-idea" class="cap__step" style="display:none">
+    <div class="cap__back" onclick="backToModes()">← Retour</div>
+    <h2 class="cap__section-title">💡 Nouvelle idée</h2>
+    <input type="text" id="idea-title" placeholder="L'idée en une phrase" class="cap__input cap__input--lg" required />
+    <textarea id="idea-content" placeholder="Détails, contexte, application possible..." rows="5" class="cap__input"></textarea>
+    <div class="cap__tags-row">
+      <button class="cap__tag-btn" data-tag="ia">IA</button>
+      <button class="cap__tag-btn" data-tag="video">Vidéo</button>
+      <button class="cap__tag-btn" data-tag="design">Design</button>
+      <button class="cap__tag-btn" data-tag="tech">Tech</button>
+      <button class="cap__tag-btn" data-tag="business">Business</button>
+      <button class="cap__tag-btn" data-tag="creatif">Créatif</button>
+    </div>
+    <div class="cap__priority">
+      <label><input type="radio" name="priority" value="0" checked /> Normal</label>
+      <label><input type="radio" name="priority" value="1" /> Important</label>
+      <label><input type="radio" name="priority" value="2" /> Urgent</label>
+    </div>
+    <button class="cap__upload" id="idea-save">Enregistrer l'idée</button>
+  </div>
+
+  <!-- SUCCESS -->
+  <div id="success" class="cap__step" style="display:none">
     <div class="cap__success">
       <div class="cap__success-icon">✓</div>
-      <h2>Document enregistré</h2>
+      <h2 id="success-title">Enregistré</h2>
       <p id="success-detail"></p>
       <button class="cap__upload" onclick="location.reload()">Nouvelle capture</button>
     </div>
@@ -92,21 +116,31 @@ import Base from '../layouts/Base.astro';
 .cap__badge{background:#E9540D;border-radius:6px;font-size:1rem;font-weight:700;letter-spacing:.08em;padding:.3rem .8rem}
 .cap__title{font-size:2.4rem;font-weight:600;margin-bottom:.8rem}
 .cap__sub{color:rgba(255,255,255,.5);font-size:1.4rem;margin-bottom:3rem}
-.cap__cats{display:grid;gap:1.2rem;grid-template-columns:1fr 1fr}
-.cap__cat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:.8rem;padding:2rem 1rem;transition:all .3s;font-family:inherit;font-size:1.3rem}
-.cap__cat:active{background:rgba(233,84,13,.15);border-color:#E9540D;transform:scale(.97)}
-.cap__cat-icon{font-size:2.4rem}
-.cap__cat-name{font-weight:500;text-align:center}
+.cap__section-title{font-size:2rem;font-weight:600;margin-bottom:2rem}
+.cap__modes{display:flex;flex-direction:column;gap:1.2rem}
+.cap__mode{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;color:#fff;cursor:pointer;display:flex;align-items:center;gap:1.6rem;padding:2rem;transition:all .3s;font-family:inherit;text-align:left}
+.cap__mode:active{background:rgba(233,84,13,.15);border-color:#E9540D;transform:scale(.97)}
+.cap__mode-icon{font-size:2.4rem;flex-shrink:0}
+.cap__mode-name{display:block;font-size:1.6rem;font-weight:600}
+.cap__mode-desc{display:block;font-size:1.2rem;color:rgba(255,255,255,.5);margin-top:.2rem}
+.cap__cats{display:grid;gap:1rem;grid-template-columns:repeat(3,1fr);margin-bottom:2rem}
+.cap__cat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:.6rem;padding:1.4rem .8rem;transition:all .3s;font-family:inherit;font-size:1.2rem}
+.cap__cat:active{background:rgba(233,84,13,.15);border-color:#E9540D}
 .cap__back{color:rgba(255,255,255,.5);cursor:pointer;font-size:1.3rem;margin-bottom:2rem}
 .cap__selected{background:rgba(233,84,13,.15);border:1px solid rgba(233,84,13,.3);border-radius:12px;color:#E9540D;font-size:1.3rem;font-weight:500;margin-bottom:2rem;padding:1rem 1.6rem;text-align:center}
-.cap__camera-btn{align-items:center;background:rgba(255,255,255,.06);border:2px dashed rgba(255,255,255,.15);border-radius:16px;color:#fff;cursor:pointer;display:flex;font-family:inherit;font-size:1.5rem;font-weight:500;gap:1rem;justify-content:center;margin-bottom:1.2rem;padding:2.4rem;transition:all .3s;width:100%}
-.cap__camera-btn:active{background:rgba(233,84,13,.1);border-color:#E9540D}
-.cap__camera-btn--secondary{background:transparent;border-style:solid;border-width:1px;font-size:1.3rem;padding:1.6rem}
-.cap__camera-icon{font-size:2rem}
-.cap__preview{border-radius:16px;display:block;margin:2rem 0;max-height:50vh;width:100%;object-fit:contain}
-.cap__input{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:12px;color:#fff;font-family:inherit;font-size:1.4rem;margin-bottom:1rem;padding:1.2rem 1.6rem;width:100%}
+.cap__camera-btn{align-items:center;background:rgba(255,255,255,.06);border:2px dashed rgba(255,255,255,.15);border-radius:16px;color:#fff;cursor:pointer;display:flex;font-family:inherit;font-size:1.4rem;font-weight:500;gap:1rem;justify-content:center;margin-bottom:1rem;padding:2rem;width:100%}
+.cap__camera-btn--sec{border-style:solid;border-width:1px;font-size:1.2rem;padding:1.4rem}
+.cap__preview{border-radius:16px;display:block;margin:2rem 0;max-height:40vh;width:100%;object-fit:contain}
+.cap__input{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:12px;color:#fff;font-family:inherit;font-size:1.4rem;margin-bottom:1.2rem;padding:1.2rem 1.6rem;width:100%;resize:vertical}
+.cap__input--lg{font-size:1.6rem;padding:1.6rem 2rem}
 .cap__input:focus{border-color:#E9540D;outline:none}
-.cap__info{color:rgba(255,255,255,.4);font-size:1.2rem;margin-bottom:2rem}
+.cap__info{color:rgba(255,255,255,.4);font-size:1.2rem;margin-bottom:1.6rem}
+.cap__tags-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.6rem}
+.cap__tag-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:20px;color:rgba(255,255,255,.6);cursor:pointer;font-family:inherit;font-size:1.2rem;padding:.6rem 1.4rem;transition:all .3s}
+.cap__tag-btn.active{background:rgba(233,84,13,.15);border-color:#E9540D;color:#E9540D;font-weight:500}
+.cap__priority{display:flex;gap:1.6rem;margin-bottom:2rem}
+.cap__priority label{color:rgba(255,255,255,.6);font-size:1.3rem;display:flex;align-items:center;gap:.6rem;cursor:pointer}
+.cap__priority input{accent-color:#E9540D}
 .cap__upload{background:#E9540D;border:none;border-radius:12px;color:#fff;cursor:pointer;font-family:inherit;font-size:1.5rem;font-weight:600;letter-spacing:.06em;padding:1.6rem;text-transform:uppercase;transition:all .3s;width:100%}
 .cap__upload:active{transform:scale(.97)}
 .cap__upload:disabled{opacity:.5;cursor:wait}
@@ -114,130 +148,117 @@ import Base from '../layouts/Base.astro';
 .cap__success-icon{background:#4BB2F2;border-radius:50%;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:3rem;height:72px;margin-bottom:2rem;width:72px}
 .cap__success h2{font-size:2rem;margin-bottom:1rem}
 .cap__success p{color:rgba(255,255,255,.5);font-size:1.4rem;margin-bottom:3rem}
-.cap__meta{margin-bottom:1rem}
 </style>
 
 <script is:inline>
 var SB='https://kgfolduvslsytbekbjvf.supabase.co';
 var SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZm9sZHV2c2xzeXRiZWtianZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDU3MDcsImV4cCI6MjA5MDcyMTcwN30.4jZ9fMfSinEc1CE3s6LuR4q_WNeisEdtyBM5XQ2uMJg';
+var H={'Content-Type':'application/json','apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'return=minimal'};
 
-var selectedCat='';
-var selectedSub='';
-var compressedBlob=null;
-var originalSize=0;
+var selectedCat='',selectedSub='',compressedBlob=null,originalSize=0;
+var selectedTags=[];
 
-// STEP 1 — Category selection
-document.querySelectorAll('.cap__cat').forEach(function(btn){
-  btn.addEventListener('click',function(){
-    selectedCat=this.dataset.cat;
-    selectedSub=this.dataset.sub;
-    document.getElementById('step-1').style.display='none';
-    document.getElementById('step-2').style.display='block';
-    document.getElementById('selected-cat').textContent=this.querySelector('.cap__cat-icon').textContent+' '+this.querySelector('.cap__cat-name').textContent;
-  });
+function show(id){document.querySelectorAll('.cap__step').forEach(function(s){s.style.display='none'});document.getElementById(id).style.display='block'}
+function backToModes(){show('mode-select')}
+
+// MODE SELECTION
+document.querySelectorAll('.cap__mode').forEach(function(b){
+  b.addEventListener('click',function(){show('mode-'+this.dataset.mode)})
 });
 
-document.getElementById('back-btn').addEventListener('click',function(){
-  document.getElementById('step-2').style.display='none';
-  document.getElementById('step-1').style.display='block';
-  document.getElementById('preview-zone').style.display='none';
+// TAG TOGGLING
+document.querySelectorAll('.cap__tag-btn').forEach(function(b){
+  b.addEventListener('click',function(){
+    this.classList.toggle('active');
+    var tag=this.dataset.tag;
+    var idx=selectedTags.indexOf(tag);
+    if(idx>-1)selectedTags.splice(idx,1);else selectedTags.push(tag);
+  })
 });
 
-// STEP 2 — Camera/Gallery capture + compression
-function handleFile(file){
-  if(!file)return;
-  originalSize=file.size;
+// === PHOTO MODE ===
+document.querySelectorAll('.cap__cat').forEach(function(b){
+  b.addEventListener('click',function(){
+    selectedCat=this.dataset.cat;selectedSub=this.dataset.sub;
+    document.getElementById('photo-capture').style.display='block';
+    document.getElementById('photo-cat-label').textContent=this.textContent.trim();
+    this.parentElement.style.display='none';
+  })
+});
+
+function handleFile(f){
+  if(!f)return;originalSize=f.size;
   var reader=new FileReader();
   reader.onload=function(e){
     var img=new Image();
     img.onload=function(){
-      // Compress: max 1200px wide, WebP quality 0.75
-      var MAX=1200;
-      var w=img.width,h=img.height;
+      var MAX=1200,w=img.width,h=img.height;
       if(w>MAX){h=Math.round(h*(MAX/w));w=MAX}
       if(h>MAX){w=Math.round(w*(MAX/h));h=MAX}
-      var canvas=document.getElementById('preview-canvas');
-      canvas.width=w;canvas.height=h;
-      var ctx=canvas.getContext('2d');
-      ctx.drawImage(img,0,0,w,h);
-      // Try WebP, fallback to JPEG
-      canvas.toBlob(function(blob){
+      var c=document.getElementById('preview-canvas');c.width=w;c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      c.toBlob(function(blob){
         compressedBlob=blob;
-        document.getElementById('preview-zone').style.display='block';
-        var ratio=Math.round((1-blob.size/originalSize)*100);
-        document.getElementById('file-info').textContent=
-          'Original: '+(originalSize/1024/1024).toFixed(1)+'MB → Compressé: '+(blob.size/1024).toFixed(0)+'KB (−'+ratio+'%) · '+w+'×'+h+'px';
+        document.getElementById('photo-preview').style.display='block';
+        document.getElementById('photo-info').textContent='Original: '+(originalSize/1024/1024).toFixed(1)+'MB → '+(blob.size/1024).toFixed(0)+'KB (−'+Math.round((1-blob.size/originalSize)*100)+'%)';
       },'image/webp',0.75);
-    };
-    img.src=e.target.result;
-  };
-  reader.readAsDataURL(file);
+    };img.src=e.target.result;
+  };reader.readAsDataURL(f);
 }
-
 document.getElementById('camera-input').addEventListener('change',function(e){handleFile(e.target.files[0])});
 document.getElementById('gallery-input').addEventListener('change',function(e){handleFile(e.target.files[0])});
 
-// STEP 3 — Upload
-document.getElementById('upload-btn').addEventListener('click',async function(){
-  if(!compressedBlob)return;
-  var btn=this;
-  btn.disabled=true;
-  document.getElementById('upload-text').style.display='none';
-  document.getElementById('upload-loading').style.display='inline';
-
-  var ts=Date.now();
-  var fileName='capture/'+new Date().toISOString().slice(0,7)+'/'+ts+'.webp';
-  var title=document.getElementById('doc-title').value||selectedSub+' — '+new Date().toLocaleDateString('fr-FR');
-
+document.getElementById('photo-upload').addEventListener('click',async function(){
+  if(!compressedBlob)return;this.disabled=true;this.textContent='Envoi...';
+  var ts=Date.now(),fn='capture/'+new Date().toISOString().slice(0,7)+'/'+ts+'.webp';
+  var title=document.getElementById('photo-title').value||selectedSub+' — '+new Date().toLocaleDateString('fr-FR');
   try{
-    // Upload to Supabase Storage
-    var uploadRes=await fetch(SB+'/storage/v1/object/'+selectedCat+'/'+fileName,{
-      method:'POST',
-      headers:{
-        'apikey':SK,
-        'Authorization':'Bearer '+SK,
-        'Content-Type':'image/webp',
-        'x-upsert':'true'
-      },
-      body:compressedBlob
-    });
+    await fetch(SB+'/storage/v1/object/'+selectedCat+'/'+fn,{method:'POST',headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Content-Type':'image/webp','x-upsert':'true'},body:compressedBlob});
+    await fetch(SB+'/rest/v1/documents',{method:'POST',headers:H,body:JSON.stringify({categorie:selectedCat,sous_categorie:selectedSub,titre:title,nom_fichier:ts+'.webp',taille_octets:compressedBlob.size,type_mime:'image/webp',storage_path:selectedCat+'/'+fn,mois:new Date().toISOString().slice(0,7)})});
+    document.getElementById('success-title').textContent='Photo enregistrée';
+    document.getElementById('success-detail').textContent=title+' · '+(compressedBlob.size/1024).toFixed(0)+'KB';
+    show('success');
+  }catch(err){alert('Erreur: '+err.message);this.disabled=false;this.textContent='Envoyer'}
+});
 
-    if(!uploadRes.ok)throw new Error('Upload failed');
+// === LINK MODE ===
+document.getElementById('link-save').addEventListener('click',async function(){
+  var url=document.getElementById('link-url').value;
+  if(!url){alert('Collez un lien');return}
+  this.disabled=true;this.textContent='Enregistrement...';
+  var title=document.getElementById('link-title').value||url;
+  var note=document.getElementById('link-note').value||'';
+  var cat=selectedTags.length>0?selectedTags[0]:'autre';
+  try{
+    await fetch(SB+'/rest/v1/brain',{method:'POST',headers:H,body:JSON.stringify({
+      type:'link',titre:title,contenu:note,url:url,
+      tags:selectedTags.length>0?'{'+selectedTags.join(',')+'}':'{}',
+      categorie:cat,description:note
+    })});
+    document.getElementById('success-title').textContent='Lien sauvegardé';
+    document.getElementById('success-detail').textContent=url;
+    show('success');
+  }catch(err){alert('Erreur: '+err.message);this.disabled=false;this.textContent='Sauvegarder le lien'}
+});
 
-    // Log metadata in documents table
-    var geo=null;
-    try{
-      var pos=await new Promise(function(res,rej){navigator.geolocation.getCurrentPosition(res,rej,{timeout:5000})});
-      geo={lat:pos.coords.latitude,lng:pos.coords.longitude};
-    }catch(e){}
-
-    await fetch(SB+'/rest/v1/documents',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'return=minimal'},
-      body:JSON.stringify({
-        categorie:selectedCat,
-        sous_categorie:selectedSub,
-        titre:title,
-        nom_fichier:ts+'.webp',
-        taille_octets:compressedBlob.size,
-        type_mime:'image/webp',
-        storage_path:selectedCat+'/'+fileName,
-        mois:new Date().toISOString().slice(0,7),
-        geolocation:geo,
-        notes:'Capturé depuis iPhone · Original: '+(originalSize/1024/1024).toFixed(1)+'MB'
-      })
-    });
-
-    // Show success
-    document.getElementById('step-2').style.display='none';
-    document.getElementById('step-3').style.display='block';
-    document.getElementById('success-detail').textContent=title+' · '+(compressedBlob.size/1024).toFixed(0)+'KB · '+selectedCat;
-  }catch(err){
-    alert('Erreur : '+err.message+'. Réessayez.');
-    btn.disabled=false;
-    document.getElementById('upload-text').style.display='inline';
-    document.getElementById('upload-loading').style.display='none';
-  }
+// === IDEA MODE ===
+document.getElementById('idea-save').addEventListener('click',async function(){
+  var title=document.getElementById('idea-title').value;
+  if(!title){alert('Donnez un titre à votre idée');return}
+  this.disabled=true;this.textContent='Enregistrement...';
+  var content=document.getElementById('idea-content').value||'';
+  var priority=parseInt(document.querySelector('input[name="priority"]:checked').value);
+  var cat=selectedTags.length>0?selectedTags[0]:'autre';
+  try{
+    await fetch(SB+'/rest/v1/brain',{method:'POST',headers:H,body:JSON.stringify({
+      type:'idea',titre:title,contenu:content,
+      tags:selectedTags.length>0?'{'+selectedTags.join(',')+'}':'{}',
+      categorie:cat,priorite:priority
+    })});
+    document.getElementById('success-title').textContent='Idée enregistrée';
+    document.getElementById('success-detail').textContent=title;
+    show('success');
+  }catch(err){alert('Erreur: '+err.message);this.disabled=false;this.textContent="Enregistrer l'idée"}
 });
 </script>
 </Base>
