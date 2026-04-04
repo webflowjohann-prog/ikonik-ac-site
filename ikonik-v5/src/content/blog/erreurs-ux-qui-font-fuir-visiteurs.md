@@ -4,7 +4,7 @@ slug: "erreurs-ux-qui-font-fuir-visiteurs"
 category: "Développement"
 tags: ["UX", "design web", "expérience utilisateur", "conversion"]
 excerpt: "Votre site est beau mais personne ne reste ? C'est probablement un problème d'UX. Voici les erreurs les plus courantes."
-image_prompt: "Cinematic shot of frustrated person looking at confusing website on laptop, dark environment, dramatic side lighting showing confused expression, 16:9"
+color: "#022859"
 author: "IKONIK"
 date: "2026-02-24"
 read_time: 6

@@ -4,7 +4,7 @@ slug: "ia-automatisation-par-ou-commencer-pme"
 category: "Automatisation"
 tags: ["IA", "PME", "automatisation", "transformation digitale", "démarrage"]
 excerpt: "L'IA n'est pas réservée aux grands groupes. Voici un plan d'action concret pour intégrer l'IA dans votre PME."
-image_prompt: "Cinematic shot of small business owner at desk with laptop showing AI assistant interface, modern but modest office, warm natural lighting, hopeful mood, 16:9"
+color: "#4BB2F2"
 author: "IKONIK"
 date: "2026-03-08"
 read_time: 7

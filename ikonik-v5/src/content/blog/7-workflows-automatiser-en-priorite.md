@@ -4,7 +4,7 @@ slug: "7-workflows-automatiser-en-priorite"
 category: "Automatisation"
 tags: ["workflows", "automatisation", "productivité", "processus"]
 excerpt: "Certains workflows vous font perdre des heures chaque semaine. Voici les 7 à automatiser en priorité."
-image_prompt: "Cinematic visualization of automated workflow diagram with connected nodes on dark screen, orange flow arrows, modern tech aesthetic, 16:9"
+color: "#4BB2F2"
 author: "IKONIK"
 date: "2026-03-05"
 read_time: 7

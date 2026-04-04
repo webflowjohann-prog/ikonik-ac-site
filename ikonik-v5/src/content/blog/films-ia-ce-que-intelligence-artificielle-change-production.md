@@ -4,7 +4,7 @@ slug: "films-ia-ce-que-intelligence-artificielle-change-production"
 category: "Production IA"
 tags: ["films IA", "intelligence artificielle", "production vidéo", "IA générative"]
 excerpt: "L'IA ne remplace pas les réalisateurs — elle leur donne des superpouvoirs. Voici ce qui change concrètement."
-image_prompt: "Cinematic shot of AI interface on screen generating video storyboard frames, dark studio environment, blue and orange data streams, futuristic mood, 16:9"
+color: "#0554F2"
 author: "IKONIK"
 date: "2025-12-29"
 read_time: 8

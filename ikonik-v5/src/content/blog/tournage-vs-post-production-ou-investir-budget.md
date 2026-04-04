@@ -4,7 +4,7 @@ slug: "tournage-vs-post-production-ou-investir-budget"
 category: "Production vidéo"
 tags: ["budget vidéo", "tournage", "post-production", "production"]
 excerpt: "Faut-il investir davantage sur le tournage ou la post-production ? La réponse dépend de votre projet."
-image_prompt: "Split cinematic image: left side shows film set with camera crew and lighting, right side shows editing suite with multiple monitors, dark moody tones, 16:9"
+color: "#03318C"
 author: "IKONIK"
 date: "2025-12-23"
 read_time: 6

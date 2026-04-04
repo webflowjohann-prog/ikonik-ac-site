@@ -4,7 +4,7 @@ slug: "ugc-ia-creer-contenu-authentique-sans-tournage"
 category: "Production IA"
 tags: ["UGC", "UGC IA", "contenu authentique", "IA générative"]
 excerpt: "L'UGC IA permet de produire du contenu crédible et authentique sans casting ni tournage. Voici comment l'utiliser intelligemment."
-image_prompt: "Cinematic shot of smartphone showing authentic-looking UGC content on screen, surrounded by AI interface elements, dark desk, warm ambient lighting, 16:9"
+color: "#0554F2"
 author: "IKONIK"
 date: "2026-01-10"
 read_time: 6

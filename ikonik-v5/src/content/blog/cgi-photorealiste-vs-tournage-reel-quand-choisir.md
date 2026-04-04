@@ -4,7 +4,7 @@ slug: "cgi-photorealiste-vs-tournage-reel-quand-choisir"
 category: "Production IA"
 tags: ["CGI", "tournage", "photoréalisme", "3D", "production"]
 excerpt: "La CGI n'est pas toujours la meilleure option. Voici un guide décisionnel pour choisir le bon format selon votre projet."
-image_prompt: "Split image: left side shows real film set with actors, right side shows 3D CGI render of same scene, seamless transition in the middle, cinematic lighting, 16:9"
+color: "#0554F2"
 author: "IKONIK"
 date: "2026-01-01"
 read_time: 7

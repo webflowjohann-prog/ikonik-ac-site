@@ -4,7 +4,7 @@ slug: "email-marketing-automatise-sequences-qui-generent-revenu"
 category: "Automatisation"
 tags: ["email marketing", "automatisation", "séquences", "nurturing"]
 excerpt: "L'email reste le canal avec le meilleur ROI. Voici les séquences automatisées qui génèrent du revenu."
-image_prompt: "Cinematic shot of email automation flow chart on dark screen with branching paths and conversion metrics, orange and white data points, professional tech aesthetic, 16:9"
+color: "#4BB2F2"
 author: "IKONIK"
 date: "2026-03-14"
 read_time: 7

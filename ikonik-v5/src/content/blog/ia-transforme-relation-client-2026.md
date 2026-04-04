@@ -4,7 +4,7 @@ slug: "ia-transforme-relation-client-2026"
 category: "Automatisation"
 tags: ["IA", "relation client", "chatbot", "service client", "automatisation"]
 excerpt: "L'IA ne remplace pas la relation humaine — elle la rend possible à grande échelle. Voici les applications concrètes."
-image_prompt: "Cinematic shot of AI chatbot interface on screen providing helpful customer support, warm friendly aesthetic with dark background and orange accent elements, 16:9"
+color: "#4BB2F2"
 author: "IKONIK"
 date: "2026-03-17"
 read_time: 7

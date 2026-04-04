@@ -4,7 +4,7 @@ slug: "documentaire-corporate-pourquoi-votre-marque-en-a-besoin"
 category: "Production vidéo"
 tags: ["documentaire", "film corporate", "storytelling", "branding"]
 excerpt: "Le documentaire n'est pas réservé aux grandes marques. C'est le format le plus puissant pour construire la confiance."
-image_prompt: "Cinematic behind-the-scenes of documentary interview setup, camera on tripod, soft lighting, professional being filmed, warm golden tones, 16:9"
+color: "#03318C"
 author: "IKONIK"
 date: "2025-12-05"
 read_time: 8

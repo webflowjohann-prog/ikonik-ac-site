@@ -4,7 +4,7 @@ slug: "site-vitrine-vs-landing-page-quand-utiliser-quoi"
 category: "Développement"
 tags: ["site vitrine", "landing page", "développement web", "conversion"]
 excerpt: "Un site vitrine et une landing page n'ont pas le même objectif. Voici comment choisir le bon format pour votre besoin."
-image_prompt: "Cinematic split screen of elegant multi-page website on left and focused single-page landing page on right, both on monitors, dark desk, warm lighting, 16:9"
+color: "#022859"
 author: "IKONIK"
 date: "2026-02-06"
 read_time: 6

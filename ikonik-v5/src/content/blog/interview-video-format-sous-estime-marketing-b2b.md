@@ -4,7 +4,7 @@ slug: "interview-video-format-sous-estime-marketing-b2b"
 category: "Production vidéo"
 tags: ["interview vidéo", "marketing B2B", "témoignage", "contenu vidéo"]
 excerpt: "L'interview vidéo est le format le plus rentable du marketing B2B. Voici pourquoi et comment la produire efficacement."
-image_prompt: "Cinematic two-shot interview setup in modern office, two chairs facing each other, professional lighting with warm amber tones, camera visible in foreground, 16:9"
+color: "#03318C"
 author: "IKONIK"
 date: "2025-12-17"
 read_time: 6

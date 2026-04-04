@@ -4,7 +4,7 @@ slug: "vrai-cout-de-ne-pas-automatiser"
 category: "Automatisation"
 tags: ["automatisation", "ROI", "productivité", "coûts cachés"]
 excerpt: "L'automatisation a un coût. Mais ne pas automatiser coûte beaucoup plus cher. Voici les chiffres."
-image_prompt: "Cinematic shot of hourglass with money sand flowing, next to automated machine producing results, dramatic split lighting warm vs cool, 16:9"
+color: "#4BB2F2"
 author: "IKONIK"
 date: "2026-03-23"
 read_time: 6

@@ -4,7 +4,7 @@ slug: "creer-univers-visuel-marque-coherent"
 category: "Contenu"
 tags: ["identité visuelle", "branding", "direction artistique", "cohérence"]
 excerpt: "La cohérence visuelle est ce qui sépare les marques mémorables des marques oubliables. Voici comment la construire."
-image_prompt: "Cinematic mood board layout on dark surface showing brand color swatches, typography samples, photography style examples, all in warm amber and navy tones, 16:9"
+color: "#0460D9"
 author: "IKONIK"
 date: "2026-01-28"
 read_time: 7

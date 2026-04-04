@@ -4,7 +4,7 @@ slug: "tunnel-acquisition-automatise-guide-etape-par-etape"
 category: "Automatisation"
 tags: ["tunnel acquisition", "funnel", "automatisation", "leads", "conversion"]
 excerpt: "Un tunnel d'acquisition automatisé travaille 24h/24. Voici comment le construire, étape par étape."
-image_prompt: "Cinematic visualization of sales funnel stages on dark screen with flowing orange data particles moving through each stage, modern tech aesthetic, 16:9"
+color: "#4BB2F2"
 author: "IKONIK"
 date: "2026-03-11"
 read_time: 8

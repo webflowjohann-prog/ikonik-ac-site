@@ -4,7 +4,7 @@ slug: "comment-briefer-realisateur-spot-publicitaire"
 category: "Production vidéo"
 tags: ["brief vidéo", "réalisateur", "spot publicitaire", "gestion de projet"]
 excerpt: "Un bon brief fait la différence entre un film moyen et un film qui performe. Voici la méthode en 7 points."
-image_prompt: "Overhead shot of creative brief document on dark desk with storyboard sketches and camera lens, warm amber lighting, editorial photography, 16:9"
+color: "#03318C"
 author: "IKONIK"
 date: "2025-12-08"
 read_time: 7

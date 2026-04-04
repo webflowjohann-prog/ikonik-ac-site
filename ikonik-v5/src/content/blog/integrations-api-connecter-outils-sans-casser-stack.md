@@ -4,7 +4,7 @@ slug: "integrations-api-connecter-outils-sans-casser-stack"
 category: "Automatisation"
 tags: ["API", "intégrations", "outils", "architecture", "développement"]
 excerpt: "Vos outils ne se parlent pas ? Voici comment les connecter proprement sans créer une usine à gaz."
-image_prompt: "Cinematic visualization of API connections between different software platforms, glowing data lines connecting icons on dark background, clean tech aesthetic, 16:9"
+color: "#4BB2F2"
 author: "IKONIK"
 date: "2026-03-20"
 read_time: 7

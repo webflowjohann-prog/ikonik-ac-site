@@ -4,7 +4,7 @@ slug: "marketing-os-centraliser-acquisition-plateforme"
 category: "Automatisation"
 tags: ["Marketing OS", "automatisation marketing", "plateforme", "acquisition"]
 excerpt: "Vous jonglez entre 10 outils marketing ? Voici comment les unifier en une seule plateforme qui fait tout."
-image_prompt: "Cinematic overhead shot of centralized marketing dashboard connecting multiple channels — email, social, ads, CRM — on dark desk with glowing orange connection lines, 16:9"
+color: "#4BB2F2"
 author: "IKONIK"
 date: "2026-03-02"
 read_time: 8

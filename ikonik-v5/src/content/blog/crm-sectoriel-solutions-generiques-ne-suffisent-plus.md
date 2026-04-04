@@ -4,7 +4,7 @@ slug: "crm-sectoriel-solutions-generiques-ne-suffisent-plus"
 category: "Développement"
 tags: ["CRM", "CRM sectoriel", "outil métier", "sur mesure"]
 excerpt: "Un CRM générique ne comprend pas votre métier. Voici pourquoi les leaders de chaque secteur développent leurs propres outils."
-image_prompt: "Cinematic shot of customized CRM dashboard with industry-specific fields and workflows on dark monitor, warm amber lighting, professional setting, 16:9"
+color: "#022859"
 author: "IKONIK"
 date: "2026-02-18"
 read_time: 7

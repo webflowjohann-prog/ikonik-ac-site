@@ -4,7 +4,7 @@ slug: "strategie-contenu-social-framework-2026"
 category: "Contenu"
 tags: ["stratégie contenu", "réseaux sociaux", "contenu social", "framework"]
 excerpt: "Poster sans stratégie, c'est crier dans le vide. Voici le framework en 5 piliers pour un contenu social qui convertit."
-image_prompt: "Cinematic overhead shot of content strategy board with sticky notes organized in columns, social media mockups on phone screens, dark desk, warm amber lighting, 16:9"
+color: "#0460D9"
 author: "IKONIK"
 date: "2026-01-16"
 read_time: 8

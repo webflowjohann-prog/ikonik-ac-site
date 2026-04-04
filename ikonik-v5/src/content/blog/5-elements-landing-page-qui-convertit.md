@@ -4,7 +4,7 @@ slug: "5-elements-landing-page-qui-convertit"
 category: "Développement"
 tags: ["landing page", "conversion", "UX", "CRO", "optimisation"]
 excerpt: "Une landing page qui convertit n'est pas une question de design — c'est une question de structure. Voici les 5 éléments essentiels."
-image_prompt: "Cinematic wireframe of a high-converting landing page layout on large monitor, conversion data overlay, dark studio environment, orange accent highlights, 16:9"
+color: "#022859"
 author: "IKONIK"
 date: "2026-02-09"
 read_time: 7

@@ -4,7 +4,7 @@ slug: "reels-shorts-tiktok-adapter-video-chaque-plateforme"
 category: "Contenu"
 tags: ["Reels", "Shorts", "TikTok", "formats courts", "vidéo sociale"]
 excerpt: "Un même contenu ne peut pas fonctionner partout. Voici les spécificités de chaque plateforme et comment les exploiter."
-image_prompt: "Cinematic flat lay of three smartphones showing different social media platforms with short-form video content, dark surface, colorful screen glow, 16:9"
+color: "#0460D9"
 author: "IKONIK"
 date: "2026-01-19"
 read_time: 7

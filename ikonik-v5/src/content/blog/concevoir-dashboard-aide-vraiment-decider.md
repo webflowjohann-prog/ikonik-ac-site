@@ -4,7 +4,7 @@ slug: "concevoir-dashboard-aide-vraiment-decider"
 category: "Développement"
 tags: ["dashboard", "data visualization", "décision", "analytics", "IA"]
 excerpt: "La plupart des dashboards affichent des données. Les bons dashboards aident à prendre des décisions. Voici la différence."
-image_prompt: "Cinematic shot of executive dashboard with clear decision-oriented KPIs on large curved monitor, dark office with warm desk lamp, focused professional atmosphere, 16:9"
+color: "#022859"
 author: "IKONIK"
 date: "2026-02-21"
 read_time: 7

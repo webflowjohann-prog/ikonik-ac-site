@@ -4,7 +4,7 @@ slug: "creatif-tech-pourquoi-fusionner-les-deux-gagne"
 category: "Stratégie"
 tags: ["créatif", "tech", "stratégie", "transformation digitale", "agence"]
 excerpt: "La majorité des entreprises séparent le créatif et la tech. Celles qui les fusionnent ont un avantage décisif."
-image_prompt: "Cinematic shot of creative and tech elements merging — camera lens morphing into code on screen, warm amber meets cool blue light, dramatic composition, 16:9"
+color: "#E9540D"
 author: "IKONIK"
 date: "2026-03-26"
 read_time: 8

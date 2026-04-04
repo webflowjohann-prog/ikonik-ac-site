@@ -4,7 +4,7 @@ slug: "cout-reel-production-video-professionnelle"
 category: "Production vidéo"
 tags: ["budget vidéo", "production vidéo", "prix", "investissement"]
 excerpt: "Combien coûte vraiment un film publicitaire ? On décortique les postes de dépenses pour vous aider à investir intelligemment."
-image_prompt: "Cinematic shot of a production budget sheet on tablet next to camera equipment on dark desk, calculator and coffee, warm lighting, 16:9"
+color: "#03318C"
 author: "IKONIK"
 date: "2025-12-11"
 read_time: 8

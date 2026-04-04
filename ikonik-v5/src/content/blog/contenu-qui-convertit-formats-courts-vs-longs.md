@@ -4,7 +4,7 @@ slug: "contenu-qui-convertit-formats-courts-vs-longs"
 category: "Contenu"
 tags: ["formats courts", "formats longs", "conversion", "contenu marketing"]
 excerpt: "Court ou long ? La vraie question n'est pas la durée — c'est l'intention. Voici comment choisir."
-image_prompt: "Cinematic split screen showing short-form content on phone (left) and long-form article on laptop (right), dark desk environment, warm amber lighting, 16:9"
+color: "#0460D9"
 author: "IKONIK"
 date: "2026-01-25"
 read_time: 6

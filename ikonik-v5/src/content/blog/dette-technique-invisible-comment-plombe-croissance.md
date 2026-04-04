@@ -4,7 +4,7 @@ slug: "dette-technique-invisible-comment-plombe-croissance"
 category: "Stratégie"
 tags: ["dette technique", "développement", "croissance", "qualité", "maintenance"]
 excerpt: "Votre site fonctionne, votre outil tourne. Mais sous le capot, la dette technique s'accumule. Et elle finira par vous coûter cher."
-image_prompt: "Cinematic shot of iceberg metaphor — beautiful website above waterline, tangled messy code below waterline, dramatic underwater lighting, split composition, 16:9"
+color: "#E9540D"
 author: "IKONIK"
 date: "2026-03-29"
 read_time: 7

@@ -4,7 +4,7 @@ slug: "saas-sur-mesure-vs-solution-marche-vrai-calcul"
 category: "Développement"
 tags: ["SaaS", "développement sur mesure", "build vs buy", "plateforme"]
 excerpt: "Acheter un outil existant ou développer le vôtre ? Voici les critères objectifs pour faire le bon choix."
-image_prompt: "Cinematic comparison of generic software box vs custom-built platform on sleek laptop, balance scale metaphor, dark background with warm amber accents, 16:9"
+color: "#022859"
 author: "IKONIK"
 date: "2026-02-15"
 read_time: 8

@@ -4,7 +4,7 @@ slug: "ia-generative-pub-opportunite-ou-menace-marques"
 category: "Production IA"
 tags: ["IA générative", "publicité", "marques", "transformation digitale"]
 excerpt: "L'IA générative bouleverse la production publicitaire. Voici une analyse honnête des opportunités et des risques."
-image_prompt: "Cinematic conceptual image of human hand and AI robotic hand collaborating on a creative canvas, warm golden vs cool blue lighting split, dramatic composition, 16:9"
+color: "#0554F2"
 author: "IKONIK"
 date: "2026-01-13"
 read_time: 8

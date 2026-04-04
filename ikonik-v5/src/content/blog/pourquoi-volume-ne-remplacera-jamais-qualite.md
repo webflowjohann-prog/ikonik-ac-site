@@ -4,7 +4,7 @@ slug: "pourquoi-volume-ne-remplacera-jamais-qualite"
 category: "Contenu"
 tags: ["qualité contenu", "stratégie", "production premium", "positionnement"]
 excerpt: "L'IA permet de produire 100 contenus par jour. Mais vos prospects s'en fichent. Ce qu'ils veulent, c'est de la valeur."
-image_prompt: "Cinematic still life of one perfectly crafted golden object vs pile of generic mass-produced items, dramatic spotlight on the quality piece, dark background, 16:9"
+color: "#0460D9"
 author: "IKONIK"
 date: "2026-02-03"
 read_time: 6

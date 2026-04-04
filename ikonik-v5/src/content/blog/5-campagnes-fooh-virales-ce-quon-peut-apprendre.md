@@ -4,7 +4,7 @@ slug: "5-campagnes-fooh-virales-ce-quon-peut-apprendre"
 category: "Production IA"
 tags: ["FOOH", "campagnes virales", "marketing viral", "CGI", "études de cas"]
 excerpt: "Les marques qui ont explosé grâce au FOOH — analyse des mécaniques qui fonctionnent et comment les reproduire."
-image_prompt: "Cinematic collage of 5 different urban CGI scenes with impossible objects in city environments, dramatic lighting, viral content aesthetic, 16:9"
+color: "#0554F2"
 author: "IKONIK"
 date: "2026-01-04"
 read_time: 8

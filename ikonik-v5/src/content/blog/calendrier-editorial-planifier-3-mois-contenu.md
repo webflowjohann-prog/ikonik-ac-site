@@ -4,7 +4,7 @@ slug: "calendrier-editorial-planifier-3-mois-contenu"
 category: "Contenu"
 tags: ["calendrier éditorial", "planning contenu", "organisation", "productivité"]
 excerpt: "Fini l'improvisation quotidienne. Voici la méthode pour planifier 3 mois de contenu en une seule session de travail."
-image_prompt: "Cinematic overhead shot of a 3-month content calendar on large screen with color-coded posts, coffee and notebook nearby, organized workspace, warm lighting, 16:9"
+color: "#0460D9"
 author: "IKONIK"
 date: "2026-01-22"
 read_time: 7

@@ -4,7 +4,7 @@ slug: "mesurer-roi-contenus-video"
 category: "Production vidéo"
 tags: ["ROI vidéo", "KPI", "analytics", "performance vidéo"]
 excerpt: "Vues, likes, partages... Ce ne sont pas les bons KPIs. Voici comment vraiment mesurer la performance de vos films."
-image_prompt: "Cinematic shot of analytics dashboard showing video performance metrics on dark monitor, orange data points, coffee cup nearby, warm ambient lighting, 16:9"
+color: "#03318C"
 author: "IKONIK"
 date: "2025-12-20"
 read_time: 7

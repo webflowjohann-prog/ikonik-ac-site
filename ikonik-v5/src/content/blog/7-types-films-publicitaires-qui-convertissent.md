@@ -4,7 +4,7 @@ slug: "7-types-films-publicitaires-qui-convertissent"
 category: "Production vidéo"
 tags: ["film publicitaire", "spot vidéo", "conversion", "marketing vidéo"]
 excerpt: "Spot TV, film de marque, témoignage client… Tous les formats ne se valent pas. Voici ceux qui génèrent vraiment du résultat."
-image_prompt: "Cinematic flat lay of multiple screens on dark desk showing different video formats, warm amber lighting, editorial photography, 16:9"
+color: "#03318C"
 author: "IKONIK"
 date: "2025-12-02"
 read_time: 7

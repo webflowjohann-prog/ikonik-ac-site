@@ -4,7 +4,7 @@ slug: "5-erreurs-qui-ruinent-vos-films-de-marque"
 category: "Production vidéo"
 tags: ["film de marque", "erreurs vidéo", "production", "qualité"]
 excerpt: "Votre film est techniquement parfait mais ne performe pas ? C'est probablement l'une de ces 5 erreurs."
-image_prompt: "Cinematic close-up of a broken film reel on a dark surface with scattered film strips, dramatic red warning light, moody tones, 16:9"
+color: "#03318C"
 author: "IKONIK"
 date: "2025-12-14"
 read_time: 6

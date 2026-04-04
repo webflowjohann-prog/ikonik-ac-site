@@ -4,7 +4,7 @@ slug: "fooh-guide-complet-fake-out-of-home"
 category: "Production IA"
 tags: ["FOOH", "Fake Out Of Home", "CGI", "publicité virale", "contenu viral"]
 excerpt: "Le FOOH révolutionne la publicité outdoor. CGI photoréaliste, viralité garantie — voici comment l'utiliser pour votre marque."
-image_prompt: "Cinematic CGI render of a giant luxury handbag sitting on top of a Parisian building rooftop, hyperrealistic, golden hour lighting, urban environment, 16:9"
+color: "#0554F2"
 author: "IKONIK"
 date: "2025-12-26"
 read_time: 9

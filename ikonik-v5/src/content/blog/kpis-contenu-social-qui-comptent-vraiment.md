@@ -4,7 +4,7 @@ slug: "kpis-contenu-social-qui-comptent-vraiment"
 category: "Contenu"
 tags: ["KPIs", "analytics", "réseaux sociaux", "performance"]
 excerpt: "Likes, followers, impressions… Arrêtez de mesurer les mauvaises choses. Voici les métriques qui font la différence."
-image_prompt: "Cinematic close-up of analytics dashboard on dark screen showing social media metrics with orange highlights, blurred office background, professional mood, 16:9"
+color: "#0460D9"
 author: "IKONIK"
 date: "2026-01-31"
 read_time: 6

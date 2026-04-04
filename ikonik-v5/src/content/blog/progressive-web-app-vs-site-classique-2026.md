@@ -4,7 +4,7 @@ slug: "progressive-web-app-vs-site-classique-2026"
 category: "Développement"
 tags: ["PWA", "site web", "application web", "développement", "mobile"]
 excerpt: "Une PWA offre les avantages d'une app native sans passer par les stores. Mais est-ce le bon choix pour vous ?"
-image_prompt: "Cinematic comparison of PWA installation prompt on smartphone vs traditional website on same phone, dark background, modern tech aesthetic, 16:9"
+color: "#022859"
 author: "IKONIK"
 date: "2026-02-27"
 read_time: 7

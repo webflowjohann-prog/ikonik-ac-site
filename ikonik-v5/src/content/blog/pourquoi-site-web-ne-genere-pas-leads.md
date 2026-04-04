@@ -4,7 +4,7 @@ slug: "pourquoi-site-web-ne-genere-pas-leads"
 category: "Développement"
 tags: ["site web", "leads", "génération de leads", "conversion", "diagnostic"]
 excerpt: "Votre site a du trafic mais zéro lead ? Voici les 6 raisons les plus fréquentes et comment y remédier."
-image_prompt: "Cinematic shot of website analytics showing high traffic but zero conversions on dark screen, frustrated business aesthetic, warm lighting, 16:9"
+color: "#022859"
 author: "IKONIK"
 date: "2026-02-12"
 read_time: 7

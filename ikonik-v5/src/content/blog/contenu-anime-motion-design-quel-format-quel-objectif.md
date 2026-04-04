@@ -4,7 +4,7 @@ slug: "contenu-anime-motion-design-quel-format-quel-objectif"
 category: "Production IA"
 tags: ["motion design", "animation 2D", "animation 3D", "contenu animé"]
 excerpt: "L'animation n'est pas qu'un style visuel — c'est un outil stratégique. Voici comment choisir le bon format."
-image_prompt: "Cinematic screenshot of colorful 2D and 3D animation frames on a dark editing timeline, multiple layers visible, creative studio environment, warm lighting, 16:9"
+color: "#0554F2"
 author: "IKONIK"
 date: "2026-01-07"
 read_time: 7
