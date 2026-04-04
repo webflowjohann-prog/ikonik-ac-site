@@ -1,6 +1,6 @@
-redirectsOrigin = "config"
+headersOrigin = "config"
 plugins = []
-headers = []
+redirects = []
 
 [functions]
 
@@ -8,8 +8,8 @@ headers = []
 
 [build]
 publish = "/Users/origin/ikonik-ac-site/ikonik-v5/dist"
-publishOrigin = "config"
-commandOrigin = "config"
+publishOrigin = "ui"
+commandOrigin = "ui"
 base = "/Users/origin/ikonik-ac-site/ikonik-v5"
 command = "npm run build"
 
@@ -27,14 +27,12 @@ command = "npm run build"
 
 [build.services]
 
-[[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200.0
-force = false
+[[headers]]
+for = "/*"
 
-[redirects.query]
-
-[redirects.conditions]
-
-[redirects.headers]
+[headers.values]
+X-Frame-Options = "SAMEORIGIN"
+X-Content-Type-Options = "nosniff"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+X-XSS-Protection = "1; mode=block"
