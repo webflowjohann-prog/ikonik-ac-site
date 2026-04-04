@@ -1,0 +1,259 @@
+---
+// admin.astro — IKONIK OS · Command Center
+---
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Command Center — IKONIK OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0D1117;--card:#161B22;--border:#21262D;--text:#E6EDF3;--muted:#8B949E;--accent:#E9540D;--green:#3FB950;--blue:#4BB2F2;--yellow:#D29922;--red:#F85149}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',system-ui,sans-serif;font-size:14px;min-height:100vh}
+a{color:var(--accent);text-decoration:none}
+
+/* AUTH */
+.auth{align-items:center;display:flex;flex-direction:column;gap:2rem;height:100vh;justify-content:center;padding:2rem}
+.auth__logo{height:3rem;opacity:.8}
+.auth__title{font-size:1.4rem;font-weight:500;color:var(--muted)}
+.auth__input{background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:1rem;padding:.8rem 1.2rem;text-align:center;width:280px}
+.auth__input:focus{border-color:var(--accent);outline:none}
+.auth__btn{background:var(--accent);border:none;border-radius:8px;color:#fff;cursor:pointer;font-family:inherit;font-size:1rem;font-weight:600;padding:.8rem 2rem}
+
+/* LAYOUT */
+.dash{display:none;padding:2rem;max-width:1400px;margin:0 auto}
+.dash__header{align-items:center;display:flex;gap:1.2rem;margin-bottom:3rem}
+.dash__logo{height:2.4rem;opacity:.8}
+.dash__badge{background:var(--accent);border-radius:6px;font-size:.75rem;font-weight:700;letter-spacing:.08em;padding:.25rem .6rem;color:#fff}
+.dash__time{color:var(--muted);font-size:.85rem;margin-left:auto}
+.dash__refresh{background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer;font-family:inherit;font-size:.8rem;padding:.4rem 1rem}
+.dash__refresh:hover{border-color:var(--accent);color:var(--text)}
+
+/* KPI ROW */
+.kpi-row{display:grid;gap:1rem;grid-template-columns:repeat(2,1fr);margin-bottom:2rem}
+@media(min-width:768px){.kpi-row{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:1200px){.kpi-row{grid-template-columns:repeat(6,1fr)}}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.4rem}
+.kpi__label{color:var(--muted);font-size:.75rem;font-weight:500;letter-spacing:.1em;margin-bottom:.6rem;text-transform:uppercase}
+.kpi__value{font-size:2rem;font-weight:700}
+.kpi__value--accent{color:var(--accent)}
+.kpi__value--green{color:var(--green)}
+.kpi__value--blue{color:var(--blue)}
+
+/* SECTIONS */
+.panels{display:grid;gap:1.6rem;grid-template-columns:1fr}
+@media(min-width:992px){.panels{grid-template-columns:1fr 1fr}}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.panel__head{border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.6rem}
+.panel__title{font-size:1rem;font-weight:600}
+.panel__count{background:var(--accent);border-radius:12px;color:#fff;font-size:.75rem;font-weight:600;padding:.2rem .6rem}
+.panel__body{max-height:400px;overflow-y:auto;padding:0}
+.panel__empty{color:var(--muted);font-size:.9rem;padding:2rem 1.6rem;text-align:center}
+
+/* TABLE ROWS */
+.row{align-items:center;border-bottom:1px solid var(--border);display:flex;gap:1rem;padding:.8rem 1.6rem;transition:background .2s}
+.row:hover{background:rgba(255,255,255,.03)}
+.row:last-child{border-bottom:none}
+.row__name{font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row__email{color:var(--muted);font-size:.85rem;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row__score{border-radius:6px;font-size:.75rem;font-weight:600;padding:.2rem .6rem;min-width:36px;text-align:center}
+.row__score--hot{background:rgba(248,81,73,.15);color:var(--red)}
+.row__score--warm{background:rgba(210,153,34,.15);color:var(--yellow)}
+.row__score--cold{background:rgba(75,178,242,.15);color:var(--blue)}
+.row__date{color:var(--muted);font-size:.8rem;white-space:nowrap}
+.row__type{background:rgba(233,84,13,.1);border-radius:6px;color:var(--accent);font-size:.75rem;font-weight:500;padding:.2rem .6rem;white-space:nowrap}
+.row__tag{background:rgba(75,178,242,.1);border-radius:6px;color:var(--blue);font-size:.75rem;font-weight:500;padding:.2rem .6rem}
+
+/* ACTIVITY */
+.activity{color:var(--muted);font-size:.85rem;padding:.6rem 1.6rem;border-bottom:1px solid var(--border);display:flex;gap:.8rem;align-items:center}
+.activity:last-child{border-bottom:none}
+.activity__dot{background:var(--accent);border-radius:50%;flex-shrink:0;height:6px;width:6px}
+.activity__time{color:var(--muted);font-size:.75rem;margin-left:auto;white-space:nowrap}
+</style>
+</head>
+<body>
+
+<!-- AUTH SCREEN -->
+<div class="auth" id="auth-screen">
+  <img src="/images/LOGO_IKONIK_blanc.webp" alt="IKONIK" class="auth__logo" />
+  <p class="auth__title">Command Center</p>
+  <input type="password" id="auth-pass" class="auth__input" placeholder="Mot de passe" autofocus />
+  <button class="auth__btn" id="auth-btn">Accéder</button>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dash" id="dashboard">
+  <div class="dash__header">
+    <img src="/images/LOGO_IKONIK_blanc.webp" alt="IKONIK" class="dash__logo" />
+    <span class="dash__badge">COMMAND CENTER</span>
+    <span class="dash__time" id="dash-time"></span>
+    <button class="dash__refresh" onclick="loadAll()">↻ Rafraîchir</button>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi__label">Contacts</div><div class="kpi__value kpi__value--accent" id="kpi-contacts">—</div></div>
+    <div class="kpi"><div class="kpi__label">Score moyen</div><div class="kpi__value kpi__value--green" id="kpi-score">—</div></div>
+    <div class="kpi"><div class="kpi__label">Bookings</div><div class="kpi__value kpi__value--blue" id="kpi-bookings">—</div></div>
+    <div class="kpi"><div class="kpi__label">Newsletter</div><div class="kpi__value" id="kpi-newsletter">—</div></div>
+    <div class="kpi"><div class="kpi__label">Brain</div><div class="kpi__value" id="kpi-brain">—</div></div>
+    <div class="kpi"><div class="kpi__label">Activités 24h</div><div class="kpi__value kpi__value--accent" id="kpi-activity">—</div></div>
+  </div>
+
+  <!-- PANELS -->
+  <div class="panels">
+    <!-- CONTACTS -->
+    <div class="panel">
+      <div class="panel__head">
+        <span class="panel__title">Derniers contacts</span>
+        <span class="panel__count" id="contacts-count">0</span>
+      </div>
+      <div class="panel__body" id="contacts-list">
+        <div class="panel__empty">Aucun contact pour l'instant.</div>
+      </div>
+    </div>
+
+    <!-- BOOKINGS -->
+    <div class="panel">
+      <div class="panel__head">
+        <span class="panel__title">Prochains RDV</span>
+        <span class="panel__count" id="bookings-count">0</span>
+      </div>
+      <div class="panel__body" id="bookings-list">
+        <div class="panel__empty">Aucune réservation à venir.</div>
+      </div>
+    </div>
+
+    <!-- BRAIN -->
+    <div class="panel">
+      <div class="panel__head">
+        <span class="panel__title">IKONIK Brain</span>
+        <span class="panel__count" id="brain-count">0</span>
+      </div>
+      <div class="panel__body" id="brain-list">
+        <div class="panel__empty">Aucune idée ou lien sauvegardé.</div>
+      </div>
+    </div>
+
+    <!-- ACTIVITY LOG -->
+    <div class="panel">
+      <div class="panel__head">
+        <span class="panel__title">Activité récente</span>
+        <span class="panel__count" id="activity-count">0</span>
+      </div>
+      <div class="panel__body" id="activity-list">
+        <div class="panel__empty">Aucune activité.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var SB='https://kgfolduvslsytbekbjvf.supabase.co';
+var SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZm9sZHV2c2xzeXRiZWtianZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDU3MDcsImV4cCI6MjA5MDcyMTcwN30.4jZ9fMfSinEc1CE3s6LuR4q_WNeisEdtyBM5XQ2uMJg';
+var H={'apikey':SK,'Authorization':'Bearer '+SK};
+var PASS='ikonik2026';
+
+// AUTH
+document.getElementById('auth-btn').addEventListener('click',doAuth);
+document.getElementById('auth-pass').addEventListener('keydown',function(e){if(e.key==='Enter')doAuth()});
+if(localStorage.getItem('iko_admin')==='1'){showDash()}
+
+function doAuth(){
+  if(document.getElementById('auth-pass').value===PASS){
+    localStorage.setItem('iko_admin','1');
+    showDash();
+  }else{
+    document.getElementById('auth-pass').style.borderColor='#F85149';
+  }
+}
+function showDash(){
+  document.getElementById('auth-screen').style.display='none';
+  document.getElementById('dashboard').style.display='block';
+  loadAll();
+}
+
+// TIME
+function updateTime(){
+  document.getElementById('dash-time').textContent=new Date().toLocaleString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+}
+updateTime();setInterval(updateTime,60000);
+
+// FETCH HELPER
+async function q(table,params){
+  var url=SB+'/rest/v1/'+table+'?'+params;
+  var res=await fetch(url,{headers:H});
+  return res.json();
+}
+
+// LOAD ALL
+async function loadAll(){
+  try{
+    // Contacts
+    var contacts=await q('contacts','select=id,nom,email,telephone,score,type_projet,created_at,source&order=created_at.desc&limit=20');
+    document.getElementById('kpi-contacts').textContent=contacts.length;
+    document.getElementById('contacts-count').textContent=contacts.length;
+    if(contacts.length>0){
+      document.getElementById('contacts-list').innerHTML=contacts.map(function(c){
+        var sc=c.score||0;
+        var cls=sc>=60?'hot':sc>=30?'warm':'cold';
+        var d=new Date(c.created_at);
+        return '<div class="row"><span class="row__name">'+c.nom+'</span><span class="row__email">'+(c.email||'')+'</span><span class="row__score row__score--'+cls+'">'+sc+'</span><span class="row__type">'+(c.type_projet||'—')+'</span><span class="row__date">'+d.toLocaleDateString('fr-FR')+'</span></div>';
+      }).join('');
+    }
+
+    // Score moyen
+    var scores=contacts.filter(function(c){return c.score>0}).map(function(c){return c.score});
+    document.getElementById('kpi-score').textContent=scores.length>0?Math.round(scores.reduce(function(a,b){return a+b},0)/scores.length):'—';
+
+    // Bookings
+    var today=new Date().toISOString().slice(0,10);
+    var bookings=await q('booking_slots','select=id,date_slot,heure_debut,heure_fin,nom_client,email_client,type_rdv&disponible=eq.false&date_slot=gte.'+today+'&order=date_slot.asc,heure_debut.asc&limit=20');
+    document.getElementById('kpi-bookings').textContent=bookings.length;
+    document.getElementById('bookings-count').textContent=bookings.length;
+    if(bookings.length>0){
+      document.getElementById('bookings-list').innerHTML=bookings.map(function(b){
+        var d=new Date(b.date_slot);
+        var jours=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+        return '<div class="row"><span class="row__name">'+(b.nom_client||'—')+'</span><span class="row__email">'+(b.email_client||'')+'</span><span class="row__type">'+(b.type_rdv||'')+'</span><span class="row__date">'+jours[d.getDay()]+' '+d.toLocaleDateString('fr-FR')+' '+String(b.heure_debut).slice(0,5)+'</span></div>';
+      }).join('');
+    }
+
+    // Newsletter
+    var newsletter=await q('newsletter_subscribers','select=id&limit=1000');
+    document.getElementById('kpi-newsletter').textContent=newsletter.length;
+
+    // Brain
+    var brain=await q('brain','select=id,type,titre,categorie,url,created_at&order=created_at.desc&limit=20');
+    document.getElementById('kpi-brain').textContent=brain.length;
+    document.getElementById('brain-count').textContent=brain.length;
+    if(brain.length>0){
+      document.getElementById('brain-list').innerHTML=brain.map(function(b){
+        var icon=b.type==='link'?'🔗':b.type==='idea'?'💡':b.type==='photo'?'📷':'✨';
+        var d=new Date(b.created_at);
+        return '<div class="row"><span style="flex-shrink:0">'+icon+'</span><span class="row__name">'+(b.url?'<a href="'+b.url+'" target="_blank">'+b.titre+'</a>':b.titre)+'</span><span class="row__tag">'+(b.categorie||'')+'</span><span class="row__date">'+d.toLocaleDateString('fr-FR')+'</span></div>';
+      }).join('');
+    }
+
+    // Activity
+    var yesterday=new Date(Date.now()-86400000).toISOString();
+    var activity=await q('activity_log','select=id,type,description,created_at&order=created_at.desc&limit=30');
+    var recent=activity.filter(function(a){return a.created_at>=yesterday});
+    document.getElementById('kpi-activity').textContent=recent.length;
+    document.getElementById('activity-count').textContent=activity.length;
+    if(activity.length>0){
+      document.getElementById('activity-list').innerHTML=activity.slice(0,20).map(function(a){
+        var d=new Date(a.created_at);
+        return '<div class="activity"><span class="activity__dot"></span><span>'+(a.description||a.type)+'</span><span class="activity__time">'+d.toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+'</span></div>';
+      }).join('');
+    }
+
+  }catch(err){console.error('Dashboard error:',err)}
+}
+</script>
+</body>
+</html>
