@@ -13,9 +13,16 @@ import ReviewSection from '../components/ReviewSection.astro';
 import SignUp from '../components/SignUp.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import Footer from '../components/Footer.astro';
+import { getCollection } from 'astro:content';
 
 // Assets Warwick CDN (remplacés par assets IKONIK ultérieurement)
 const CDN = 'https://d3aq9k5clbjrty.cloudfront.net';
+
+// Fetch 3 derniers articles du blog
+const allPosts = await getCollection('blog');
+const latestPosts = allPosts
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 3);
 ---
 
 <Base title="IKONIK — Nous construisons les outils, les contenus et les systèmes qui font vendre.">
@@ -190,30 +197,16 @@ const CDN = 'https://d3aq9k5clbjrty.cloudfront.net';
                 </a>
               </div>
               <div class="articles-grid">
-                <ArticleCard
-                  tag="Films IA"
-                  title="Comment le FOOH révolutionne la pub outdoor en 2025"
-                  excerpt="Le Fake Out Of Home change les codes de la publicité extérieure. Voici comment nous l'utilisons pour nos clients."
-                  href="/blog/fooh-fake-out-of-home-guide"
-                  imageSrc={`${CDN}/gallery/gallery-image-4.avif`}
-                  date="Mars 2025"
-                />
-                <ArticleCard
-                  tag="Tech"
-                  title="L'IA va-t-elle remplacer les équipes de production vidéo ?"
-                  excerpt="Notre analyse honnête sur l'impact de l'IA générative sur les métiers créatifs et ce que ça change pour les marques."
-                  href="/blog/ia-revolution-production-video"
-                  imageSrc={`${CDN}/gallery/gallery-image-5.avif`}
-                  date="Février 2025"
-                />
-                <ArticleCard
-                  tag="Studio"
-                  title="VibeCoding : développer une plateforme SaaS en 30 jours"
-                  excerpt="Retour d'expérience sur notre méthode de développement assisté IA — pipeline, outils, résultats."
-                  href="/blog"
-                  imageSrc={`${CDN}/gallery/gallery-image-6.avif`}
-                  date="Janvier 2025"
-                />
+                {latestPosts.map((post) => (
+                  <ArticleCard
+                    tag={post.data.category}
+                    title={post.data.title}
+                    excerpt={post.data.excerpt}
+                    href={`/blog/${post.data.slug}`}
+                    color={post.data.color}
+                    date={new Date(post.data.date).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}
+                  />
+                ))}
               </div>
             </div>
           </div>
