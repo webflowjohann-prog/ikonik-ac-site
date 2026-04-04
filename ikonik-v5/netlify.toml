@@ -1,3 +1,34 @@
+# Redirections anciennes URLs → nouvelles (SEO, pas de 404)
+[[redirects]]
+  from = "/en/*"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/en"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/services/*"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/production-video-ia/*"
+  to = "/creatif/"
+  status = 301
+
+[[redirects]]
+  from = "/fooh/*"
+  to = "/creatif/"
+  status = 301
+
+[[redirects]]
+  from = "/ugc-ia/*"
+  to = "/creatif/"
+  status = 301
+
 [[headers]]
   for = "/*"
   [headers.values]
