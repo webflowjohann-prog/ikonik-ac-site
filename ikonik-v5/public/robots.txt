@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /capture/
+Disallow: /facture/
+
+Sitemap: https://ikonik-v5.netlify.app/sitemap.xml

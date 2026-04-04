@@ -28,6 +28,24 @@ const {
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="canonical" href={`https://ikonik-v5.netlify.app${Astro.url.pathname}`} />
+
+  <!-- Schema.org LD+JSON -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "IKONIK",
+    "alternateName": "IKONIK — Artisan Créatif",
+    "url": "https://ikonik-ac.com",
+    "logo": "https://ikonik-ac.com/LOGO_IKONIK_blanc.webp",
+    "description": "Studio créatif & tech — Vidéo, IA, développement sur mesure, automatisation.",
+    "address": { "@type": "PostalAddress", "addressRegion": "Normandie", "addressCountry": "FR" },
+    "email": "contact@ikonik-ac.com",
+    "telephone": "+33660657056",
+    "sameAs": ["https://www.instagram.com/ikonik_ac/", "https://www.linkedin.com/company/ikonik-ac/"],
+    "serviceType": ["Production vidéo", "Développement web", "Intelligence artificielle", "Automatisation"],
+    "founder": { "@type": "Person", "name": "Johann Langenberg" }
+  })} />
 
   <!-- IKONIK OS — DataLayer init -->
   <script is:inline>
