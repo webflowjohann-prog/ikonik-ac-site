@@ -1,22 +1,16 @@
 ---
-// contact.astro — Formulaire de contact IKONIK
+// contact.astro — IKONIK OS · Page Contact avec formulaire intelligent
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-
-const CDN = 'https://d3aq9k5clbjrty.cloudfront.net';
 ---
 
 <Base title="Contact — IKONIK" description="Parlons de votre projet. IKONIK — studio créatif et tech en Normandie.">
-
   <Header />
-
   <div class="layout layout--dark">
     <div class="layout__inner">
-
-      <!-- HERO -->
       <section class="page-hero">
-        <div class="page-hero__bg" style={`background-image:url(${CDN}/gallery/gallery-image-8.avif)`}></div>
+        <div class="page-hero__bg" style="background-image:url(/images/hero-studio.webp)"></div>
         <div class="page-hero__inner">
           <div class="container">
             <h1 class="page-hero__title">
@@ -33,96 +27,188 @@ const CDN = 'https://d3aq9k5clbjrty.cloudfront.net';
             </h1>
           </div>
         </div>
-        <svg fill="none" viewBox="0 0 12 34" class="scroll-ind" aria-hidden="true">
-          <path d="M12 0 6 8.195 0 0h12Z" fill="#E9540D"/>
-          <path d="m12 25-6 8.195L0 25h12Z" fill="#FFF"/>
-        </svg>
       </section>
 
-      <!-- FORMULAIRE -->
       <div class="layout__content">
         <div class="section t-light s-pad-lg">
           <div class="section__inner">
             <div class="container">
-              <div class="grid grid--gap-lg rv">
+              <div class="contact-layout rv">
+                <div class="contact-form-wrap">
+                  <span class="cb__tag" style="display:block;margin-bottom:1.6rem">Contact</span>
+                  <h2 class="contact-heading">Décrivez votre <em>projet</em></h2>
+                  <p class="contact-sub">On revient vers vous sous 24h avec une première analyse.</p>
 
-                <!-- Infos -->
-                <div class="cb cb--l">
-                  <div class="cb__h">
-                    <span class="cb__tag">Contact</span>
-                    <h2>
-                      <span class="h-line">
-                        <span>On construit ensemble</span>
-                        <svg fill="none" viewBox="0 0 200 11" width="100" height="11">
-                          <path d="M177 5.5H0" stroke="#222931"></path>
-                          <circle cx="194.5" cy="5.5" r="5.5" fill="#E9540D"></circle>
-                        </svg>
-                      </span>
-                    </h2>
-                  </div>
-                  <div class="cb__wrap">
-                    <p class="cb__t">Que vous ayez besoin d'un film IA, d'une plateforme SaaS ou d'un système marketing complet — parlons-en. Réponse sous 24h.</p>
-                    <p class="cb__t" style="margin-top:2rem">
-                      <a href="mailto:hello@ikonik-ac.com" style="color:var(--accent);font-weight:450">hello@ikonik-ac.com</a>
-                    </p>
-                  </div>
-                </div>
-
-                <!-- Formulaire -->
-                <div class="rv">
-                  <form class="contact-form" id="contactForm">
-                    <label>
-                      Nom
-                      <input type="text" name="name" placeholder="Votre nom" required />
-                    </label>
-                    <label>
-                      Email
-                      <input type="email" name="email" placeholder="votre@email.com" required />
-                    </label>
-                    <label>
-                      Sujet
-                      <input type="text" name="subject" placeholder="Film IA, SaaS, automatisation…" />
-                    </label>
-                    <label>
-                      Message
-                      <textarea name="message" placeholder="Décrivez votre projet en quelques lignes…" required></textarea>
-                    </label>
-                    <div style="display:flex;justify-content:flex-end">
-                      <button class="button" type="submit">
-                        <span class="btn btn--pri" style="height:5.2rem">
-                          <span class="bt bt--in">Envoyer</span>
-                          <span class="bt bt--out" aria-hidden="true">Envoyer</span>
-                        </span>
-                      </button>
+                  <form id="contact-form" class="contact-form">
+                    <div class="form-row">
+                      <div class="form-group"><label for="prenom">Prénom</label><input type="text" id="prenom" name="prenom" required placeholder="Votre prénom" /></div>
+                      <div class="form-group"><label for="nom">Nom</label><input type="text" id="nom" name="nom" required placeholder="Votre nom" /></div>
                     </div>
-                    <p id="formMsg" style="display:none;font-size:1.4rem;color:var(--accent);text-align:right"></p>
+                    <div class="form-row">
+                      <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" required placeholder="vous@entreprise.com" /></div>
+                      <div class="form-group"><label for="telephone">Téléphone</label><input type="tel" id="telephone" name="telephone" placeholder="+33 6 00 00 00 00" /></div>
+                    </div>
+                    <div class="form-group"><label for="entreprise">Entreprise</label><input type="text" id="entreprise" name="entreprise" placeholder="Nom de votre entreprise" /></div>
+
+                    <div class="form-group">
+                      <label>Type de projet</label>
+                      <div class="radio-group">
+                        <label class="radio-card"><input type="radio" name="type_projet" value="creatif" /><span class="radio-card__inner"><span class="radio-card__title">Créatif</span><span class="radio-card__desc">Film, animation, contenu</span></span></label>
+                        <label class="radio-card"><input type="radio" name="type_projet" value="tech" /><span class="radio-card__inner"><span class="radio-card__title">Tech</span><span class="radio-card__desc">Site, SaaS, CRM, IA</span></span></label>
+                        <label class="radio-card"><input type="radio" name="type_projet" value="les-deux" checked /><span class="radio-card__inner"><span class="radio-card__title">Les deux</span><span class="radio-card__desc">Créatif + Tech</span></span></label>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label>Budget estimé</label>
+                      <div class="radio-group radio-group--budget">
+                        <label class="radio-pill"><input type="radio" name="budget" value="moins-5k" /><span>&lt; 5K€</span></label>
+                        <label class="radio-pill"><input type="radio" name="budget" value="5k-15k" /><span>5K — 15K€</span></label>
+                        <label class="radio-pill"><input type="radio" name="budget" value="15k-50k" /><span>15K — 50K€</span></label>
+                        <label class="radio-pill"><input type="radio" name="budget" value="plus-50k" /><span>50K€+</span></label>
+                        <label class="radio-pill"><input type="radio" name="budget" value="non-precise" checked /><span>À définir</span></label>
+                      </div>
+                    </div>
+
+                    <div class="form-group"><label for="message">Votre projet</label><textarea id="message" name="message" rows="5" placeholder="Décrivez votre projet, vos objectifs, votre calendrier..."></textarea></div>
+
+                    <button type="submit" class="form-submit" id="submit-btn">
+                      <span class="form-submit__text">Envoyer ma demande</span>
+                      <span class="form-submit__loading" style="display:none">Envoi en cours...</span>
+                    </button>
+
+                    <div id="form-success" class="form-success" style="display:none">
+                      <div class="form-success__icon">✓</div>
+                      <h3>Message envoyé</h3>
+                      <p>Nous revenons vers vous sous 24h avec une première analyse de votre projet.</p>
+                    </div>
+                    <div id="form-error" class="form-error" style="display:none">
+                      <p>Une erreur est survenue. Contactez-nous à <a href="mailto:contact@ikonik-ac.com">contact@ikonik-ac.com</a></p>
+                    </div>
                   </form>
                 </div>
 
+                <div class="contact-info">
+                  <div class="info-card rv"><h3 class="info-card__title">IKONIK</h3><p class="info-card__text">Studio créatif & tech</p><p class="info-card__text">Normandie, France</p></div>
+                  <div class="info-card rv"><h3 class="info-card__title">Email</h3><a href="mailto:contact@ikonik-ac.com" class="info-card__link">contact@ikonik-ac.com</a></div>
+                  <div class="info-card rv"><h3 class="info-card__title">Téléphone</h3><a href="tel:+33660657056" class="info-card__link">+33 6 60 65 70 56</a></div>
+                  <div class="info-card rv"><h3 class="info-card__title">Réseaux</h3><div class="info-card__socials"><a href="https://www.instagram.com/ikonik_artisan_creatif/" target="_blank" rel="noopener">Instagram</a><a href="https://www.linkedin.com/in/%E2%9C%85-johann-langenberg-production-video/" target="_blank" rel="noopener">LinkedIn</a></div></div>
+                  <div class="info-card info-card--accent rv"><p class="info-card__quote">"Je prends 2 projets de cette envergure par mois. Le calendrier a une fenêtre."</p><p class="info-card__author">— Johann, Fondateur</p></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
+        <!-- NEWSLETTER -->
+        <div class="section t-dark s-pad-md">
+          <div class="section__inner">
+            <div class="container rv" style="text-align:center;color:#fff;max-width:600px;margin:0 auto">
+              <p style="font-size:1.2rem;font-weight:450;letter-spacing:.16em;text-transform:uppercase;margin-bottom:2rem">Newsletter</p>
+              <h2 style="font-size:2.8rem;font-weight:600;letter-spacing:.06em;margin-bottom:1.6rem">Restez connecté</h2>
+              <p style="color:var(--gray);font-size:1.5rem;margin-bottom:3rem">Recevez nos analyses et retours d'expérience. Pas de spam — du contenu qui compte.</p>
+              <form id="newsletter-form" style="display:flex;gap:1.2rem;max-width:480px;margin:0 auto">
+                <input type="email" id="nl-email" required placeholder="votre@email.com" style="flex:1;padding:1.4rem 2rem;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-size:1.5rem;font-family:var(--sans);outline:none" />
+                <button type="submit" style="padding:1.4rem 2.8rem;border-radius:12px;border:none;background:var(--accent);color:#fff;font-size:1.4rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;white-space:nowrap">S'inscrire</button>
+              </form>
+              <p id="nl-success" style="display:none;color:#4BB2F2;margin-top:1.6rem;font-size:1.4rem">Inscription confirmée. Bienvenue.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
-
   <Footer />
-
 </Base>
 
-<script>
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('rv--vis'); obs.unobserve(e.target); } });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.rv').forEach((el) => obs.observe(el));
+<style>
+.contact-layout{display:grid;gap:6rem;grid-template-columns:1fr}
+@media(min-width:992px){.contact-layout{grid-template-columns:1.4fr 1fr;gap:8rem}}
+.contact-heading{font-family:var(--sans);font-size:3.2rem;font-weight:600;letter-spacing:.04em;line-height:4rem;margin:0 0 1.2rem}
+.contact-heading em{font-family:var(--serif);font-style:italic;font-weight:400}
+.contact-sub{color:var(--gray);font-size:1.5rem;line-height:2.4rem;margin:0 0 4rem}
+.form-row{display:grid;gap:2rem;grid-template-columns:1fr 1fr}
+@media(max-width:600px){.form-row{grid-template-columns:1fr}}
+.form-group{margin-bottom:2.4rem}
+.form-group label{color:var(--text);display:block;font-size:1.2rem;font-weight:500;letter-spacing:.1em;margin-bottom:.8rem;text-transform:uppercase}
+.form-group input,.form-group textarea{background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.1);border-radius:12px;color:var(--text);font-family:var(--sans);font-size:1.5rem;padding:1.4rem 2rem;transition:border-color .3s,box-shadow .3s;width:100%}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(233,84,13,.1);outline:none}
+.form-group textarea{resize:vertical}
+.radio-group{display:grid;gap:1.2rem;grid-template-columns:repeat(3,1fr)}
+@media(max-width:600px){.radio-group{grid-template-columns:1fr}}
+.radio-card{cursor:pointer}
+.radio-card input{display:none}
+.radio-card__inner{background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.1);border-radius:12px;display:block;padding:1.6rem;text-align:center;transition:border-color .3s,background .3s}
+.radio-card input:checked+.radio-card__inner{background:rgba(233,84,13,.06);border-color:var(--accent)}
+.radio-card__title{color:var(--text);display:block;font-size:1.5rem;font-weight:600;margin-bottom:.4rem}
+.radio-card__desc{color:var(--gray);display:block;font-size:1.2rem}
+.radio-group--budget{display:flex;flex-wrap:wrap;gap:.8rem;grid-template-columns:unset}
+.radio-pill{cursor:pointer}
+.radio-pill input{display:none}
+.radio-pill span{background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.1);border-radius:40px;color:var(--gray);display:inline-block;font-size:1.3rem;padding:.8rem 1.8rem;transition:all .3s}
+.radio-pill input:checked+span{background:rgba(233,84,13,.06);border-color:var(--accent);color:var(--accent);font-weight:500}
+.form-submit{background:var(--accent);border:none;border-radius:12px;color:#fff;cursor:pointer;font-family:var(--sans);font-size:1.5rem;font-weight:600;letter-spacing:.08em;margin-top:1rem;padding:1.6rem 4rem;text-transform:uppercase;transition:background .3s,transform .2s;width:100%}
+.form-submit:hover{background:#d04a0b}
+.form-submit:active{transform:scale(.98)}
+.form-submit:disabled{cursor:wait;opacity:.7}
+.form-success{background:rgba(75,178,242,.08);border:1px solid rgba(75,178,242,.3);border-radius:16px;margin-top:2rem;padding:3rem;text-align:center}
+.form-success__icon{background:#4BB2F2;border-radius:50%;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:2rem;height:48px;margin-bottom:1.6rem;width:48px}
+.form-success h3{font-size:2rem;margin:0 0 .8rem}
+.form-success p{color:var(--gray);font-size:1.4rem;margin:0}
+.form-error{background:rgba(233,84,13,.08);border:1px solid rgba(233,84,13,.3);border-radius:12px;margin-top:2rem;padding:1.6rem 2rem}
+.form-error p{color:var(--accent);font-size:1.4rem;margin:0}
+.form-error a{color:var(--accent)}
+.contact-info{display:flex;flex-direction:column;gap:2.4rem}
+.info-card{border-bottom:1px solid rgba(0,0,0,.06);padding-bottom:2.4rem}
+.info-card:last-child{border-bottom:none}
+.info-card__title{color:var(--text);font-size:1.2rem;font-weight:500;letter-spacing:.14em;margin:0 0 .8rem;text-transform:uppercase}
+.info-card__text{color:var(--gray);font-size:1.5rem;line-height:2.4rem;margin:0}
+.info-card__link{color:var(--text);font-size:1.5rem;text-decoration:none;transition:color .3s}
+.info-card__link:hover{color:var(--accent)}
+.info-card__socials{display:flex;gap:2rem}
+.info-card__socials a{color:var(--text);font-size:1.5rem;text-decoration:none;transition:color .3s}
+.info-card__socials a:hover{color:var(--accent)}
+.info-card--accent{background:rgba(0,0,0,.03);border:none;border-radius:16px;padding:3rem}
+.info-card__quote{color:var(--text);font-family:var(--serif);font-size:1.8rem;font-style:italic;line-height:2.8rem;margin:0 0 1.2rem}
+.info-card__author{color:var(--accent);font-size:1.2rem;font-weight:500;letter-spacing:.1em;margin:0;text-transform:uppercase}
+</style>
 
-  const form = document.getElementById('contactForm') as HTMLFormElement | null;
-  const msg  = document.getElementById('formMsg');
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (msg) { msg.textContent = 'Message envoyé — on revient vers vous sous 24h.'; msg.style.display = 'block'; }
-    form.reset();
-  });
+<script is:inline>
+var SB='https://kgfolduvslsytbekbjvf.supabase.co';
+var SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZm9sZHV2c2xzeXRiZWtianZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDU3MDcsImV4cCI6MjA5MDcyMTcwN30.4jZ9fMfSinEc1CE3s6LuR4q_WNeisEdtyBM5XQ2uMJg';
+var H={'Content-Type':'application/json','apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'return=minimal'};
+
+document.getElementById('contact-form').addEventListener('submit',async function(e){
+  e.preventDefault();
+  var b=document.getElementById('submit-btn');
+  b.disabled=true;
+  b.querySelector('.form-submit__text').style.display='none';
+  b.querySelector('.form-submit__loading').style.display='inline';
+  try{
+    var r=await fetch(SB+'/rest/v1/contacts',{method:'POST',headers:H,body:JSON.stringify({
+      prenom:document.getElementById('prenom').value,
+      nom:document.getElementById('nom').value,
+      email:document.getElementById('email').value,
+      telephone:document.getElementById('telephone').value||null,
+      entreprise:document.getElementById('entreprise').value||null,
+      type_projet:document.querySelector('input[name="type_projet"]:checked')?.value||'les-deux',
+      budget:document.querySelector('input[name="budget"]:checked')?.value||'non-precise',
+      message:document.getElementById('message').value||null,
+      source:'site-contact',page_origine:window.location.pathname
+    })});
+    if(r.ok){document.getElementById('contact-form').style.display='none';document.getElementById('form-success').style.display='block'}
+    else throw new Error()
+  }catch(err){document.getElementById('form-error').style.display='block';b.disabled=false;b.querySelector('.form-submit__text').style.display='inline';b.querySelector('.form-submit__loading').style.display='none'}
+});
+
+document.getElementById('newsletter-form').addEventListener('submit',async function(e){
+  e.preventDefault();
+  try{await fetch(SB+'/rest/v1/newsletter_subscribers',{method:'POST',headers:H,body:JSON.stringify({email:document.getElementById('nl-email').value,source:'site-newsletter'})});
+  document.getElementById('newsletter-form').style.display='none';document.getElementById('nl-success').style.display='block'}catch(err){}
+});
+</script>
+<script>
+  const obs=new IntersectionObserver((e)=>{e.forEach((e)=>{if(e.isIntersecting){e.target.classList.add('rv--vis');obs.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.rv').forEach((el)=>obs.observe(el));
 </script>
