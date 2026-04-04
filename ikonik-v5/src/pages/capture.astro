@@ -1,0 +1,243 @@
+---
+// capture.astro — IKONIK OS · Capture Mobile
+// Ouvre la caméra, compresse l'image, stocke dans Supabase
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Capture — IKONIK OS" description="Capture et stockage de documents">
+<div class="cap">
+  <div class="cap__header">
+    <img src="/images/LOGO_IKONIK_blanc.webp" alt="IKONIK" class="cap__logo" />
+    <span class="cap__badge">OS</span>
+  </div>
+
+  <!-- STEP 1: Choose category -->
+  <div id="step-1" class="cap__step">
+    <h1 class="cap__title">Capturer un document</h1>
+    <p class="cap__sub">Choisissez la catégorie puis prenez la photo.</p>
+    <div class="cap__cats">
+      <button class="cap__cat" data-cat="comptabilite" data-sub="facture-fournisseur">
+        <span class="cap__cat-icon">📄</span>
+        <span class="cap__cat-name">Facture fournisseur</span>
+      </button>
+      <button class="cap__cat" data-cat="comptabilite" data-sub="note-frais">
+        <span class="cap__cat-icon">🧾</span>
+        <span class="cap__cat-name">Note de frais</span>
+      </button>
+      <button class="cap__cat" data-cat="projets" data-sub="reference-visuelle">
+        <span class="cap__cat-icon">📸</span>
+        <span class="cap__cat-name">Référence projet</span>
+      </button>
+      <button class="cap__cat" data-cat="projets" data-sub="contrat">
+        <span class="cap__cat-icon">📝</span>
+        <span class="cap__cat-name">Contrat / Brief</span>
+      </button>
+      <button class="cap__cat" data-cat="perso" data-sub="document-admin">
+        <span class="cap__cat-icon">🪪</span>
+        <span class="cap__cat-name">Document admin</span>
+      </button>
+      <button class="cap__cat" data-cat="perso" data-sub="autre">
+        <span class="cap__cat-icon">📎</span>
+        <span class="cap__cat-name">Autre</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Camera + preview -->
+  <div id="step-2" class="cap__step" style="display:none">
+    <div class="cap__back" id="back-btn">← Retour</div>
+    <div id="selected-cat" class="cap__selected"></div>
+    
+    <label class="cap__camera-btn" id="camera-label">
+      <input type="file" accept="image/*" capture="environment" id="camera-input" style="display:none" />
+      <span class="cap__camera-icon">📷</span>
+      <span>Prendre la photo</span>
+    </label>
+
+    <label class="cap__camera-btn cap__camera-btn--secondary" id="gallery-label">
+      <input type="file" accept="image/*" id="gallery-input" style="display:none" />
+      <span class="cap__camera-icon">🖼️</span>
+      <span>Choisir depuis la galerie</span>
+    </label>
+
+    <div id="preview-zone" style="display:none">
+      <canvas id="preview-canvas" class="cap__preview"></canvas>
+      <div class="cap__meta">
+        <input type="text" id="doc-title" placeholder="Titre du document (optionnel)" class="cap__input" />
+        <p id="file-info" class="cap__info"></p>
+      </div>
+      <button id="upload-btn" class="cap__upload">
+        <span id="upload-text">Envoyer</span>
+        <span id="upload-loading" style="display:none">Compression & envoi...</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Success -->
+  <div id="step-3" class="cap__step" style="display:none">
+    <div class="cap__success">
+      <div class="cap__success-icon">✓</div>
+      <h2>Document enregistré</h2>
+      <p id="success-detail"></p>
+      <button class="cap__upload" onclick="location.reload()">Nouvelle capture</button>
+    </div>
+  </div>
+</div>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.cap{background:#151C24;color:#fff;font-family:'Outfit',system-ui,sans-serif;min-height:100vh;padding:2rem;max-width:480px;margin:0 auto}
+.cap__header{display:flex;align-items:center;gap:1rem;margin-bottom:3rem}
+.cap__logo{height:2.4rem;width:auto;opacity:.9}
+.cap__badge{background:#E9540D;border-radius:6px;font-size:1rem;font-weight:700;letter-spacing:.08em;padding:.3rem .8rem}
+.cap__title{font-size:2.4rem;font-weight:600;margin-bottom:.8rem}
+.cap__sub{color:rgba(255,255,255,.5);font-size:1.4rem;margin-bottom:3rem}
+.cap__cats{display:grid;gap:1.2rem;grid-template-columns:1fr 1fr}
+.cap__cat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:.8rem;padding:2rem 1rem;transition:all .3s;font-family:inherit;font-size:1.3rem}
+.cap__cat:active{background:rgba(233,84,13,.15);border-color:#E9540D;transform:scale(.97)}
+.cap__cat-icon{font-size:2.4rem}
+.cap__cat-name{font-weight:500;text-align:center}
+.cap__back{color:rgba(255,255,255,.5);cursor:pointer;font-size:1.3rem;margin-bottom:2rem}
+.cap__selected{background:rgba(233,84,13,.15);border:1px solid rgba(233,84,13,.3);border-radius:12px;color:#E9540D;font-size:1.3rem;font-weight:500;margin-bottom:2rem;padding:1rem 1.6rem;text-align:center}
+.cap__camera-btn{align-items:center;background:rgba(255,255,255,.06);border:2px dashed rgba(255,255,255,.15);border-radius:16px;color:#fff;cursor:pointer;display:flex;font-family:inherit;font-size:1.5rem;font-weight:500;gap:1rem;justify-content:center;margin-bottom:1.2rem;padding:2.4rem;transition:all .3s;width:100%}
+.cap__camera-btn:active{background:rgba(233,84,13,.1);border-color:#E9540D}
+.cap__camera-btn--secondary{background:transparent;border-style:solid;border-width:1px;font-size:1.3rem;padding:1.6rem}
+.cap__camera-icon{font-size:2rem}
+.cap__preview{border-radius:16px;display:block;margin:2rem 0;max-height:50vh;width:100%;object-fit:contain}
+.cap__input{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:12px;color:#fff;font-family:inherit;font-size:1.4rem;margin-bottom:1rem;padding:1.2rem 1.6rem;width:100%}
+.cap__input:focus{border-color:#E9540D;outline:none}
+.cap__info{color:rgba(255,255,255,.4);font-size:1.2rem;margin-bottom:2rem}
+.cap__upload{background:#E9540D;border:none;border-radius:12px;color:#fff;cursor:pointer;font-family:inherit;font-size:1.5rem;font-weight:600;letter-spacing:.06em;padding:1.6rem;text-transform:uppercase;transition:all .3s;width:100%}
+.cap__upload:active{transform:scale(.97)}
+.cap__upload:disabled{opacity:.5;cursor:wait}
+.cap__success{text-align:center;padding:4rem 0}
+.cap__success-icon{background:#4BB2F2;border-radius:50%;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:3rem;height:72px;margin-bottom:2rem;width:72px}
+.cap__success h2{font-size:2rem;margin-bottom:1rem}
+.cap__success p{color:rgba(255,255,255,.5);font-size:1.4rem;margin-bottom:3rem}
+.cap__meta{margin-bottom:1rem}
+</style>
+
+<script is:inline>
+var SB='https://kgfolduvslsytbekbjvf.supabase.co';
+var SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZm9sZHV2c2xzeXRiZWtianZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDU3MDcsImV4cCI6MjA5MDcyMTcwN30.4jZ9fMfSinEc1CE3s6LuR4q_WNeisEdtyBM5XQ2uMJg';
+
+var selectedCat='';
+var selectedSub='';
+var compressedBlob=null;
+var originalSize=0;
+
+// STEP 1 — Category selection
+document.querySelectorAll('.cap__cat').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    selectedCat=this.dataset.cat;
+    selectedSub=this.dataset.sub;
+    document.getElementById('step-1').style.display='none';
+    document.getElementById('step-2').style.display='block';
+    document.getElementById('selected-cat').textContent=this.querySelector('.cap__cat-icon').textContent+' '+this.querySelector('.cap__cat-name').textContent;
+  });
+});
+
+document.getElementById('back-btn').addEventListener('click',function(){
+  document.getElementById('step-2').style.display='none';
+  document.getElementById('step-1').style.display='block';
+  document.getElementById('preview-zone').style.display='none';
+});
+
+// STEP 2 — Camera/Gallery capture + compression
+function handleFile(file){
+  if(!file)return;
+  originalSize=file.size;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var img=new Image();
+    img.onload=function(){
+      // Compress: max 1200px wide, WebP quality 0.75
+      var MAX=1200;
+      var w=img.width,h=img.height;
+      if(w>MAX){h=Math.round(h*(MAX/w));w=MAX}
+      if(h>MAX){w=Math.round(w*(MAX/h));h=MAX}
+      var canvas=document.getElementById('preview-canvas');
+      canvas.width=w;canvas.height=h;
+      var ctx=canvas.getContext('2d');
+      ctx.drawImage(img,0,0,w,h);
+      // Try WebP, fallback to JPEG
+      canvas.toBlob(function(blob){
+        compressedBlob=blob;
+        document.getElementById('preview-zone').style.display='block';
+        var ratio=Math.round((1-blob.size/originalSize)*100);
+        document.getElementById('file-info').textContent=
+          'Original: '+(originalSize/1024/1024).toFixed(1)+'MB → Compressé: '+(blob.size/1024).toFixed(0)+'KB (−'+ratio+'%) · '+w+'×'+h+'px';
+      },'image/webp',0.75);
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+document.getElementById('camera-input').addEventListener('change',function(e){handleFile(e.target.files[0])});
+document.getElementById('gallery-input').addEventListener('change',function(e){handleFile(e.target.files[0])});
+
+// STEP 3 — Upload
+document.getElementById('upload-btn').addEventListener('click',async function(){
+  if(!compressedBlob)return;
+  var btn=this;
+  btn.disabled=true;
+  document.getElementById('upload-text').style.display='none';
+  document.getElementById('upload-loading').style.display='inline';
+
+  var ts=Date.now();
+  var fileName='capture/'+new Date().toISOString().slice(0,7)+'/'+ts+'.webp';
+  var title=document.getElementById('doc-title').value||selectedSub+' — '+new Date().toLocaleDateString('fr-FR');
+
+  try{
+    // Upload to Supabase Storage
+    var uploadRes=await fetch(SB+'/storage/v1/object/'+selectedCat+'/'+fileName,{
+      method:'POST',
+      headers:{
+        'apikey':SK,
+        'Authorization':'Bearer '+SK,
+        'Content-Type':'image/webp',
+        'x-upsert':'true'
+      },
+      body:compressedBlob
+    });
+
+    if(!uploadRes.ok)throw new Error('Upload failed');
+
+    // Log metadata in documents table
+    var geo=null;
+    try{
+      var pos=await new Promise(function(res,rej){navigator.geolocation.getCurrentPosition(res,rej,{timeout:5000})});
+      geo={lat:pos.coords.latitude,lng:pos.coords.longitude};
+    }catch(e){}
+
+    await fetch(SB+'/rest/v1/documents',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'return=minimal'},
+      body:JSON.stringify({
+        categorie:selectedCat,
+        sous_categorie:selectedSub,
+        titre:title,
+        nom_fichier:ts+'.webp',
+        taille_octets:compressedBlob.size,
+        type_mime:'image/webp',
+        storage_path:selectedCat+'/'+fileName,
+        mois:new Date().toISOString().slice(0,7),
+        geolocation:geo,
+        notes:'Capturé depuis iPhone · Original: '+(originalSize/1024/1024).toFixed(1)+'MB'
+      })
+    });
+
+    // Show success
+    document.getElementById('step-2').style.display='none';
+    document.getElementById('step-3').style.display='block';
+    document.getElementById('success-detail').textContent=title+' · '+(compressedBlob.size/1024).toFixed(0)+'KB · '+selectedCat;
+  }catch(err){
+    alert('Erreur : '+err.message+'. Réessayez.');
+    btn.disabled=false;
+    document.getElementById('upload-text').style.display='inline';
+    document.getElementById('upload-loading').style.display='none';
+  }
+});
+</script>
+</Base>
