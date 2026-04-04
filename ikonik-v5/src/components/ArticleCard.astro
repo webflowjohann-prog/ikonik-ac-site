@@ -1,5 +1,5 @@
 ---
-// ArticleCard.astro — card article avec bandeau couleur par catégorie
+// ArticleCard.astro — card article avec accent couleur fin par catégorie
 interface Props {
   tag?: string;
   title: string;
@@ -12,19 +12,15 @@ interface Props {
 const { tag, title, excerpt, href, imageSrc, color, date } = Astro.props;
 ---
 
-<a class="article-card rv" href={href}>
-  {color && !imageSrc && (
-    <div class="article-card__color" style={`background-color:${color}`}>
-      {tag && <span class="article-card__color-tag">{tag}</span>}
-    </div>
-  )}
+<a class="article-card rv" href={href} style={color ? `--card-accent:${color}` : ''}>
+  {color && <div class="article-card__accent"></div>}
   {imageSrc && (
     <div class="article-card__img">
       <img src={imageSrc} alt={title} loading="lazy" />
     </div>
   )}
   <div class="article-card__body">
-    {tag && !color && <span class="article-card__tag">{tag}</span>}
+    {tag && <span class="article-card__tag" style={color ? `color:${color}` : ''}>{tag}</span>}
     <h3 class="article-card__title">{title}</h3>
     {excerpt && <p class="article-card__excerpt">{excerpt}</p>}
     {date && <p class="article-card__date">{date}</p>}
@@ -32,19 +28,10 @@ const { tag, title, excerpt, href, imageSrc, color, date } = Astro.props;
 </a>
 
 <style>
-  .article-card__color {
+  .article-card__accent {
+    background-color: var(--card-accent, var(--accent));
     border-radius: 20px 20px 0 0;
-    display: flex;
-    align-items: flex-end;
-    height: 180px;
-    padding: 2rem;
-    position: relative;
-  }
-  .article-card__color-tag {
-    color: rgba(255,255,255,0.85);
-    font-size: 1.1rem;
-    font-weight: 500;
-    letter-spacing: .14em;
-    text-transform: uppercase;
+    height: 4px;
+    width: 100%;
   }
 </style>
