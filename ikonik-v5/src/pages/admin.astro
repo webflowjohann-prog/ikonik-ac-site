@@ -1,259 +1,408 @@
 ---
-// admin.astro — IKONIK OS · Command Center
+// admin.astro — IKONIK OS · Unified Command Center
 ---
 <html lang="fr">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow" />
-<title>Command Center — IKONIK OS</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<meta name="color-scheme" content="dark" />
+<title>IKONIK OS — Command Center</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0D1117;--card:#161B22;--border:#21262D;--text:#E6EDF3;--muted:#8B949E;--accent:#E9540D;--green:#3FB950;--blue:#4BB2F2;--yellow:#D29922;--red:#F85149}
+:root{--bg:#0D1117;--card:#161B22;--border:#21262D;--text:#E6EDF3;--muted:#8B949E;--gold:#b8963e;--gold-light:#d4b062;--green:#3FB950;--blue:#4BB2F2;--red:#F85149;--sidebar-w:220px}
 body{background:var(--bg);color:var(--text);font-family:'Outfit',system-ui,sans-serif;font-size:14px;min-height:100vh}
-a{color:var(--accent);text-decoration:none}
+a{color:var(--blue);text-decoration:none}
 
 /* AUTH */
-.auth{align-items:center;display:flex;flex-direction:column;gap:2rem;height:100vh;justify-content:center;padding:2rem}
+.auth{align-items:center;display:flex;flex-direction:column;gap:2rem;height:100vh;justify-content:center}
 .auth__logo{height:3rem;opacity:.8}
-.auth__title{font-size:1.4rem;font-weight:500;color:var(--muted)}
+.auth__tag{color:var(--gold);font-size:.85rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
 .auth__input{background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:1rem;padding:.8rem 1.2rem;text-align:center;width:280px}
-.auth__input:focus{border-color:var(--accent);outline:none}
-.auth__btn{background:var(--accent);border:none;border-radius:8px;color:#fff;cursor:pointer;font-family:inherit;font-size:1rem;font-weight:600;padding:.8rem 2rem}
+.auth__input:focus{border-color:var(--gold);outline:none}
+.auth__btn{background:var(--gold);border:none;border-radius:8px;color:#fff;cursor:pointer;font-family:inherit;font-weight:600;padding:.8rem 2rem}
 
 /* LAYOUT */
-.dash{display:none;padding:2rem;max-width:1400px;margin:0 auto}
-.dash__header{align-items:center;display:flex;gap:1.2rem;margin-bottom:3rem}
-.dash__logo{height:2.4rem;opacity:.8}
-.dash__badge{background:var(--accent);border-radius:6px;font-size:.75rem;font-weight:700;letter-spacing:.08em;padding:.25rem .6rem;color:#fff}
-.dash__time{color:var(--muted);font-size:.85rem;margin-left:auto}
-.dash__refresh{background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer;font-family:inherit;font-size:.8rem;padding:.4rem 1rem}
-.dash__refresh:hover{border-color:var(--accent);color:var(--text)}
+.app{display:none;min-height:100vh}
+.sidebar{background:var(--card);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100vh;left:0;position:fixed;top:0;width:var(--sidebar-w);z-index:100}
+.sb-brand{border-bottom:1px solid var(--border);padding:24px 20px}
+.sb-name{font-size:20px;font-weight:700;letter-spacing:1px}
+.sb-tagline{color:var(--gold);font-size:11px;font-style:italic;margin-top:2px}
+.sb-nav{display:flex;flex-direction:column;gap:2px;padding:16px 12px;flex:1;overflow-y:auto}
+.sb-item{align-items:center;border-radius:8px;color:var(--muted);cursor:pointer;display:flex;font-size:13px;gap:10px;padding:10px 12px;transition:all .2s;border:none;background:none;font-family:inherit;width:100%;text-align:left}
+.sb-item:hover{background:rgba(255,255,255,.04);color:var(--text)}
+.sb-item.active{background:rgba(184,150,62,.12);color:var(--gold-light);font-weight:600}
+.sb-item svg{flex-shrink:0;width:16px;height:16px}
+.sb-footer{border-top:1px solid var(--border);padding:12px}
+.sb-footer a{color:var(--muted);display:flex;align-items:center;gap:8px;font-size:12px;padding:8px 12px;border-radius:6px}
+.sb-footer a:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.main{margin-left:var(--sidebar-w);min-height:100vh;padding:28px 32px}
+.main__header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.main__title{font-size:22px;font-weight:600}
+.main__sub{color:var(--muted);font-size:13px;margin-top:4px}
+.section{display:none}
+.section.active{display:block}
 
-/* KPI ROW */
-.kpi-row{display:grid;gap:1rem;grid-template-columns:repeat(2,1fr);margin-bottom:2rem}
-@media(min-width:768px){.kpi-row{grid-template-columns:repeat(4,1fr)}}
-@media(min-width:1200px){.kpi-row{grid-template-columns:repeat(6,1fr)}}
-.kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.4rem}
-.kpi__label{color:var(--muted);font-size:.75rem;font-weight:500;letter-spacing:.1em;margin-bottom:.6rem;text-transform:uppercase}
-.kpi__value{font-size:2rem;font-weight:700}
-.kpi__value--accent{color:var(--accent)}
-.kpi__value--green{color:var(--green)}
-.kpi__value--blue{color:var(--blue)}
+/* CARDS & KPIS */
+.kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin-bottom:28px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px}
+.kpi__label{color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase}
+.kpi__val{font-size:28px;font-weight:700;margin-top:6px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px}
+.card__title{font-size:13px;font-weight:600;margin-bottom:14px}
+.grid-2{display:grid;gap:16px;grid-template-columns:1.4fr 1fr}
+@media(max-width:900px){.grid-2{grid-template-columns:1fr}}
 
-/* SECTIONS */
-.panels{display:grid;gap:1.6rem;grid-template-columns:1fr}
-@media(min-width:992px){.panels{grid-template-columns:1fr 1fr}}
-.panel{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.panel__head{border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.6rem}
-.panel__title{font-size:1rem;font-weight:600}
-.panel__count{background:var(--accent);border-radius:12px;color:#fff;font-size:.75rem;font-weight:600;padding:.2rem .6rem}
-.panel__body{max-height:400px;overflow-y:auto;padding:0}
-.panel__empty{color:var(--muted);font-size:.9rem;padding:2rem 1.6rem;text-align:center}
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{color:var(--muted);font-size:11px;font-weight:500;letter-spacing:1px;padding:8px 12px;text-align:left;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.tbl td{border-bottom:1px solid rgba(255,255,255,.04);font-size:13px;padding:12px}
+.tbl tr:hover{background:rgba(255,255,255,.02)}
+.tbl tr{cursor:pointer}
+.badge{border-radius:4px;font-size:10px;font-weight:600;padding:3px 8px;display:inline-block}
+.badge--green{background:rgba(63,185,80,.15);color:var(--green)}
+.badge--blue{background:rgba(75,178,242,.15);color:var(--blue)}
+.badge--gold{background:rgba(184,150,62,.15);color:var(--gold-light)}
+.badge--red{background:rgba(248,81,73,.15);color:var(--red)}
+.badge--muted{background:rgba(139,148,158,.15);color:var(--muted)}
 
-/* TABLE ROWS */
-.row{align-items:center;border-bottom:1px solid var(--border);display:flex;gap:1rem;padding:.8rem 1.6rem;transition:background .2s}
-.row:hover{background:rgba(255,255,255,.03)}
-.row:last-child{border-bottom:none}
-.row__name{font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.row__email{color:var(--muted);font-size:.85rem;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.row__score{border-radius:6px;font-size:.75rem;font-weight:600;padding:.2rem .6rem;min-width:36px;text-align:center}
-.row__score--hot{background:rgba(248,81,73,.15);color:var(--red)}
-.row__score--warm{background:rgba(210,153,34,.15);color:var(--yellow)}
-.row__score--cold{background:rgba(75,178,242,.15);color:var(--blue)}
-.row__date{color:var(--muted);font-size:.8rem;white-space:nowrap}
-.row__type{background:rgba(233,84,13,.1);border-radius:6px;color:var(--accent);font-size:.75rem;font-weight:500;padding:.2rem .6rem;white-space:nowrap}
-.row__tag{background:rgba(75,178,242,.1);border-radius:6px;color:var(--blue);font-size:.75rem;font-weight:500;padding:.2rem .6rem}
+/* AVATAR */
+.avatar{align-items:center;background:rgba(184,150,62,.15);border-radius:50%;color:var(--gold);display:flex;font-size:11px;font-weight:600;height:32px;justify-content:center;width:32px;flex-shrink:0}
 
-/* ACTIVITY */
-.activity{color:var(--muted);font-size:.85rem;padding:.6rem 1.6rem;border-bottom:1px solid var(--border);display:flex;gap:.8rem;align-items:center}
-.activity:last-child{border-bottom:none}
-.activity__dot{background:var(--accent);border-radius:50%;flex-shrink:0;height:6px;width:6px}
-.activity__time{color:var(--muted);font-size:.75rem;margin-left:auto;white-space:nowrap}
+/* FORMS */
+.f-row{display:grid;gap:16px;grid-template-columns:1fr 1fr;margin-bottom:16px}
+@media(max-width:600px){.f-row{grid-template-columns:1fr}}
+.f-group{display:flex;flex-direction:column;gap:4px;margin-bottom:16px}
+.f-label{color:var(--muted);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.f-inp{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:14px;padding:10px 14px}
+.f-inp:focus{border-color:var(--gold);outline:none}
+select.f-inp{appearance:auto}
+textarea.f-inp{resize:vertical;min-height:80px}
+.btn{border:none;border-radius:8px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;padding:10px 20px}
+.btn--gold{background:var(--gold);color:#fff}
+.btn--gold:hover{background:#a6862f}
+.btn--sec{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text)}
+.btn--sec:hover{background:rgba(255,255,255,.1)}
+.btn--sm{font-size:12px;padding:6px 14px}
+.btn:disabled{opacity:.4;cursor:wait}
+.empty{color:var(--muted);padding:3rem;text-align:center}
+
+/* TABS inner */
+.tabs-inner{display:flex;gap:8px;margin-bottom:20px}
+.tab-inner{background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--muted);cursor:pointer;font-family:inherit;font-size:13px;padding:8px 16px}
+.tab-inner.active{background:rgba(184,150,62,.12);border-color:var(--gold);color:var(--gold-light)}
+
+/* RADIO CARDS & PILLS (booking/contact/invoice) */
+.rc-group{display:grid;gap:10px;grid-template-columns:repeat(3,1fr);margin-bottom:16px}
+@media(max-width:600px){.rc-group{grid-template-columns:1fr}}
+.rc{cursor:pointer}
+.rc input{display:none}
+.rc__inner{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px;text-align:center;transition:all .2s}
+.rc input:checked+.rc__inner{background:rgba(184,150,62,.1);border-color:var(--gold)}
+.rc__title{font-size:14px;font-weight:600}
+.rc__desc{color:var(--muted);font-size:11px}
+.pill-group{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.pill{cursor:pointer}
+.pill input{display:none}
+.pill span{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:20px;color:var(--muted);display:inline-block;font-size:12px;padding:6px 14px;transition:all .2s}
+.pill input:checked+span{background:rgba(184,150,62,.1);border-color:var(--gold);color:var(--gold-light);font-weight:500}
+
+/* INVOICE LINES */
+.inv-lines{margin:16px 0}
+.inv-line{display:grid;gap:8px;grid-template-columns:3fr 1fr 1fr 1fr 32px;margin-bottom:6px;align-items:center}
+.inv-line input{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:inherit;font-size:13px;padding:8px 10px}
+.inv-line input:focus{border-color:var(--gold);outline:none}
+.inv-line-del{background:none;border:none;color:var(--red);cursor:pointer;font-size:16px}
+.inv-line-total{color:var(--muted);font-size:13px;text-align:right;padding:8px}
+.add-line-btn{background:none;border:1px dashed var(--border);border-radius:8px;color:var(--muted);cursor:pointer;font-family:inherit;font-size:13px;padding:10px;width:100%}
+.add-line-btn:hover{border-color:var(--gold);color:var(--gold)}
+.totals{border-top:1px solid var(--border);display:flex;flex-direction:column;align-items:flex-end;gap:6px;margin-top:16px;padding-top:16px}
+.totals__row{display:flex;gap:24px;font-size:14px}
+.totals__row span:first-child{color:var(--muted);min-width:100px;text-align:right}
+.totals__row span:last-child{font-weight:500;min-width:100px;text-align:right}
+.totals__row--big span:last-child{font-size:18px;font-weight:700;color:var(--gold-light)}
+
+/* BOOKING slots */
+.bk-days{display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
+.bk-days::-webkit-scrollbar{display:none}
+.bk-day{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;color:var(--text);cursor:pointer;flex-shrink:0;font-family:inherit;font-size:12px;padding:10px 14px;text-align:center;transition:all .2s;min-width:64px}
+.bk-day:hover{border-color:var(--gold)}
+.bk-day.active{background:rgba(184,150,62,.1);border-color:var(--gold);color:var(--gold-light);font-weight:600}
+.bk-day-name{display:block;font-weight:500;margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em;font-size:10px}
+.bk-day-date{display:block;font-size:14px;font-weight:600}
+.bk-slots{display:grid;gap:8px;grid-template-columns:repeat(4,1fr)}
+@media(max-width:600px){.bk-slots{grid-template-columns:repeat(2,1fr)}}
+.bk-slot{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;color:var(--text);cursor:pointer;font-family:inherit;font-size:13px;font-weight:500;padding:10px;text-align:center;transition:all .2s}
+.bk-slot:hover{border-color:var(--gold);color:var(--gold-light)}
+.bk-slot.active{background:var(--gold);border-color:var(--gold);color:#fff}
+
+/* BRAIN modes */
+.brain-modes{display:grid;gap:12px;grid-template-columns:repeat(3,1fr);margin-bottom:24px}
+@media(max-width:600px){.brain-modes{grid-template-columns:1fr}}
+.brain-mode{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;color:var(--text);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px 16px;transition:all .2s;font-family:inherit;text-align:center}
+.brain-mode:hover{border-color:var(--gold);background:rgba(184,150,62,.06)}
+.brain-mode-icon{font-size:24px}
+.brain-mode-name{font-size:14px;font-weight:600}
+.brain-mode-desc{color:var(--muted);font-size:11px}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.tag-btn{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:20px;color:var(--muted);cursor:pointer;font-family:inherit;font-size:12px;padding:6px 14px;transition:all .2s}
+.tag-btn.active{background:rgba(184,150,62,.12);border-color:var(--gold);color:var(--gold-light)}
+
+/* MOBILE */
+@media(max-width:768px){
+  .sidebar{width:60px;overflow:hidden}
+  .sb-brand{padding:16px 12px}
+  .sb-name,.sb-tagline,.sb-item span:not(svg),.sb-footer span{display:none}
+  .sb-item{justify-content:center;padding:12px}
+  .main{margin-left:60px;padding:16px}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 </head>
 <body>
 
-<!-- AUTH SCREEN -->
+<!-- AUTH -->
 <div class="auth" id="auth-screen">
   <img src="/images/LOGO_IKONIK_blanc.webp" alt="IKONIK" class="auth__logo" />
-  <p class="auth__title">Command Center</p>
+  <p class="auth__tag">Command Center</p>
   <input type="password" id="auth-pass" class="auth__input" placeholder="Mot de passe" autofocus />
-  <button class="auth__btn" id="auth-btn">Accéder</button>
+  <button class="auth__btn" id="auth-btn">Acceder</button>
 </div>
 
-<!-- DASHBOARD -->
-<div class="dash" id="dashboard">
-  <div class="dash__header">
-    <img src="/images/LOGO_IKONIK_blanc.webp" alt="IKONIK" class="dash__logo" />
-    <span class="dash__badge">COMMAND CENTER</span>
-    <span class="dash__time" id="dash-time"></span>
-    <a href="/facture" class="dash__refresh" style="text-decoration:none;display:inline-block">📄 Facturation</a>
-    <button class="dash__refresh" onclick="loadAll()">↻ Rafraîchir</button>
-  </div>
+<!-- APP -->
+<div class="app" id="app">
 
-  <!-- KPIs -->
-  <div class="kpi-row">
-    <div class="kpi"><div class="kpi__label">Contacts</div><div class="kpi__value kpi__value--accent" id="kpi-contacts">—</div></div>
-    <div class="kpi"><div class="kpi__label">Score moyen</div><div class="kpi__value kpi__value--green" id="kpi-score">—</div></div>
-    <div class="kpi"><div class="kpi__label">Bookings</div><div class="kpi__value kpi__value--blue" id="kpi-bookings">—</div></div>
-    <div class="kpi"><div class="kpi__label">Newsletter</div><div class="kpi__value" id="kpi-newsletter">—</div></div>
-    <div class="kpi"><div class="kpi__label">Brain</div><div class="kpi__value" id="kpi-brain">—</div></div>
-    <div class="kpi"><div class="kpi__label">Activités 24h</div><div class="kpi__value kpi__value--accent" id="kpi-activity">—</div></div>
-  </div>
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sb-brand"><div class="sb-name">IKONIK</div><div class="sb-tagline">Command Center</div></div>
+    <div class="sb-nav">
+      <button class="sb-item active" data-section="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><span>Dashboard</span></button>
+      <button class="sb-item" data-section="contacts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span>Contacts</span></button>
+      <button class="sb-item" data-section="booking"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Booking</span></button>
+      <button class="sb-item" data-section="facturation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Facturation</span></button>
+      <button class="sb-item" data-section="brain"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg><span>Brain</span></button>
+      <button class="sb-item" data-section="activite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Activite</span></button>
+    </div>
+    <div class="sb-footer"><a href="/"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span>Retour au site</span></a></div>
+  </nav>
 
-  <!-- PANELS -->
-  <div class="panels">
-    <!-- CONTACTS -->
-    <div class="panel">
-      <div class="panel__head">
-        <span class="panel__title">Derniers contacts</span>
-        <span class="panel__count" id="contacts-count">0</span>
+  <!-- MAIN CONTENT -->
+  <div class="main">
+    <div class="main__header">
+      <div><div class="main__title" id="page-title">Dashboard</div><div class="main__sub" id="page-sub">Vue d'ensemble IKONIK OS</div></div>
+      <div style="font-size:12px;color:var(--muted);background:var(--card);border:1px solid var(--border);padding:6px 14px;border-radius:6px">Johann Langenberg</div>
+    </div>
+
+    <!-- ═══ SECTION: DASHBOARD ═══ -->
+    <div class="section active" id="sec-dashboard">
+      <div class="kpis" id="kpis"></div>
+      <div class="grid-2">
+        <div class="card"><div class="card__title">Derniers contacts</div><div id="dash-contacts"><div class="empty">Chargement...</div></div></div>
+        <div class="card"><div class="card__title">Prochains RDV</div><div id="dash-bookings"><div class="empty">Chargement...</div></div></div>
       </div>
-      <div class="panel__body" id="contacts-list">
-        <div class="panel__empty">Aucun contact pour l'instant.</div>
+      <div class="card" style="margin-top:16px"><div class="card__title">Activite recente</div><div id="dash-activity"><div class="empty">Chargement...</div></div></div>
+    </div>
+
+    <!-- ═══ SECTION: CONTACTS ═══ -->
+    <div class="section" id="sec-contacts">
+      <div class="tabs-inner" id="contacts-filters">
+        <button class="tab-inner active" data-filter="all">Tous</button>
+        <button class="tab-inner" data-filter="nouveau">Nouveaux</button>
+        <button class="tab-inner" data-filter="alerte_envoyee">Alertes</button>
+        <button class="tab-inner" data-filter="relance_envoyee">Relances</button>
+      </div>
+      <div class="card"><table class="tbl"><thead><tr><th>Nom</th><th>Email</th><th>Type</th><th>Budget</th><th>Score</th><th>Statut</th><th>Date</th></tr></thead><tbody id="contacts-tbody"></tbody></table></div>
+    </div>
+
+    <!-- ═══ SECTION: BOOKING ═══ -->
+    <div class="section" id="sec-booking">
+      <div class="card">
+        <div class="card__title">Creneaux disponibles</div>
+        <div class="bk-days" id="adm-bk-days"></div>
+        <div class="bk-slots" id="adm-bk-slots"><div class="empty">Chargement...</div></div>
+      </div>
+      <div id="adm-bk-form" style="display:none" class="card" style="margin-top:16px">
+        <div class="card__title">Confirmer le creneau : <span id="adm-bk-selected" style="color:var(--gold-light)"></span></div>
+        <div class="f-row"><div class="f-group"><label class="f-label">Nom</label><input class="f-inp" id="adm-bk-nom" required /></div><div class="f-group"><label class="f-label">Email</label><input class="f-inp" id="adm-bk-email" required type="email" /></div></div>
+        <div class="f-row"><div class="f-group"><label class="f-label">Telephone</label><input class="f-inp" id="adm-bk-tel" /></div><div class="f-group"><label class="f-label">Type</label><select class="f-inp" id="adm-bk-type"><option value="decouverte">Decouverte</option><option value="projet">Projet</option><option value="suivi">Suivi</option></select></div></div>
+        <button class="btn btn--gold" id="adm-bk-submit" style="width:100%;margin-top:8px">Confirmer la reservation</button>
+      </div>
+      <div class="card" style="margin-top:16px"><div class="card__title">Reservations a venir</div><table class="tbl"><thead><tr><th>Date</th><th>Heure</th><th>Nom</th><th>Email</th><th>Type</th></tr></thead><tbody id="bookings-tbody"></tbody></table></div>
+    </div>
+
+    <!-- ═══ SECTION: FACTURATION ═══ -->
+    <div class="section" id="sec-facturation">
+      <div class="tabs-inner">
+        <button class="tab-inner active" onclick="showInvTab('list')">Factures</button>
+        <button class="tab-inner" onclick="showInvTab('new')">+ Nouvelle facture</button>
+      </div>
+      <div id="inv-tab-list" class="card"><table class="tbl"><thead><tr><th>Numero</th><th>Client</th><th>Total TTC</th><th>Statut</th><th>Date</th></tr></thead><tbody id="inv-tbody"></tbody></table></div>
+      <div id="inv-tab-new" class="card" style="display:none">
+        <div class="card__title">Nouvelle facture</div>
+        <div class="f-row"><div class="f-group"><label class="f-label">Type</label><select class="f-inp" id="inv-type"><option value="facture">Facture</option><option value="devis">Devis</option><option value="avoir">Avoir</option></select></div><div class="f-group"><label class="f-label">Date</label><input type="date" class="f-inp" id="inv-date" /></div></div>
+        <div class="f-row"><div class="f-group"><label class="f-label">Client</label><input class="f-inp" id="inv-client" placeholder="Nom du client" /></div><div class="f-group"><label class="f-label">Email</label><input class="f-inp" id="inv-email" placeholder="email@client.com" /></div></div>
+        <div class="f-row"><div class="f-group"><label class="f-label">Adresse</label><input class="f-inp" id="inv-adresse" placeholder="Adresse complete" /></div><div class="f-group"><label class="f-label">SIRET client</label><input class="f-inp" id="inv-siret" placeholder="Optionnel" /></div></div>
+        <div class="f-row"><div class="f-group"><label class="f-label">Echeance</label><select class="f-inp" id="inv-echeance"><option value="30">30 jours</option><option value="15">15 jours</option><option value="45">45 jours</option><option value="0">A reception</option></select></div><div class="f-group"><label class="f-label">TVA (%)</label><input type="number" class="f-inp" id="inv-tva" value="20" min="0" max="100" /></div></div>
+        <div class="inv-lines"><div style="display:grid;gap:8px;grid-template-columns:3fr 1fr 1fr 1fr 32px;margin-bottom:8px;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em"><span>Description</span><span>Qte</span><span>Prix HT</span><span>Total</span><span></span></div><div id="inv-lines"></div><button class="add-line-btn" onclick="addInvLine()">+ Ajouter une ligne</button></div>
+        <div class="totals"><div class="totals__row"><span>Sous-total HT</span><span id="inv-st">0,00 EUR</span></div><div class="totals__row"><span>TVA (<span id="inv-tp">20</span>%)</span><span id="inv-tv">0,00 EUR</span></div><div class="totals__row totals__row--big"><span>Total TTC</span><span id="inv-tt">0,00 EUR</span></div></div>
+        <div style="display:flex;gap:10px;margin-top:16px"><button class="btn btn--gold" onclick="saveInvoice()">Enregistrer</button><button class="btn btn--sec" onclick="previewInvoice()">Apercu / PDF</button></div>
+      </div>
+      <div id="inv-preview" style="display:none"></div>
+    </div>
+
+    <!-- ═══ SECTION: BRAIN ═══ -->
+    <div class="section" id="sec-brain">
+      <div id="brain-home">
+        <div class="brain-modes">
+          <button class="brain-mode" onclick="showBrainMode('link')"><span class="brain-mode-icon">&#128279;</span><span class="brain-mode-name">Lien web</span><span class="brain-mode-desc">R&D, veille, inspiration</span></button>
+          <button class="brain-mode" onclick="showBrainMode('idea')"><span class="brain-mode-icon">&#128161;</span><span class="brain-mode-name">Idee</span><span class="brain-mode-desc">Note rapide, boite a idees</span></button>
+          <button class="brain-mode" onclick="showBrainMode('photo')"><span class="brain-mode-icon">&#128247;</span><span class="brain-mode-name">Photo</span><span class="brain-mode-desc">Document, reference visuelle</span></button>
+        </div>
+        <div class="card"><div class="card__title">Dernieres captures</div><table class="tbl"><thead><tr><th>Type</th><th>Titre</th><th>Tags</th><th>Date</th></tr></thead><tbody id="brain-tbody"></tbody></table></div>
+      </div>
+      <div id="brain-form" style="display:none">
+        <button class="btn btn--sec btn--sm" onclick="showBrainMode('home')" style="margin-bottom:16px">&#8592; Retour</button>
+        <div class="card">
+          <div class="card__title" id="brain-form-title">Nouveau lien</div>
+          <div id="brain-link-fields"><div class="f-group"><label class="f-label">URL</label><input class="f-inp" id="br-url" placeholder="https://..." /></div></div>
+          <div id="brain-idea-fields" style="display:none"></div>
+          <div class="f-group"><label class="f-label">Titre</label><input class="f-inp" id="br-title" placeholder="Titre ou note" /></div>
+          <div class="f-group"><label class="f-label">Notes</label><textarea class="f-inp" id="br-note" placeholder="Pourquoi c'est interessant ?" rows="3"></textarea></div>
+          <div class="tag-row" id="br-tags"><button class="tag-btn" data-t="ia">IA</button><button class="tag-btn" data-t="video">Video</button><button class="tag-btn" data-t="design">Design</button><button class="tag-btn" data-t="tech">Tech</button><button class="tag-btn" data-t="business">Business</button><button class="tag-btn" data-t="creatif">Creatif</button></div>
+          <button class="btn btn--gold" style="width:100%" id="br-save">Sauvegarder</button>
+        </div>
       </div>
     </div>
 
-    <!-- BOOKINGS -->
-    <div class="panel">
-      <div class="panel__head">
-        <span class="panel__title">Prochains RDV</span>
-        <span class="panel__count" id="bookings-count">0</span>
-      </div>
-      <div class="panel__body" id="bookings-list">
-        <div class="panel__empty">Aucune réservation à venir.</div>
-      </div>
+    <!-- ═══ SECTION: ACTIVITE ═══ -->
+    <div class="section" id="sec-activite">
+      <div class="card"><table class="tbl"><thead><tr><th>Action</th><th>Description</th><th>Date</th></tr></thead><tbody id="activity-tbody"></tbody></table></div>
     </div>
 
-    <!-- BRAIN -->
-    <div class="panel">
-      <div class="panel__head">
-        <span class="panel__title">IKONIK Brain</span>
-        <span class="panel__count" id="brain-count">0</span>
-      </div>
-      <div class="panel__body" id="brain-list">
-        <div class="panel__empty">Aucune idée ou lien sauvegardé.</div>
-      </div>
-    </div>
-
-    <!-- ACTIVITY LOG -->
-    <div class="panel">
-      <div class="panel__head">
-        <span class="panel__title">Activité récente</span>
-        <span class="panel__count" id="activity-count">0</span>
-      </div>
-      <div class="panel__body" id="activity-list">
-        <div class="panel__empty">Aucune activité.</div>
-      </div>
-    </div>
   </div>
 </div>
 
-<script>
+<script is:inline>
 var SB='https://kgfolduvslsytbekbjvf.supabase.co';
 var SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZm9sZHV2c2xzeXRiZWtianZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDU3MDcsImV4cCI6MjA5MDcyMTcwN30.4jZ9fMfSinEc1CE3s6LuR4q_WNeisEdtyBM5XQ2uMJg';
-var H={'apikey':SK,'Authorization':'Bearer '+SK};
+var H={'Content-Type':'application/json','apikey':SK,'Authorization':'Bearer '+SK};
+var HP={...H,'Prefer':'return=minimal'};
 var PASS='ikonik2026';
+function fmt(n){return parseFloat(n||0).toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})+' EUR'}
+function dateFr(d){return new Date(d).toLocaleDateString('fr-FR')}
+function initials(p,n){return((p||'')[0]||'')+((n||'')[0]||'')};
+async function q(path){var r=await fetch(SB+'/rest/v1/'+path,{headers:H});return r.json()}
 
-// AUTH
+// ═══ AUTH ═══
 document.getElementById('auth-btn').addEventListener('click',doAuth);
 document.getElementById('auth-pass').addEventListener('keydown',function(e){if(e.key==='Enter')doAuth()});
-if(localStorage.getItem('iko_admin')==='1'){showDash()}
+if(localStorage.getItem('iko_admin')==='1')showApp();
+function doAuth(){if(document.getElementById('auth-pass').value===PASS){localStorage.setItem('iko_admin','1');showApp()}}
+function showApp(){document.getElementById('auth-screen').style.display='none';document.getElementById('app').style.display='flex';loadDashboard()}
 
-function doAuth(){
-  if(document.getElementById('auth-pass').value===PASS){
-    localStorage.setItem('iko_admin','1');
-    showDash();
-  }else{
-    document.getElementById('auth-pass').style.borderColor='#F85149';
-  }
+// ═══ NAV ═══
+var titles={dashboard:['Dashboard','Vue d\'ensemble IKONIK OS'],contacts:['Contacts','Gestion des prospects et clients'],booking:['Booking','Calendrier et reservations'],facturation:['Facturation','Devis et factures'],brain:['Brain','Capture, veille et idees'],activite:['Activite','Journal d\'activite']};
+document.querySelectorAll('.sb-item').forEach(function(b){b.addEventListener('click',function(){
+  document.querySelectorAll('.sb-item').forEach(function(x){x.classList.remove('active')});this.classList.add('active');
+  var sec=this.dataset.section;
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('sec-'+sec).classList.add('active');
+  document.getElementById('page-title').textContent=titles[sec][0];
+  document.getElementById('page-sub').textContent=titles[sec][1];
+  if(sec==='dashboard')loadDashboard();
+  if(sec==='contacts')loadContacts();
+  if(sec==='booking')loadBooking();
+  if(sec==='facturation')loadInvoices();
+  if(sec==='brain')loadBrain();
+  if(sec==='activite')loadActivity();
+})});
+
+// ═══ DASHBOARD ═══
+async function loadDashboard(){
+  var contacts=await q('contacts?select=id,score&order=created_at.desc');
+  var bookings=await q('booking_slots?select=id&booked=eq.true');
+  var nl=await q('newsletter_subscribers?select=id');
+  var brain=await q('brain?select=id');
+  var avgScore=contacts.length?Math.round(contacts.reduce(function(a,c){return a+(c.score||0)},0)/contacts.length):0;
+  document.getElementById('kpis').innerHTML='<div class="kpi"><div class="kpi__label">Contacts</div><div class="kpi__val" style="color:var(--gold-light)">'+contacts.length+'</div></div><div class="kpi"><div class="kpi__label">Score moyen</div><div class="kpi__val" style="color:var(--blue)">'+avgScore+'</div></div><div class="kpi"><div class="kpi__label">Bookings</div><div class="kpi__val" style="color:var(--green)">'+bookings.length+'</div></div><div class="kpi"><div class="kpi__label">Newsletter</div><div class="kpi__val">'+nl.length+'</div></div><div class="kpi"><div class="kpi__label">Brain</div><div class="kpi__val" style="color:var(--gold)">'+brain.length+'</div></div>';
+  var recent=await q('contacts?select=prenom,nom,type_projet,score,created_at&order=created_at.desc&limit=5');
+  document.getElementById('dash-contacts').innerHTML=recent.length?recent.map(function(c){return'<div style="display:flex;align-items:center;gap:10px;font-size:13px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04)"><div class="avatar">'+initials(c.prenom,c.nom)+'</div><div style="flex:1"><div>'+((c.prenom||'')+' '+(c.nom||'')).trim()+'</div><div style="color:var(--muted);font-size:11px">'+(c.type_projet||'')+'</div></div><div class="badge '+(c.score>=50?'badge--green':c.score>=30?'badge--blue':'badge--muted')+'">'+c.score+'</div></div>'}).join(''):'<div class="empty">Aucun contact</div>';
+  var bk=await q('booking_slots?select=date,start_time,contact_name,contact_email,type_rdv&booked=eq.true&date=gte.'+new Date().toISOString().slice(0,10)+'&order=date.asc,start_time.asc&limit=5');
+  document.getElementById('dash-bookings').innerHTML=bk.length?bk.map(function(b){return'<div style="display:flex;justify-content:space-between;font-size:13px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04)"><span>'+(b.contact_name||'RDV')+'</span><span style="color:var(--muted)">'+dateFr(b.date)+' '+b.start_time+'</span></div>'}).join(''):'<div class="empty">Aucun RDV a venir</div>';
+  var act=await q('activity_log?select=action,description,created_at&order=created_at.desc&limit=8');
+  document.getElementById('dash-activity').innerHTML=act.length?act.map(function(a){return'<div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04)"><span style="color:var(--gold)">'+a.action+'</span><span style="flex:1;margin:0 12px;color:var(--muted)">'+((a.description||'').slice(0,60))+'</span><span style="color:var(--muted);font-size:11px;white-space:nowrap">'+dateFr(a.created_at)+'</span></div>'}).join(''):'<div class="empty">Aucune activite</div>';
 }
-function showDash(){
-  document.getElementById('auth-screen').style.display='none';
-  document.getElementById('dashboard').style.display='block';
-  loadAll();
+
+// ═══ CONTACTS ═══
+var contactFilter='all';
+document.querySelectorAll('#contacts-filters .tab-inner').forEach(function(b){b.addEventListener('click',function(){
+  document.querySelectorAll('#contacts-filters .tab-inner').forEach(function(x){x.classList.remove('active')});this.classList.add('active');
+  contactFilter=this.dataset.filter;loadContacts();
+})});
+async function loadContacts(){
+  var url='contacts?select=*&order=created_at.desc&limit=50';
+  if(contactFilter!=='all')url+='&statut=eq.'+contactFilter;
+  var data=await q(url);
+  document.getElementById('contacts-tbody').innerHTML=data.length?data.map(function(c){
+    var sc=c.score>=50?'green':c.score>=30?'blue':'muted';
+    var st=c.statut==='nouveau'?'gold':c.statut==='alerte_envoyee'?'red':c.statut==='relance_envoyee'?'blue':'muted';
+    return'<tr><td><div style="display:flex;align-items:center;gap:8px"><div class="avatar">'+initials(c.prenom,c.nom)+'</div>'+((c.prenom||'')+' '+(c.nom||'')).trim()+'</div></td><td style="color:var(--muted)">'+c.email+'</td><td>'+(c.type_projet||'-')+'</td><td>'+(c.budget||'-')+'</td><td><span class="badge badge--'+sc+'">'+c.score+'</span></td><td><span class="badge badge--'+st+'">'+c.statut+'</span></td><td style="color:var(--muted)">'+dateFr(c.created_at)+'</td></tr>'}).join(''):'<tr><td colspan="7" class="empty">Aucun contact</td></tr>';
 }
 
-// TIME
-function updateTime(){
-  document.getElementById('dash-time').textContent=new Date().toLocaleString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+// ═══ BOOKING ═══
+var bkSlots=[],bkSelectedSlot=null;
+async function loadBooking(){
+  try{var r=await fetch(SB+'/functions/v1/ikonik-booking');var data=await r.json();bkSlots=data.slots||[];}catch(e){bkSlots=[];}
+  var dates={};bkSlots.forEach(function(s){if(!dates[s.date])dates[s.date]={day:s.day,date:s.date};});
+  var dl=Object.values(dates);
+  var daysEl=document.getElementById('adm-bk-days');daysEl.innerHTML='';
+  dl.forEach(function(d,i){var p=d.date.split('-');var b=document.createElement('button');b.className='bk-day'+(i===0?' active':'');b.innerHTML='<span class="bk-day-name">'+d.day+'</span><span class="bk-day-date">'+p[2]+'/'+p[1]+'</span>';b.addEventListener('click',function(){document.querySelectorAll('.bk-day').forEach(function(x){x.classList.remove('active')});this.classList.add('active');renderAdmSlots(d.date)});daysEl.appendChild(b)});
+  if(dl.length)renderAdmSlots(dl[0].date);
+  var bk=await q('booking_slots?select=*&booked=eq.true&date=gte.'+new Date().toISOString().slice(0,10)+'&order=date.asc,start_time.asc&limit=20');
+  document.getElementById('bookings-tbody').innerHTML=bk.length?bk.map(function(b){return'<tr><td>'+dateFr(b.date)+'</td><td>'+(b.start_time||'')+'</td><td>'+(b.contact_name||'-')+'</td><td style="color:var(--muted)">'+(b.contact_email||'-')+'</td><td>'+(b.type_rdv||'-')+'</td></tr>'}).join(''):'<tr><td colspan="5" class="empty">Aucune reservation</td></tr>';
 }
-updateTime();setInterval(updateTime,60000);
-
-// FETCH HELPER
-async function q(table,params){
-  var url=SB+'/rest/v1/'+table+'?'+params;
-  var res=await fetch(url,{headers:H});
-  return res.json();
+function renderAdmSlots(date){
+  var el=document.getElementById('adm-bk-slots');var ds=bkSlots.filter(function(s){return s.date===date});
+  el.innerHTML=ds.length?'':'<div class="empty">Aucun creneau</div>';
+  ds.forEach(function(s){var b=document.createElement('button');b.className='bk-slot';b.textContent=s.start+' - '+s.end;b.addEventListener('click',function(){document.querySelectorAll('.bk-slot').forEach(function(x){x.classList.remove('active')});this.classList.add('active');bkSelectedSlot=s;document.getElementById('adm-bk-selected').textContent=s.day+' '+s.date+' '+s.start;document.getElementById('adm-bk-form').style.display='block'});el.appendChild(b)});
 }
+document.getElementById('adm-bk-submit').addEventListener('click',async function(){
+  if(!bkSelectedSlot)return;this.disabled=true;this.textContent='Reservation...';
+  try{var r=await fetch(SB+'/functions/v1/ikonik-booking',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({date:bkSelectedSlot.date,start:bkSelectedSlot.start,end:bkSelectedSlot.end,nom:document.getElementById('adm-bk-nom').value,email:document.getElementById('adm-bk-email').value,telephone:document.getElementById('adm-bk-tel').value||null,type_rdv:document.getElementById('adm-bk-type').value})});var d=await r.json();if(d.success){alert('Reservation confirmee');loadBooking();document.getElementById('adm-bk-form').style.display='none'}else{alert(d.error||'Erreur')}}catch(e){alert('Erreur')}
+  this.disabled=false;this.textContent='Confirmer la reservation';
+});
 
-// LOAD ALL
-async function loadAll(){
-  try{
-    // Contacts
-    var contacts=await q('contacts','select=id,nom,email,telephone,score,type_projet,created_at,source&order=created_at.desc&limit=20');
-    document.getElementById('kpi-contacts').textContent=contacts.length;
-    document.getElementById('contacts-count').textContent=contacts.length;
-    if(contacts.length>0){
-      document.getElementById('contacts-list').innerHTML=contacts.map(function(c){
-        var sc=c.score||0;
-        var cls=sc>=60?'hot':sc>=30?'warm':'cold';
-        var d=new Date(c.created_at);
-        return '<div class="row"><span class="row__name">'+c.nom+'</span><span class="row__email">'+(c.email||'')+'</span><span class="row__score row__score--'+cls+'">'+sc+'</span><span class="row__type">'+(c.type_projet||'—')+'</span><span class="row__date">'+d.toLocaleDateString('fr-FR')+'</span></div>';
-      }).join('');
-    }
+// ═══ FACTURATION ═══
+var invLineCount=0;
+function showInvTab(t){document.getElementById('inv-tab-list').style.display=t==='list'?'block':'none';document.getElementById('inv-tab-new').style.display=t==='new'?'block':'none';document.querySelectorAll('#sec-facturation .tabs-inner .tab-inner').forEach(function(b,i){b.classList.toggle('active',i===(t==='list'?0:1))});if(t==='list')loadInvoices();if(t==='new'){document.getElementById('inv-date').value=new Date().toISOString().slice(0,10);if(!invLineCount){addInvLine();addInvLine()}}}
+async function loadInvoices(){
+  var data=await q('invoices?select=id,numero,type,statut,client_nom,total_ttc,date_emission&order=created_at.desc&limit=50');
+  document.getElementById('inv-tbody').innerHTML=data.length?data.map(function(inv){
+    var cls=inv.statut==='payee'?'green':inv.statut==='envoyee'?'blue':inv.statut==='retard'?'red':'muted';
+    return'<tr onclick="openInvoice(\''+inv.id+'\')"><td>'+(inv.numero||'Brouillon')+'</td><td>'+(inv.client_nom||'-')+'</td><td style="font-weight:600">'+fmt(inv.total_ttc||0)+'</td><td><span class="badge badge--'+cls+'">'+inv.statut+'</span></td><td style="color:var(--muted)">'+(inv.date_emission?dateFr(inv.date_emission):'-')+'</td></tr>'}).join(''):'<tr><td colspan="5" class="empty">Aucune facture</td></tr>';
+}
+function addInvLine(){invLineCount++;var d=document.createElement('div');d.className='inv-line';d.id='invl-'+invLineCount;d.innerHTML='<input class="il-desc" placeholder="Description" /><input class="il-qty" type="number" value="1" min="0" step="1" oninput="calcInv()" /><input class="il-price" type="number" value="0" min="0" step="0.01" oninput="calcInv()" /><div class="inv-line-total">0,00</div><button class="inv-line-del" onclick="this.parentElement.remove();calcInv()">x</button>';document.getElementById('inv-lines').appendChild(d)}
+function calcInv(){var st=0;document.querySelectorAll('.inv-line').forEach(function(l){var qty=parseFloat(l.querySelector('.il-qty').value)||0;var price=parseFloat(l.querySelector('.il-price').value)||0;var t=qty*price;l.querySelector('.inv-line-total').textContent=fmt(t);st+=t});var tp=parseFloat(document.getElementById('inv-tva').value)||0;var tv=st*(tp/100);document.getElementById('inv-st').textContent=fmt(st);document.getElementById('inv-tp').textContent=tp;document.getElementById('inv-tv').textContent=fmt(tv);document.getElementById('inv-tt').textContent=fmt(st+tv)}
+async function saveInvoice(){var lines=[];document.querySelectorAll('.inv-line').forEach(function(l){var d=l.querySelector('.il-desc').value;var qty=parseFloat(l.querySelector('.il-qty').value)||0;var p=parseFloat(l.querySelector('.il-price').value)||0;if(d)lines.push({description:d,quantite:qty,prix_unitaire:p,total:qty*p})});var st=lines.reduce(function(a,l){return a+l.total},0);var tp=parseFloat(document.getElementById('inv-tva').value)||0;var tv=st*(tp/100);var ej=parseInt(document.getElementById('inv-echeance').value)||30;var de=document.getElementById('inv-date').value;var d2=new Date(de);d2.setDate(d2.getDate()+ej);try{var r=await fetch(SB+'/rest/v1/invoices',{method:'POST',headers:{...H,'Prefer':'return=representation'},body:JSON.stringify({type:document.getElementById('inv-type').value,client_nom:document.getElementById('inv-client').value,client_email:document.getElementById('inv-email').value,client_adresse:document.getElementById('inv-adresse').value,client_siret:document.getElementById('inv-siret').value||null,date_emission:de,date_echeance:d2.toISOString().slice(0,10),lignes:lines,sous_total:st,tva:tv,total_ttc:st+tv,statut:'brouillon'})});var data=await r.json();alert('Facture '+(data[0]?.numero||'')+' creee');showInvTab('list')}catch(e){alert('Erreur')}}
+function previewInvoice(){var lines=[];document.querySelectorAll('.inv-line').forEach(function(l){var d=l.querySelector('.il-desc').value;var qty=parseFloat(l.querySelector('.il-qty').value)||0;var p=parseFloat(l.querySelector('.il-price').value)||0;if(d)lines.push({description:d,quantite:qty,prix_unitaire:p,total:qty*p})});var st=lines.reduce(function(a,l){return a+l.total},0);var tp=parseFloat(document.getElementById('inv-tva').value)||0;var tv=st*(tp/100);var tt=st+tv;var type=document.getElementById('inv-type').value;var tl=type==='devis'?'Devis':type==='avoir'?'Avoir':'Facture';var ej=document.getElementById('inv-echeance').value;var de=document.getElementById('inv-date').value;var d1=new Date(de);var d2=new Date(d1);d2.setDate(d2.getDate()+parseInt(ej));var df=function(d){return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'})};var cn=document.getElementById('inv-client').value||'Client';var ca=document.getElementById('inv-adresse').value||'';var ce=document.getElementById('inv-email').value||'';var cs=document.getElementById('inv-siret').value;var lh='';lines.forEach(function(l){lh+='<tr><td style="padding:14px 16px;border-bottom:1px solid #f0ede8;color:#333;font-size:13px">'+l.description+'</td><td style="padding:14px 16px;border-bottom:1px solid #f0ede8;color:#333;font-size:13px;text-align:right">'+l.quantite+'</td><td style="padding:14px 16px;border-bottom:1px solid #f0ede8;color:#333;font-size:13px;text-align:right">'+fmt(l.prix_unitaire)+'</td><td style="padding:14px 16px;border-bottom:1px solid #f0ede8;color:#333;font-size:13px;text-align:right;font-weight:500">'+fmt(l.total)+'</td></tr>'});var h='<div style="background:#fff;border-radius:12px;overflow:hidden;font-family:Georgia,serif;color:#1a1a1a;max-width:800px;margin:16px auto"><div style="background:linear-gradient(135deg,#e8e0f0,#c9b8e0);padding:40px 48px 32px;display:flex;justify-content:space-between"><div><div style="font-size:36px;font-weight:700;color:#1a1a1a;letter-spacing:2px">IKONIK</div><div style="font-size:13px;font-style:italic;color:#b8963e;margin-top:4px">Artisan Cr\u00e9atif</div></div><div style="text-align:right"><div style="font-size:28px;color:#1a1a1a">'+tl+'</div><div style="font-size:13px;color:#666;margin-top:6px">'+df(d1)+'</div></div></div><div style="padding:40px 48px"><div style="display:flex;gap:40px;margin-bottom:40px"><div style="flex:1"><div style="font-family:system-ui;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#b8963e;margin-bottom:10px">Emetteur</div><div style="font-size:13px;line-height:2;color:#333"><strong>IKONIK</strong><br>Johann Langenberg<br>contact@ikonik-ac.com<br>+33 6 60 65 70 56</div></div><div style="flex:1;background:#faf8f5;border-radius:8px;padding:20px 24px"><div style="font-family:system-ui;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#b8963e;margin-bottom:10px">Client</div><div style="font-size:13px;line-height:2;color:#333"><strong>'+cn+'</strong><br>'+ca+'<br>'+ce+(cs?'<br>SIRET: '+cs:'')+'</div></div></div><table style="width:100%;border-collapse:collapse;margin-bottom:32px"><thead><tr style="border-bottom:2px solid #b8963e"><th style="font-family:system-ui;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#b8963e;padding:12px 16px;text-align:left">Description</th><th style="font-family:system-ui;font-size:10px;font-weight:700;color:#b8963e;padding:12px 16px;text-align:right">Qte</th><th style="font-family:system-ui;font-size:10px;font-weight:700;color:#b8963e;padding:12px 16px;text-align:right">Prix HT</th><th style="font-family:system-ui;font-size:10px;font-weight:700;color:#b8963e;padding:12px 16px;text-align:right">Total HT</th></tr></thead><tbody>'+lh+'</tbody></table><div style="display:flex;justify-content:flex-end;margin-bottom:40px"><div style="width:280px"><div style="display:flex;justify-content:space-between;padding:8px 0;font-size:13px;color:#555"><span>Sous-total HT</span><span>'+fmt(st)+'</span></div><div style="display:flex;justify-content:space-between;padding:8px 0;font-size:13px;color:#555"><span>TVA ('+tp+'%)</span><span>'+fmt(tv)+'</span></div><div style="display:flex;justify-content:space-between;padding:12px 0;font-size:18px;font-weight:700;color:#1a1a1a;border-top:2px solid #b8963e;margin-top:4px"><span>Total TTC</span><span>'+fmt(tt)+'</span></div></div></div><div style="background:#faf8f5;border-radius:8px;padding:20px 24px;font-size:12px;color:#666;line-height:1.8"><strong style="display:block;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#333;font-family:system-ui">Conditions</strong>Paiement a '+ej+' jours. Echeance : '+df(d2)+'</div><div style="border-top:1px solid #e8e4de;padding-top:20px;text-align:center;font-size:10px;color:#999;line-height:2;margin-top:40px"><div style="font-size:14px;color:#b8963e;font-weight:700;letter-spacing:1px;margin-bottom:6px">IKONIK</div>Johann Langenberg — contact@ikonik-ac.com — ikonik-ac.com</div></div></div>';h+='<div style="padding:16px;display:flex;gap:10px;justify-content:center"><button class="btn btn--gold" onclick="window.print()">Imprimer / PDF</button><button class="btn btn--sec" onclick="closeInvPreview()">Fermer</button></div>';var el=document.getElementById('inv-preview');el.style.display='block';el.innerHTML=h;el.scrollIntoView({behavior:'smooth'})}
+function closeInvPreview(){document.getElementById('inv-preview').style.display='none';document.getElementById('inv-preview').innerHTML=''}
+async function openInvoice(id){var data=await q('invoices?id=eq.'+id+'&select=*');var inv=data[0];if(!inv)return;showInvTab('new');document.getElementById('inv-type').value=inv.type||'facture';document.getElementById('inv-date').value=inv.date_emission||'';document.getElementById('inv-client').value=inv.client_nom||'';document.getElementById('inv-email').value=inv.client_email||'';document.getElementById('inv-adresse').value=inv.client_adresse||'';document.getElementById('inv-siret').value=inv.client_siret||'';document.getElementById('inv-lines').innerHTML='';invLineCount=0;var lignes=inv.lignes||[];if(!lignes.length){addInvLine();addInvLine()}else{lignes.forEach(function(l){addInvLine();var line=document.getElementById('invl-'+invLineCount);line.querySelector('.il-desc').value=l.description||'';line.querySelector('.il-qty').value=l.quantite||1;line.querySelector('.il-price').value=l.prix_unitaire||0})}calcInv()}
 
-    // Score moyen
-    var scores=contacts.filter(function(c){return c.score>0}).map(function(c){return c.score});
-    document.getElementById('kpi-score').textContent=scores.length>0?Math.round(scores.reduce(function(a,b){return a+b},0)/scores.length):'—';
+// ═══ BRAIN ═══
+var brainTags=[],brainMode='link';
+async function loadBrain(){
+  var data=await q('brain?select=type,titre,tags,created_at&order=created_at.desc&limit=20');
+  document.getElementById('brain-tbody').innerHTML=data.length?data.map(function(b){return'<tr><td><span class="badge badge--gold">'+b.type+'</span></td><td>'+b.titre+'</td><td style="color:var(--muted)">'+(b.tags||'')+'</td><td style="color:var(--muted)">'+dateFr(b.created_at)+'</td></tr>'}).join(''):'<tr><td colspan="4" class="empty">Aucune capture</td></tr>';
+}
+function showBrainMode(mode){if(mode==='home'){document.getElementById('brain-home').style.display='block';document.getElementById('brain-form').style.display='none';return}brainMode=mode;document.getElementById('brain-home').style.display='none';document.getElementById('brain-form').style.display='block';document.getElementById('brain-form-title').textContent=mode==='link'?'Nouveau lien':mode==='idea'?'Nouvelle idee':'Photo';document.getElementById('brain-link-fields').style.display=mode==='link'?'block':'none';brainTags=[]}
+document.querySelectorAll('#br-tags .tag-btn').forEach(function(b){b.addEventListener('click',function(){this.classList.toggle('active');var t=this.dataset.t;var i=brainTags.indexOf(t);if(i>-1)brainTags.splice(i,1);else brainTags.push(t)})});
+document.getElementById('br-save').addEventListener('click',async function(){this.disabled=true;this.textContent='Enregistrement...';var title=document.getElementById('br-title').value;var note=document.getElementById('br-note').value;try{await fetch(SB+'/rest/v1/brain',{method:'POST',headers:HP,body:JSON.stringify({type:brainMode,titre:title||'Sans titre',contenu:note,url:brainMode==='link'?document.getElementById('br-url').value:null,tags:brainTags.length?'{'+brainTags.join(',')+'}':'{}',categorie:brainTags[0]||'autre'})});alert('Enregistre');showBrainMode('home');loadBrain()}catch(e){alert('Erreur')}this.disabled=false;this.textContent='Sauvegarder'});
 
-    // Bookings
-    var today=new Date().toISOString().slice(0,10);
-    var bookings=await q('booking_slots','select=id,date_slot,heure_debut,heure_fin,nom_client,email_client,type_rdv&disponible=eq.false&date_slot=gte.'+today+'&order=date_slot.asc,heure_debut.asc&limit=20');
-    document.getElementById('kpi-bookings').textContent=bookings.length;
-    document.getElementById('bookings-count').textContent=bookings.length;
-    if(bookings.length>0){
-      document.getElementById('bookings-list').innerHTML=bookings.map(function(b){
-        var d=new Date(b.date_slot);
-        var jours=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
-        return '<div class="row"><span class="row__name">'+(b.nom_client||'—')+'</span><span class="row__email">'+(b.email_client||'')+'</span><span class="row__type">'+(b.type_rdv||'')+'</span><span class="row__date">'+jours[d.getDay()]+' '+d.toLocaleDateString('fr-FR')+' '+String(b.heure_debut).slice(0,5)+'</span></div>';
-      }).join('');
-    }
-
-    // Newsletter
-    var newsletter=await q('newsletter_subscribers','select=id&limit=1000');
-    document.getElementById('kpi-newsletter').textContent=newsletter.length;
-
-    // Brain
-    var brain=await q('brain','select=id,type,titre,categorie,url,created_at&order=created_at.desc&limit=20');
-    document.getElementById('kpi-brain').textContent=brain.length;
-    document.getElementById('brain-count').textContent=brain.length;
-    if(brain.length>0){
-      document.getElementById('brain-list').innerHTML=brain.map(function(b){
-        var icon=b.type==='link'?'🔗':b.type==='idea'?'💡':b.type==='photo'?'📷':'✨';
-        var d=new Date(b.created_at);
-        return '<div class="row"><span style="flex-shrink:0">'+icon+'</span><span class="row__name">'+(b.url?'<a href="'+b.url+'" target="_blank">'+b.titre+'</a>':b.titre)+'</span><span class="row__tag">'+(b.categorie||'')+'</span><span class="row__date">'+d.toLocaleDateString('fr-FR')+'</span></div>';
-      }).join('');
-    }
-
-    // Activity
-    var yesterday=new Date(Date.now()-86400000).toISOString();
-    var activity=await q('activity_log','select=id,type,description,created_at&order=created_at.desc&limit=30');
-    var recent=activity.filter(function(a){return a.created_at>=yesterday});
-    document.getElementById('kpi-activity').textContent=recent.length;
-    document.getElementById('activity-count').textContent=activity.length;
-    if(activity.length>0){
-      document.getElementById('activity-list').innerHTML=activity.slice(0,20).map(function(a){
-        var d=new Date(a.created_at);
-        return '<div class="activity"><span class="activity__dot"></span><span>'+(a.description||a.type)+'</span><span class="activity__time">'+d.toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+'</span></div>';
-      }).join('');
-    }
-
-  }catch(err){console.error('Dashboard error:',err)}
+// ═══ ACTIVITE ═══
+async function loadActivity(){
+  var data=await q('activity_log?select=action,description,created_at&order=created_at.desc&limit=50');
+  document.getElementById('activity-tbody').innerHTML=data.length?data.map(function(a){return'<tr><td><span class="badge badge--gold">'+a.action+'</span></td><td style="color:var(--muted)">'+((a.description||'').slice(0,80))+'</td><td style="color:var(--muted);white-space:nowrap">'+dateFr(a.created_at)+'</td></tr>'}).join(''):'<tr><td colspan="3" class="empty">Aucune activite</td></tr>';
 }
 </script>
 </body>
