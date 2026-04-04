@@ -1,0 +1,340 @@
+---
+// facture.astro — IKONIK OS · Facturation
+---
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Facturation — IKONIK OS</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0D1117;--card:#161B22;--border:#21262D;--text:#E6EDF3;--muted:#8B949E;--accent:#E9540D;--green:#3FB950;--blue:#4BB2F2}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',system-ui,sans-serif;font-size:14px;min-height:100vh}
+
+/* AUTH */
+.auth{align-items:center;display:flex;flex-direction:column;gap:2rem;height:100vh;justify-content:center}
+.auth__logo{height:3rem;opacity:.8}
+.auth__input{background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:1rem;padding:.8rem 1.2rem;text-align:center;width:280px}
+.auth__input:focus{border-color:var(--accent);outline:none}
+.auth__btn{background:var(--accent);border:none;border-radius:8px;color:#fff;cursor:pointer;font-family:inherit;font-weight:600;padding:.8rem 2rem}
+
+/* APP */
+.app{display:none;padding:2rem;max-width:1200px;margin:0 auto}
+.app__header{align-items:center;display:flex;gap:1rem;margin-bottom:2rem}
+.app__logo{height:2rem;opacity:.8}
+.app__badge{background:var(--accent);border-radius:6px;font-size:.75rem;font-weight:700;padding:.2rem .6rem;color:#fff}
+.app__nav{display:flex;gap:1rem;margin-left:auto}
+.app__nav a{color:var(--muted);font-size:.85rem;text-decoration:none}
+.app__nav a:hover{color:var(--text)}
+
+/* TABS */
+.tabs{display:flex;gap:.5rem;margin-bottom:2rem}
+.tab{background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--muted);cursor:pointer;font-family:inherit;font-size:.9rem;font-weight:500;padding:.6rem 1.4rem}
+.tab.active{background:rgba(233,84,13,.15);border-color:var(--accent);color:var(--accent)}
+
+/* INVOICE LIST */
+.inv-row{background:var(--card);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;gap:1rem;margin-bottom:.8rem;padding:1rem 1.4rem;cursor:pointer;transition:border-color .2s}
+.inv-row:hover{border-color:var(--accent)}
+.inv-num{font-weight:600;min-width:160px;font-size:.95rem}
+.inv-client{flex:1;color:var(--muted)}
+.inv-total{font-weight:600;min-width:100px;text-align:right}
+.inv-statut{border-radius:6px;font-size:.75rem;font-weight:600;padding:.2rem .8rem;min-width:80px;text-align:center}
+.inv-statut--brouillon{background:rgba(139,148,158,.15);color:var(--muted)}
+.inv-statut--envoyee{background:rgba(75,178,242,.15);color:var(--blue)}
+.inv-statut--payee{background:rgba(63,185,80,.15);color:var(--green)}
+.inv-statut--retard{background:rgba(248,81,73,.15);color:#F85149}
+.inv-date{color:var(--muted);font-size:.8rem;min-width:90px;text-align:right}
+.empty{color:var(--muted);padding:3rem;text-align:center}
+
+/* FORM */
+.form{background:var(--card);border:1px solid var(--border);border-radius:12px;display:none;padding:2rem}
+.form__title{font-size:1.2rem;font-weight:600;margin-bottom:2rem}
+.form__grid{display:grid;gap:1rem;grid-template-columns:1fr 1fr}
+@media(max-width:768px){.form__grid{grid-template-columns:1fr}}
+.form__group{display:flex;flex-direction:column;gap:.4rem}
+.form__group--full{grid-column:1/-1}
+.form__label{color:var(--muted);font-size:.75rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.form__inp{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:.95rem;padding:.7rem 1rem}
+.form__inp:focus{border-color:var(--accent);outline:none}
+.form__inp--sm{max-width:120px}
+select.form__inp{appearance:auto}
+
+/* LINE ITEMS */
+.lines{margin:2rem 0}
+.lines__head{color:var(--muted);display:grid;font-size:.75rem;font-weight:500;gap:.5rem;grid-template-columns:3fr 1fr 1fr 1fr 40px;letter-spacing:.08em;padding:0 .5rem .6rem;text-transform:uppercase}
+.line{display:grid;gap:.5rem;grid-template-columns:3fr 1fr 1fr 1fr 40px;margin-bottom:.5rem;align-items:center}
+.line input{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:inherit;font-size:.9rem;padding:.6rem .8rem}
+.line input:focus{border-color:var(--accent);outline:none}
+.line__del{background:none;border:none;color:#F85149;cursor:pointer;font-size:1.2rem}
+.line__total{color:var(--muted);font-size:.85rem;padding:.6rem .8rem;text-align:right}
+.add-line{background:none;border:1px dashed var(--border);border-radius:8px;color:var(--muted);cursor:pointer;font-family:inherit;font-size:.85rem;padding:.7rem;width:100%}
+.add-line:hover{border-color:var(--accent);color:var(--accent)}
+
+/* TOTALS */
+.totals{border-top:1px solid var(--border);display:flex;flex-direction:column;align-items:flex-end;gap:.6rem;margin-top:1.5rem;padding-top:1.5rem}
+.totals__row{display:flex;gap:2rem;font-size:.95rem}
+.totals__label{color:var(--muted);min-width:120px;text-align:right}
+.totals__val{font-weight:500;min-width:100px;text-align:right}
+.totals__val--big{font-size:1.3rem;font-weight:700;color:var(--accent)}
+
+/* ACTIONS */
+.actions{display:flex;gap:1rem;margin-top:2rem}
+.btn{border:none;border-radius:8px;cursor:pointer;font-family:inherit;font-size:.9rem;font-weight:600;padding:.7rem 1.6rem}
+.btn--primary{background:var(--accent);color:#fff}
+.btn--secondary{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text)}
+.btn:disabled{opacity:.4;cursor:wait}
+
+/* PREVIEW (Print) */
+.preview{display:none}
+@media print{
+  body{background:#fff!important;color:#000!important}
+  .auth,.app__header,.tabs,.form,.app__nav{display:none!important}
+  .app{display:block!important;padding:0!important;max-width:none!important}
+  .preview{display:block!important;padding:40px;font-size:12px;line-height:1.5}
+  .preview *{color:#000!important}
+  .pv-head{display:flex;justify-content:space-between;margin-bottom:40px}
+  .pv-company{font-size:11px;line-height:1.8}
+  .pv-company strong{font-size:18px;color:#E9540D!important;display:block;margin-bottom:8px}
+  .pv-num{font-size:24px;font-weight:700;text-align:right}
+  .pv-num span{display:block;font-size:12px;font-weight:400;color:#666!important;margin-top:4px}
+  .pv-client{background:#f8f8f8;border-radius:8px;margin-bottom:30px;padding:16px 20px}
+  .pv-client strong{display:block;margin-bottom:4px}
+  .pv-table{border-collapse:collapse;width:100%;margin-bottom:30px}
+  .pv-table th{background:#f0f0f0;border:1px solid #ddd;font-size:11px;font-weight:600;padding:8px 12px;text-align:left;text-transform:uppercase}
+  .pv-table td{border:1px solid #ddd;padding:8px 12px}
+  .pv-table .num{text-align:right}
+  .pv-totals{float:right;width:250px}
+  .pv-totals tr td{padding:6px 12px;font-size:13px}
+  .pv-totals .big{font-size:16px;font-weight:700;border-top:2px solid #000}
+  .pv-footer{border-top:1px solid #ddd;clear:both;font-size:10px;color:#888!important;margin-top:60px;padding-top:16px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="auth" id="auth-screen">
+  <img src="/images/LOGO_IKONIK_blanc.webp" alt="IKONIK" class="auth__logo" />
+  <p style="color:var(--muted)">Facturation</p>
+  <input type="password" id="auth-pass" class="auth__input" placeholder="Mot de passe" autofocus />
+  <button class="auth__btn" id="auth-btn">Accéder</button>
+</div>
+
+<div class="app" id="app">
+  <div class="app__header">
+    <img src="/images/LOGO_IKONIK_blanc.webp" alt="IKONIK" class="app__logo" />
+    <span class="app__badge">FACTURATION</span>
+    <div class="app__nav"><a href="/admin">← Command Center</a></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('list')">Factures</button>
+    <button class="tab" onclick="showTab('new')">+ Nouvelle facture</button>
+  </div>
+
+  <!-- LIST -->
+  <div id="tab-list">
+    <div id="invoices-list"><div class="empty">Chargement...</div></div>
+  </div>
+
+  <!-- NEW INVOICE FORM -->
+  <div id="tab-new" class="form">
+    <h2 class="form__title">Nouvelle facture</h2>
+    <div class="form__grid">
+      <div class="form__group"><label class="form__label">Type</label>
+        <select class="form__inp" id="inv-type">
+          <option value="facture">Facture</option>
+          <option value="devis">Devis</option>
+          <option value="avoir">Avoir</option>
+        </select>
+      </div>
+      <div class="form__group"><label class="form__label">Date d'émission</label><input type="date" class="form__inp" id="inv-date" /></div>
+      <div class="form__group"><label class="form__label">Client — Nom / Entreprise</label><input type="text" class="form__inp" id="inv-client" placeholder="Nom du client" /></div>
+      <div class="form__group"><label class="form__label">Email client</label><input type="email" class="form__inp" id="inv-email" placeholder="email@client.com" /></div>
+      <div class="form__group"><label class="form__label">Adresse</label><input type="text" class="form__inp" id="inv-adresse" placeholder="Adresse complète" /></div>
+      <div class="form__group"><label class="form__label">SIRET client (optionnel)</label><input type="text" class="form__inp" id="inv-siret" placeholder="XXX XXX XXX XXXXX" /></div>
+      <div class="form__group"><label class="form__label">Échéance (jours)</label>
+        <select class="form__inp form__inp--sm" id="inv-echeance">
+          <option value="30">30 jours</option>
+          <option value="15">15 jours</option>
+          <option value="45">45 jours</option>
+          <option value="60">60 jours</option>
+          <option value="0">À réception</option>
+        </select>
+      </div>
+      <div class="form__group"><label class="form__label">TVA (%)</label><input type="number" class="form__inp form__inp--sm" id="inv-tva" value="20" min="0" max="100" step="0.1" /></div>
+    </div>
+
+    <div class="lines">
+      <div class="lines__head"><span>Description</span><span>Qté</span><span>Prix unit. HT</span><span>Total HT</span><span></span></div>
+      <div id="lines-container"></div>
+      <button class="add-line" onclick="addLine()">+ Ajouter une ligne</button>
+    </div>
+
+    <div class="totals">
+      <div class="totals__row"><span class="totals__label">Sous-total HT</span><span class="totals__val" id="t-ht">0,00 €</span></div>
+      <div class="totals__row"><span class="totals__label">TVA (<span id="t-tva-pct">20</span>%)</span><span class="totals__val" id="t-tva">0,00 €</span></div>
+      <div class="totals__row"><span class="totals__label">Total TTC</span><span class="totals__val totals__val--big" id="t-ttc">0,00 €</span></div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn--primary" id="save-btn" onclick="saveInvoice()">Enregistrer</button>
+      <button class="btn btn--secondary" onclick="previewInvoice()">Aperçu / PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRINT PREVIEW -->
+<div class="preview" id="preview"></div>
+
+<script>
+var SB='https://kgfolduvslsytbekbjvf.supabase.co';
+var SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZm9sZHV2c2xzeXRiZWtianZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDU3MDcsImV4cCI6MjA5MDcyMTcwN30.4jZ9fMfSinEc1CE3s6LuR4q_WNeisEdtyBM5XQ2uMJg';
+var H={'Content-Type':'application/json','apikey':SK,'Authorization':'Bearer '+SK};
+var PASS='ikonik2026';
+
+// AUTH
+document.getElementById('auth-btn').addEventListener('click',doAuth);
+document.getElementById('auth-pass').addEventListener('keydown',function(e){if(e.key==='Enter')doAuth()});
+if(localStorage.getItem('iko_admin')==='1')showApp();
+function doAuth(){if(document.getElementById('auth-pass').value===PASS){localStorage.setItem('iko_admin','1');showApp()}}
+function showApp(){document.getElementById('auth-screen').style.display='none';document.getElementById('app').style.display='block';loadInvoices();document.getElementById('inv-date').value=new Date().toISOString().slice(0,10);addLine();addLine();}
+
+// TABS
+function showTab(t){
+  document.querySelectorAll('.tab').forEach(function(b,i){b.classList.toggle('active',i===(t==='list'?0:1))});
+  document.getElementById('tab-list').style.display=t==='list'?'block':'none';
+  document.getElementById('tab-new').style.display=t==='new'?'block':'none';
+  if(t==='list')loadInvoices();
+}
+
+// LOAD INVOICES
+async function loadInvoices(){
+  var res=await fetch(SB+'/rest/v1/invoices?select=id,numero,type,statut,client_nom,total_ttc,date_emission&order=created_at.desc&limit=50',{headers:H});
+  var data=await res.json();
+  if(!data.length){document.getElementById('invoices-list').innerHTML='<div class="empty">Aucune facture. Cliquez "+ Nouvelle facture" pour commencer.</div>';return}
+  document.getElementById('invoices-list').innerHTML=data.map(function(inv){
+    var cls='brouillon';if(inv.statut==='envoyee')cls='envoyee';if(inv.statut==='payee')cls='payee';if(inv.statut==='retard')cls='retard';
+    var d=inv.date_emission?new Date(inv.date_emission).toLocaleDateString('fr-FR'):'—';
+    return '<div class="inv-row" onclick="openInvoice(\''+inv.id+'\')"><span class="inv-num">'+(inv.numero||'Brouillon')+'</span><span class="inv-client">'+(inv.client_nom||'—')+'</span><span class="inv-total">'+fmt(inv.total_ttc||0)+'</span><span class="inv-statut inv-statut--'+cls+'">'+inv.statut+'</span><span class="inv-date">'+d+'</span></div>';
+  }).join('');
+}
+
+// FORMAT MONEY
+function fmt(n){return parseFloat(n||0).toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'}
+
+// LINE ITEMS
+var lineCount=0;
+function addLine(){
+  lineCount++;
+  var div=document.createElement('div');div.className='line';div.id='line-'+lineCount;
+  div.innerHTML='<input type="text" placeholder="Description" class="l-desc" /><input type="number" value="1" min="0" step="1" class="l-qty" oninput="calc()" /><input type="number" value="0" min="0" step="0.01" class="l-price" oninput="calc()" /><span class="line__total">0,00 €</span><button class="line__del" onclick="this.parentElement.remove();calc()">×</button>';
+  document.getElementById('lines-container').appendChild(div);
+}
+
+function calc(){
+  var total=0;
+  document.querySelectorAll('.line').forEach(function(l){
+    var q=parseFloat(l.querySelector('.l-qty').value)||0;
+    var p=parseFloat(l.querySelector('.l-price').value)||0;
+    var t=q*p;total+=t;
+    l.querySelector('.line__total').textContent=fmt(t);
+  });
+  var tvaPct=parseFloat(document.getElementById('inv-tva').value)||0;
+  var tva=total*(tvaPct/100);
+  document.getElementById('t-ht').textContent=fmt(total);
+  document.getElementById('t-tva').textContent=fmt(tva);
+  document.getElementById('t-tva-pct').textContent=tvaPct;
+  document.getElementById('t-ttc').textContent=fmt(total+tva);
+}
+document.getElementById('inv-tva').addEventListener('input',calc);
+
+// SAVE
+async function saveInvoice(){
+  var btn=document.getElementById('save-btn');btn.disabled=true;btn.textContent='Enregistrement...';
+  var lines=[];
+  document.querySelectorAll('.line').forEach(function(l){
+    var desc=l.querySelector('.l-desc').value;
+    var qty=parseFloat(l.querySelector('.l-qty').value)||0;
+    var price=parseFloat(l.querySelector('.l-price').value)||0;
+    if(desc||price>0)lines.push({description:desc,quantite:qty,prix_unitaire:price,total:qty*price});
+  });
+  var sousTotal=lines.reduce(function(a,l){return a+l.total},0);
+  var tvaPct=parseFloat(document.getElementById('inv-tva').value)||0;
+  var tva=sousTotal*(tvaPct/100);
+  var echeanceJours=parseInt(document.getElementById('inv-echeance').value)||30;
+  var dateEmission=document.getElementById('inv-date').value;
+  var dateEcheance=new Date(dateEmission);dateEcheance.setDate(dateEcheance.getDate()+echeanceJours);
+
+  var body={
+    type:document.getElementById('inv-type').value,
+    client_nom:document.getElementById('inv-client').value,
+    client_email:document.getElementById('inv-email').value,
+    client_adresse:document.getElementById('inv-adresse').value,
+    client_siret:document.getElementById('inv-siret').value||null,
+    date_emission:dateEmission,
+    date_echeance:dateEcheance.toISOString().slice(0,10),
+    lignes:lines,
+    sous_total:sousTotal,
+    tva:tva,
+    total_ttc:sousTotal+tva,
+    statut:'brouillon'
+  };
+
+  try{
+    var res=await fetch(SB+'/rest/v1/invoices',{method:'POST',headers:{...H,'Prefer':'return=representation'},body:JSON.stringify(body)});
+    var data=await res.json();
+    if(data[0]&&data[0].numero){alert('Facture '+data[0].numero+' créée !');showTab('list')}
+    else{alert('Facture enregistrée');showTab('list')}
+  }catch(e){alert('Erreur: '+e.message)}
+  btn.disabled=false;btn.textContent='Enregistrer';
+}
+
+// PREVIEW
+function previewInvoice(){
+  var lines=[];
+  document.querySelectorAll('.line').forEach(function(l){
+    var desc=l.querySelector('.l-desc').value;
+    var qty=parseFloat(l.querySelector('.l-qty').value)||0;
+    var price=parseFloat(l.querySelector('.l-price').value)||0;
+    if(desc)lines.push({description:desc,quantite:qty,prix_unitaire:price,total:qty*price});
+  });
+  var sousTotal=lines.reduce(function(a,l){return a+l.total},0);
+  var tvaPct=parseFloat(document.getElementById('inv-tva').value)||0;
+  var tva=sousTotal*(tvaPct/100);
+  var total=sousTotal+tva;
+  var type=document.getElementById('inv-type').value;
+  var typeLabel=type==='devis'?'DEVIS':type==='avoir'?'AVOIR':'FACTURE';
+
+  var html='<div class="pv-head"><div class="pv-company"><strong>IKONIK</strong>Johann Langenberg<br>Micro-entreprise<br>Normandie, France<br>contact@ikonik-ac.com<br>+33 6 60 65 70 56<br>SIRET : À compléter</div><div class="pv-num">'+typeLabel+'<span>Date : '+document.getElementById('inv-date').value+'</span></div></div>';
+  html+='<div class="pv-client"><strong>'+(document.getElementById('inv-client').value||'Client')+'</strong>'+(document.getElementById('inv-adresse').value||'')+'<br>'+(document.getElementById('inv-email').value||'')+(document.getElementById('inv-siret').value?'<br>SIRET : '+document.getElementById('inv-siret').value:'')+'</div>';
+  html+='<table class="pv-table"><thead><tr><th>Description</th><th class="num">Qté</th><th class="num">Prix unit. HT</th><th class="num">Total HT</th></tr></thead><tbody>';
+  lines.forEach(function(l){html+='<tr><td>'+l.description+'</td><td class="num">'+l.quantite+'</td><td class="num">'+fmt(l.prix_unitaire)+'</td><td class="num">'+fmt(l.total)+'</td></tr>'});
+  html+='</tbody></table>';
+  html+='<table class="pv-totals"><tr><td>Sous-total HT</td><td class="num">'+fmt(sousTotal)+'</td></tr><tr><td>TVA ('+tvaPct+'%)</td><td class="num">'+fmt(tva)+'</td></tr><tr class="big"><td>Total TTC</td><td class="num">'+fmt(total)+'</td></tr></table>';
+  html+='<div class="pv-footer">IKONIK — Johann Langenberg — Micro-entreprise — contact@ikonik-ac.com — +33 6 60 65 70 56<br>Conditions de paiement : '+document.getElementById('inv-echeance').value+' jours</div>';
+  document.getElementById('preview').innerHTML=html;
+  setTimeout(function(){window.print()},200);
+}
+
+// OPEN INVOICE (load from DB and show in form)
+async function openInvoice(id){
+  var res=await fetch(SB+'/rest/v1/invoices?id=eq.'+id+'&select=*',{headers:H});
+  var inv=(await res.json())[0];if(!inv)return;
+  showTab('new');
+  document.getElementById('inv-type').value=inv.type||'facture';
+  document.getElementById('inv-date').value=inv.date_emission||'';
+  document.getElementById('inv-client').value=inv.client_nom||'';
+  document.getElementById('inv-email').value=inv.client_email||'';
+  document.getElementById('inv-adresse').value=inv.client_adresse||'';
+  document.getElementById('inv-siret').value=inv.client_siret||'';
+  document.getElementById('lines-container').innerHTML='';lineCount=0;
+  var lignes=inv.lignes||[];
+  if(!lignes.length){addLine();addLine()}
+  else{lignes.forEach(function(l){addLine();var line=document.getElementById('line-'+lineCount);line.querySelector('.l-desc').value=l.description||'';line.querySelector('.l-qty').value=l.quantite||1;line.querySelector('.l-price').value=l.prix_unitaire||0})}
+  calc();
+}
+</script>
+</body>
+</html>
