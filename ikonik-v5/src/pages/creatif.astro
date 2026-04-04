@@ -140,47 +140,59 @@ if (services.length === 0) {
                 <h2 style="font-size:3.6rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Sélection <em style="font-family:var(--serif);font-style:italic;text-transform:none">de productions</em></h2>
               </div>
               <div class="productions-grid">
-                <a href="/studio" class="production-card rv">
+                <div class="production-card rv" onclick="openWistia('9rg8erhogc')" style="cursor:pointer">
                   <div class="production-card__img">
                     <img src="/images/sandro-chinatown.webp" alt="Film publicitaire IA Sandro — Chinatown" loading="lazy" />
+                    <div class="play-btn" aria-label="Lire la vidéo">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="white"><polygon points="4,0 20,10 4,20"/></svg>
+                    </div>
                   </div>
                   <div class="production-card__info">
                     <span class="production-card__cat">Film publicitaire IA</span>
                     <h3 class="production-card__title">Sandro Chinatown</h3>
                     <p class="production-card__desc">27 secondes · 100% IA</p>
                   </div>
-                </a>
-                <a href="/studio" class="production-card rv">
+                </div>
+                <div class="production-card rv" onclick="openWistia('t427yb7j8z')" style="cursor:pointer">
                   <div class="production-card__img">
                     <img src="/images/cafe-san-marco.webp" alt="Film corporate Café San Marco" loading="lazy" />
+                    <div class="play-btn" aria-label="Lire la vidéo">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="white"><polygon points="4,0 20,10 4,20"/></svg>
+                    </div>
                   </div>
                   <div class="production-card__info">
                     <span class="production-card__cat">Film corporate</span>
                     <h3 class="production-card__title">Café San Marco</h3>
                     <p class="production-card__desc">Tournage réel · Brand content</p>
                   </div>
-                </a>
-                <a href="/studio" class="production-card rv">
+                </div>
+                <div class="production-card rv" onclick="openWistia('2ytpjmvfi9')" style="cursor:pointer">
                   <div class="production-card__img">
                     <img src="/images/segafredo.webp" alt="Film de marque Segafredo" loading="lazy" />
+                    <div class="play-btn" aria-label="Lire la vidéo">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="white"><polygon points="4,0 20,10 4,20"/></svg>
+                    </div>
                   </div>
                   <div class="production-card__info">
                     <span class="production-card__cat">Film de marque</span>
                     <h3 class="production-card__title">Segafredo Zanetti</h3>
                     <p class="production-card__desc">60 secondes · 4K · IA + Réel</p>
                   </div>
-                </a>
-                <a href="/studio" class="production-card rv">
+                </div>
+                <div class="production-card rv" onclick="openWistia('hehl6vkokj')" style="cursor:pointer">
                   <div class="production-card__img">
                     <img src="/images/bouillon-anime.webp" alt="Animation de marque Bouillon Italien" loading="lazy" />
+                    <div class="play-btn" aria-label="Lire la vidéo">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="white"><polygon points="4,0 20,10 4,20"/></svg>
+                    </div>
                   </div>
                   <div class="production-card__info">
                     <span class="production-card__cat">Animation IA</span>
                     <h3 class="production-card__title">Bouillon Italia</h3>
                     <p class="production-card__desc">Style anime · 100% IA</p>
                   </div>
-                </a>
-                <a href="/studio" class="production-card rv">
+                </div>
+                <div class="production-card rv">
                   <div class="production-card__img">
                     <img src="/images/service-fooh.webp" alt="FOOH Fake Out Of Home" loading="lazy" />
                   </div>
@@ -189,10 +201,16 @@ if (services.length === 0) {
                     <h3 class="production-card__title">Fake Out Of Home</h3>
                     <p class="production-card__desc">CGI photoréaliste · Viral</p>
                   </div>
-                </a>
+                </div>
               </div>
             </div>
           </div>
+        </div>
+
+        <!-- WISTIA LIGHTBOX MODAL -->
+        <div id="wistia-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);backdrop-filter:blur(10px);align-items:center;justify-content:center">
+          <button onclick="closeWistia()" style="position:absolute;top:2rem;right:2rem;background:none;border:none;color:white;font-size:3.2rem;cursor:pointer;z-index:10000;width:48px;height:48px;display:flex;align-items:center;justify-content:center" aria-label="Fermer">✕</button>
+          <div id="wistia-container" style="width:90vw;max-width:1200px;aspect-ratio:16/9"></div>
         </div>
 
         <!-- CTA DARK -->
@@ -220,8 +238,34 @@ if (services.length === 0) {
 </Base>
 
 <script>
+  // Reveal on scroll
   const obs = new IntersectionObserver((entries) => {
     entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('rv--vis'); obs.unobserve(e.target); } });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.rv').forEach((el) => obs.observe(el));
+</script>
+
+<!-- Wistia Player -->
+<script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
+<script is:inline>
+  function openWistia(hash) {
+    var modal = document.getElementById('wistia-modal');
+    var container = document.getElementById('wistia-container');
+    container.innerHTML = '<div class="wistia_embed wistia_async_' + hash + ' videoFoam=true autoPlay=true" style="width:100%;height:100%">&nbsp;</div>';
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeWistia() {
+    var modal = document.getElementById('wistia-modal');
+    var container = document.getElementById('wistia-container');
+    container.innerHTML = '';
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeWistia();
+  });
+  document.getElementById('wistia-modal')?.addEventListener('click', function(e) {
+    if (e.target === this) closeWistia();
+  });
 </script>

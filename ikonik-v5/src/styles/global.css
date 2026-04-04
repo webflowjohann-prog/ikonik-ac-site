@@ -1190,3 +1190,28 @@ h1 em, h2 em, h3 em {
   line-height: 2.2rem;
   margin: 0;
 }
+
+/* ── PLAY BUTTON ───────────────────────────────────────────── */
+.play-btn {
+  align-items: center;
+  backdrop-filter: blur(10px);
+  background: rgba(0,0,0,.45);
+  border-radius: 50%;
+  display: flex;
+  height: 56px;
+  justify-content: center;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: background .3s var(--ease), transform .3s var(--ease);
+  width: 56px;
+  z-index: 2;
+}
+.play-btn svg {
+  margin-left: 3px;
+}
+.production-card:hover .play-btn {
+  background: var(--accent);
+  transform: translate(-50%, -50%) scale(1.1);
+}
