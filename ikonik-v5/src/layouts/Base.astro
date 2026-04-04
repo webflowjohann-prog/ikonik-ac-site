@@ -27,8 +27,148 @@ const {
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+  <!-- IKONIK OS — DataLayer init -->
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'page_title': document.title,
+      'page_path': window.location.pathname,
+      'page_url': window.location.href
+    });
+  </script>
+
+  <!-- Google Tag Manager (GTM-NJHKCZLZ) -->
+  <script is:inline>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-NJHKCZLZ');
+  </script>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJHKCZLZ"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
   <slot />
+
+  <!-- IKONIK OS — Cookie Consent Banner (RGPD) -->
+  <div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;padding:2rem;background:rgba(21,28,36,.96);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.08)">
+    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap">
+      <p style="color:rgba(255,255,255,.75);font-size:1.4rem;line-height:2.2rem;margin:0;max-width:700px;font-family:var(--sans)">
+        Ce site utilise des cookies pour améliorer votre expérience et analyser le trafic. En continuant, vous acceptez notre <a href="/mentions-legales" style="color:#E9540D;text-decoration:underline">politique de confidentialité</a>.
+      </p>
+      <div style="display:flex;gap:1rem;flex-shrink:0">
+        <button onclick="acceptCookies()" style="padding:.8rem 2.4rem;border-radius:8px;border:none;background:#E9540D;color:#fff;font-size:1.3rem;font-weight:600;cursor:pointer;font-family:var(--sans);letter-spacing:.04em">Accepter</button>
+        <button onclick="refuseCookies()" style="padding:.8rem 2.4rem;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.6);font-size:1.3rem;cursor:pointer;font-family:var(--sans);letter-spacing:.04em">Refuser</button>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    // IKONIK OS — Cookie Consent + Visitor Tracking
+    (function(){
+      var consent = localStorage.getItem('ikonik_cookies');
+      if (!consent) {
+        document.getElementById('cookie-banner').style.display = 'block';
+      } else if (consent === 'accepted') {
+        fireMarketingTags();
+      }
+
+      // Track page view in IKONIK OS (first-party, no consent needed)
+      trackPageView();
+    })();
+
+    function acceptCookies() {
+      localStorage.setItem('ikonik_cookies', 'accepted');
+      document.getElementById('cookie-banner').style.display = 'none';
+      window.dataLayer.push({'event': 'cookie_consent_granted'});
+      fireMarketingTags();
+    }
+
+    function refuseCookies() {
+      localStorage.setItem('ikonik_cookies', 'refused');
+      document.getElementById('cookie-banner').style.display = 'none';
+      window.dataLayer.push({'event': 'cookie_consent_denied'});
+    }
+
+    function fireMarketingTags() {
+      // GTM will handle Meta Pixel, GA4, etc. based on consent
+      window.dataLayer.push({'event': 'marketing_consent_ready'});
+    }
+
+    // IKONIK OS — First-party visitor tracking (no consent needed, anonymous)
+    function trackPageView() {
+      var SB = 'https://kgfolduvslsytbekbjvf.supabase.co';
+      var SK = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZm9sZHV2c2xzeXRiZWtianZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDU3MDcsImV4cCI6MjA5MDcyMTcwN30.4jZ9fMfSinEc1CE3s6LuR4q_WNeisEdtyBM5XQ2uMJg';
+
+      // Generate or retrieve visitor ID (anonymous, first-party)
+      var vid = localStorage.getItem('ikonik_vid');
+      if (!vid) {
+        vid = 'v_' + Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+        localStorage.setItem('ikonik_vid', vid);
+      }
+
+      // Log page view to IKONIK OS
+      fetch(SB + '/rest/v1/activity_log', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SK,
+          'Authorization': 'Bearer ' + SK,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          type: 'page_view',
+          description: document.title,
+          metadata: {
+            path: window.location.pathname,
+            referrer: document.referrer || null,
+            visitor_id: vid,
+            screen: window.innerWidth + 'x' + window.innerHeight,
+            device: /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
+            utm_source: new URLSearchParams(window.location.search).get('utm_source'),
+            utm_medium: new URLSearchParams(window.location.search).get('utm_medium'),
+            utm_campaign: new URLSearchParams(window.location.search).get('utm_campaign')
+          }
+        })
+      }).catch(function(){});
+
+      // Push enhanced data to GTM dataLayer
+      window.dataLayer.push({
+        'event': 'ikonik_page_view',
+        'ikonik_visitor_id': vid,
+        'ikonik_device': /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
+        'ikonik_referrer': document.referrer || 'direct'
+      });
+    }
+
+    // IKONIK OS — Track custom events (used by contact form, newsletter, etc.)
+    window.ikonikTrack = function(eventName, data) {
+      var SB = 'https://kgfolduvslsytbekbjvf.supabase.co';
+      var SK = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZm9sZHV2c2xzeXRiZWtianZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNDU3MDcsImV4cCI6MjA5MDcyMTcwN30.4jZ9fMfSinEc1CE3s6LuR4q_WNeisEdtyBM5XQ2uMJg';
+      var vid = localStorage.getItem('ikonik_vid') || 'unknown';
+
+      fetch(SB + '/rest/v1/activity_log', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SK,
+          'Authorization': 'Bearer ' + SK,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          type: eventName,
+          description: data.description || eventName,
+          metadata: Object.assign({visitor_id: vid}, data)
+        })
+      }).catch(function(){});
+
+      // Also push to GTM for Meta Pixel / GA4
+      window.dataLayer.push(Object.assign({'event': eventName}, data));
+    };
+  </script>
 </body>
 </html>

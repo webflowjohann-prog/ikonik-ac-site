@@ -197,7 +197,8 @@ document.getElementById('contact-form').addEventListener('submit',async function
       message:document.getElementById('message').value||null,
       source:'site-contact',page_origine:window.location.pathname
     })});
-    if(r.ok){document.getElementById('contact-form').style.display='none';document.getElementById('form-success').style.display='block'}
+    if(r.ok){document.getElementById('contact-form').style.display='none';document.getElementById('form-success').style.display='block';
+        if(window.ikonikTrack)window.ikonikTrack('lead_created',{description:'Contact form submitted',type_projet:data.type_projet,budget:data.budget,email_hash:btoa(data.email)})}
     else throw new Error()
   }catch(err){document.getElementById('form-error').style.display='block';b.disabled=false;b.querySelector('.form-submit__text').style.display='inline';b.querySelector('.form-submit__loading').style.display='none'}
 });
@@ -205,7 +206,8 @@ document.getElementById('contact-form').addEventListener('submit',async function
 document.getElementById('newsletter-form').addEventListener('submit',async function(e){
   e.preventDefault();
   try{await fetch(SB+'/rest/v1/newsletter_subscribers',{method:'POST',headers:H,body:JSON.stringify({email:document.getElementById('nl-email').value,source:'site-newsletter'})});
-  document.getElementById('newsletter-form').style.display='none';document.getElementById('nl-success').style.display='block'}catch(err){}
+  document.getElementById('newsletter-form').style.display='none';document.getElementById('nl-success').style.display='block';
+  if(window.ikonikTrack)window.ikonikTrack('newsletter_signup',{description:'Newsletter subscription',email_hash:btoa(email)})}catch(err){}
 });
 </script>
 <script>
