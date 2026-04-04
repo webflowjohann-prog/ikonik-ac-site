@@ -1,0 +1,255 @@
+---
+// booking.astro — IKONIK OS · Calendrier de réservation
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+<Base title="Réserver un appel — IKONIK" description="Choisissez un créneau pour un appel découverte avec Johann.">
+<Header />
+<div class="layout layout--dark">
+  <div class="layout__inner">
+    <section class="page-hero" style="min-height:50vh">
+      <div class="page-hero__bg" style="background-image:url(/images/hero-studio.webp)"></div>
+      <div class="page-hero__inner" style="padding:10rem 0">
+        <div class="container">
+          <h1 class="page-hero__title">
+            <div class="hero-title">
+              <span class="hero-line">Réserver un</span>
+              <span class="hero-line"><em>appel</em>
+                <svg fill="none" viewBox="0 0 200 11" width="160" height="11">
+                  <path d="M177 5.5H0" stroke="#FFFFFF"></path>
+                  <circle cx="194.5" cy="5.5" r="5.5" fill="#E9540D"></circle>
+                </svg>
+              </span>
+            </div>
+          </h1>
+        </div>
+      </div>
+    </section>
+
+    <div class="layout__content">
+      <div class="section t-light s-pad-lg">
+        <div class="section__inner">
+          <div class="container">
+            <div class="bk rv">
+              <div class="bk__info">
+                <span class="cb__tag" style="display:block;margin-bottom:1.6rem">Appel découverte</span>
+                <h2 class="bk__heading">45 minutes <em>avec Johann</em></h2>
+                <p class="bk__desc">Un appel pour comprendre votre projet, identifier les leviers, et vous proposer une approche sur mesure. Sans engagement.</p>
+                <div class="bk__details">
+                  <div class="bk__detail"><span>⏱</span><span>45 minutes</span></div>
+                  <div class="bk__detail"><span>📍</span><span>Visioconférence</span></div>
+                  <div class="bk__detail"><span>💰</span><span>Gratuit</span></div>
+                </div>
+              </div>
+
+              <div class="bk__calendar">
+                <!-- Day selector -->
+                <div class="bk__days" id="bk-days"></div>
+                <!-- Slots -->
+                <div class="bk__slots" id="bk-slots">
+                  <p class="bk__loading">Chargement des créneaux...</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Booking form (hidden by default) -->
+            <div id="bk-form-wrap" class="bk__form-wrap rv" style="display:none">
+              <div class="bk__form-header">
+                <h3>Confirmer votre créneau</h3>
+                <p id="bk-selected-slot" class="bk__selected-slot"></p>
+              </div>
+              <form id="bk-form" class="bk__form">
+                <div class="bk__form-row">
+                  <div class="bk__form-group"><label>Nom *</label><input type="text" id="bk-nom" required /></div>
+                  <div class="bk__form-group"><label>Email *</label><input type="email" id="bk-email" required /></div>
+                </div>
+                <div class="bk__form-row">
+                  <div class="bk__form-group"><label>Téléphone</label><input type="tel" id="bk-tel" /></div>
+                  <div class="bk__form-group">
+                    <label>Type</label>
+                    <select id="bk-type">
+                      <option value="decouverte">Appel découverte</option>
+                      <option value="projet">Discussion projet</option>
+                      <option value="suivi">Suivi client</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="bk__form-group"><label>Message (optionnel)</label><textarea id="bk-msg" rows="3" placeholder="Décrivez brièvement votre projet..."></textarea></div>
+                <button type="submit" class="bk__submit" id="bk-submit">Confirmer la réservation</button>
+              </form>
+            </div>
+
+            <!-- Success -->
+            <div id="bk-success" class="bk__success rv" style="display:none">
+              <div class="bk__success-icon">✓</div>
+              <h3>Réservation confirmée</h3>
+              <p id="bk-success-detail"></p>
+              <p class="bk__success-note">Vous recevrez un email de confirmation avec le lien de visioconférence.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<Footer />
+</Base>
+
+<style is:global>
+.bk{display:grid;gap:6rem;grid-template-columns:1fr}
+@media(min-width:992px){.bk{grid-template-columns:1fr 1.2fr;gap:8rem}}
+.bk__heading{font-family:var(--sans);font-size:3rem;font-weight:600;letter-spacing:.04em;line-height:3.8rem;margin:0 0 1.6rem}
+.bk__heading em{font-family:var(--serif);font-style:italic;font-weight:400}
+.bk__desc{color:var(--gray);font-size:1.5rem;line-height:2.4rem;margin:0 0 3rem}
+.bk__details{display:flex;flex-direction:column;gap:1.2rem}
+.bk__detail{align-items:center;color:var(--text);display:flex;font-size:1.4rem;gap:1rem}
+.bk__days{display:flex;gap:.8rem;margin-bottom:2rem;overflow-x:auto;padding-bottom:.8rem;scrollbar-width:none}
+.bk__days::-webkit-scrollbar{display:none}
+.bk__day{background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.1);border-radius:12px;color:var(--text);cursor:pointer;flex-shrink:0;font-family:var(--sans);font-size:1.2rem;padding:1.2rem 1.6rem;text-align:center;transition:all .3s;min-width:72px}
+.bk__day:hover{border-color:var(--accent)}
+.bk__day.active{background:rgba(233,84,13,.08);border-color:var(--accent);color:var(--accent);font-weight:600}
+.bk__day-name{display:block;font-weight:500;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.08em;font-size:1.1rem}
+.bk__day-date{display:block;font-size:1.5rem;font-weight:600}
+.bk__slots{display:grid;gap:.8rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:600px){.bk__slots{grid-template-columns:repeat(3,1fr)}}
+.bk__slot{background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.1);border-radius:10px;color:var(--text);cursor:pointer;font-family:var(--sans);font-size:1.4rem;font-weight:500;padding:1rem;text-align:center;transition:all .3s}
+.bk__slot:hover{background:rgba(233,84,13,.08);border-color:var(--accent);color:var(--accent)}
+.bk__slot.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.bk__loading{color:var(--gray);font-size:1.4rem;grid-column:1/-1;text-align:center;padding:2rem}
+.bk__form-wrap{background:var(--white);border-radius:20px;margin-top:4rem;padding:3rem}
+@media(min-width:768px){.bk__form-wrap{padding:4rem}}
+.bk__form-header h3{font-size:2rem;font-weight:600;margin:0 0 .8rem}
+.bk__selected-slot{color:var(--accent);font-size:1.5rem;font-weight:500;margin:0 0 2.4rem}
+.bk__form-row{display:grid;gap:1.6rem;grid-template-columns:1fr 1fr}
+@media(max-width:600px){.bk__form-row{grid-template-columns:1fr}}
+.bk__form-group{margin-bottom:1.6rem}
+.bk__form-group label{color:var(--text);display:block;font-size:1.1rem;font-weight:500;letter-spacing:.1em;margin-bottom:.6rem;text-transform:uppercase}
+.bk__form-group input,.bk__form-group textarea,.bk__form-group select{background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.1);border-radius:10px;color:var(--text);font-family:var(--sans);font-size:1.4rem;padding:1.1rem 1.4rem;width:100%}
+.bk__form-group input:focus,.bk__form-group textarea:focus,.bk__form-group select:focus{border-color:var(--accent);outline:none}
+.bk__form-group textarea{resize:vertical}
+.bk__submit{background:var(--accent);border:none;border-radius:12px;color:#fff;cursor:pointer;font-family:var(--sans);font-size:1.4rem;font-weight:600;letter-spacing:.06em;padding:1.4rem;text-transform:uppercase;transition:background .3s;width:100%}
+.bk__submit:hover{background:#d04a0b}
+.bk__submit:disabled{opacity:.5;cursor:wait}
+.bk__success{background:rgba(75,178,242,.06);border:1px solid rgba(75,178,242,.2);border-radius:20px;margin-top:4rem;padding:4rem;text-align:center}
+.bk__success-icon{background:#4BB2F2;border-radius:50%;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:2.4rem;height:64px;margin-bottom:1.6rem;width:64px}
+.bk__success h3{font-size:2rem;margin:0 0 1rem}
+.bk__success p{color:var(--gray);font-size:1.4rem;margin:0 0 .8rem}
+.bk__success-note{font-style:italic}
+</style>
+
+<script is:inline>
+var SB='https://kgfolduvslsytbekbjvf.supabase.co';
+var allSlots=[];
+var selectedDate=null;
+var selectedSlot=null;
+
+// Load slots
+fetch(SB+'/functions/v1/ikonik-booking').then(r=>r.json()).then(function(data){
+  allSlots=data.slots||[];
+  // Group by date
+  var dates={};
+  allSlots.forEach(function(s){
+    if(!dates[s.date])dates[s.date]={day:s.day,date:s.date,slots:[]};
+    dates[s.date].slots.push(s);
+  });
+  var dateList=Object.values(dates);
+
+  // Render days
+  var daysEl=document.getElementById('bk-days');
+  daysEl.innerHTML='';
+  dateList.forEach(function(d,i){
+    var parts=d.date.split('-');
+    var btn=document.createElement('button');
+    btn.className='bk__day'+(i===0?' active':'');
+    btn.innerHTML='<span class="bk__day-name">'+d.day+'</span><span class="bk__day-date">'+parts[2]+'/'+parts[1]+'</span>';
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('.bk__day').forEach(function(b){b.classList.remove('active')});
+      this.classList.add('active');
+      selectedDate=d.date;
+      renderSlots(d.date);
+    });
+    daysEl.appendChild(btn);
+  });
+
+  // Show first day
+  if(dateList.length>0){
+    selectedDate=dateList[0].date;
+    renderSlots(selectedDate);
+  }
+}).catch(function(){
+  document.getElementById('bk-slots').innerHTML='<p class="bk__loading">Impossible de charger les créneaux.</p>';
+});
+
+function renderSlots(date){
+  var slotsEl=document.getElementById('bk-slots');
+  var daySlots=allSlots.filter(function(s){return s.date===date});
+  slotsEl.innerHTML='';
+  if(daySlots.length===0){
+    slotsEl.innerHTML='<p class="bk__loading">Aucun créneau disponible ce jour.</p>';
+    return;
+  }
+  daySlots.forEach(function(s){
+    var btn=document.createElement('button');
+    btn.className='bk__slot';
+    btn.textContent=s.start+' - '+s.end;
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('.bk__slot').forEach(function(b){b.classList.remove('active')});
+      this.classList.add('active');
+      selectedSlot=s;
+      var parts=s.date.split('-');
+      document.getElementById('bk-selected-slot').textContent=s.day+' '+parts[2]+'/'+parts[1]+'/'+parts[0]+' de '+s.start+' à '+s.end;
+      document.getElementById('bk-form-wrap').style.display='block';
+      document.getElementById('bk-form-wrap').scrollIntoView({behavior:'smooth',block:'center'});
+    });
+    slotsEl.appendChild(btn);
+  });
+}
+
+// Submit booking
+document.getElementById('bk-form').addEventListener('submit',async function(e){
+  e.preventDefault();
+  if(!selectedSlot)return;
+  var btn=document.getElementById('bk-submit');
+  btn.disabled=true;btn.textContent='Réservation en cours...';
+
+  try{
+    var res=await fetch(SB+'/functions/v1/ikonik-booking',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        date:selectedSlot.date,
+        start:selectedSlot.start,
+        end:selectedSlot.end,
+        nom:document.getElementById('bk-nom').value,
+        email:document.getElementById('bk-email').value,
+        telephone:document.getElementById('bk-tel').value||null,
+        type_rdv:document.getElementById('bk-type').value,
+        message:document.getElementById('bk-msg').value||null
+      })
+    });
+    var data=await res.json();
+    if(data.success){
+      document.getElementById('bk-form-wrap').style.display='none';
+      document.querySelector('.bk').style.display='none';
+      var parts=selectedSlot.date.split('-');
+      document.getElementById('bk-success-detail').textContent=selectedSlot.day+' '+parts[2]+'/'+parts[1]+'/'+parts[0]+' de '+selectedSlot.start+' à '+selectedSlot.end;
+      document.getElementById('bk-success').style.display='block';
+      if(window.ikonikTrack)window.ikonikTrack('booking_created',{date:selectedSlot.date,start:selectedSlot.start});
+    }else{
+      alert(data.error||'Erreur lors de la réservation');
+      btn.disabled=false;btn.textContent='Confirmer la réservation';
+    }
+  }catch(err){
+    alert('Erreur de connexion');
+    btn.disabled=false;btn.textContent='Confirmer la réservation';
+  }
+});
+</script>
+
+<script>
+  const obs=new IntersectionObserver((e)=>{e.forEach((e)=>{if(e.isIntersecting){e.target.classList.add('rv--vis');obs.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.rv').forEach((el)=>obs.observe(el));
+</script>
+</Base>
