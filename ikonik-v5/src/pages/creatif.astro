@@ -142,7 +142,7 @@ if (services.length === 0) {
               <div class="productions-grid">
                 <div class="production-card rv" onclick="document.querySelector('#wistia-popover-sandro a').click()" style="cursor:pointer">
                   <div class="production-card__img">
-                    <img src="/images/sandro-chinatown.webp" alt="Film publicitaire IA Sandro — Chinatown" loading="lazy" />
+                    <img src="/images/sandro-chinatown.webp" alt="Film publicitaire IA Sandro — Chinatown" width="600" height="340" loading="lazy" />
                     <div class="play-btn" aria-label="Lire la vidéo">
                       <svg width="20" height="20" viewBox="0 0 20 20" fill="white"><polygon points="4,0 20,10 4,20"/></svg>
                     </div>
@@ -155,7 +155,7 @@ if (services.length === 0) {
                 </div>
                 <div class="production-card rv" onclick="document.querySelector('#wistia-popover-sanmarco a').click()" style="cursor:pointer">
                   <div class="production-card__img">
-                    <img src="/images/cafe-san-marco.webp" alt="Film corporate Café San Marco" loading="lazy" />
+                    <img src="/images/cafe-san-marco.webp" alt="Film corporate Café San Marco" width="600" height="340" loading="lazy" />
                     <div class="play-btn" aria-label="Lire la vidéo">
                       <svg width="20" height="20" viewBox="0 0 20 20" fill="white"><polygon points="4,0 20,10 4,20"/></svg>
                     </div>
@@ -168,7 +168,7 @@ if (services.length === 0) {
                 </div>
                 <div class="production-card rv" onclick="document.querySelector('#wistia-popover-segafredo a').click()" style="cursor:pointer">
                   <div class="production-card__img">
-                    <img src="/images/segafredo.webp" alt="Film de marque Segafredo" loading="lazy" />
+                    <img src="/images/segafredo.webp" alt="Film de marque Segafredo" width="600" height="340" loading="lazy" />
                     <div class="play-btn" aria-label="Lire la vidéo">
                       <svg width="20" height="20" viewBox="0 0 20 20" fill="white"><polygon points="4,0 20,10 4,20"/></svg>
                     </div>
@@ -181,7 +181,7 @@ if (services.length === 0) {
                 </div>
                 <div class="production-card rv" onclick="document.querySelector('#wistia-popover-bouillon a').click()" style="cursor:pointer">
                   <div class="production-card__img">
-                    <img src="/images/bouillon-anime.webp" alt="Animation de marque Bouillon Italien" loading="lazy" />
+                    <img src="/images/bouillon-anime.webp" alt="Animation de marque Bouillon Italien" width="600" height="340" loading="lazy" />
                     <div class="play-btn" aria-label="Lire la vidéo">
                       <svg width="20" height="20" viewBox="0 0 20 20" fill="white"><polygon points="4,0 20,10 4,20"/></svg>
                     </div>
@@ -194,7 +194,7 @@ if (services.length === 0) {
                 </div>
                 <div class="production-card rv">
                   <div class="production-card__img">
-                    <img src="/images/service-fooh.webp" alt="FOOH Fake Out Of Home" loading="lazy" />
+                    <img src="/images/service-fooh.webp" alt="FOOH Fake Out Of Home" width="600" height="340" loading="lazy" />
                     <div class="play-btn play-btn--soon" aria-label="Bientot disponible">
                       <span style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff">Bientot</span>
                     </div>
@@ -252,9 +252,26 @@ if (services.length === 0) {
   document.querySelectorAll('.rv').forEach((el) => obs.observe(el));
 </script>
 
-<!-- Wistia Player — popover mode handles its own fullscreen overlay -->
+<!-- Wistia Player — lazy-loaded when productions section scrolls into view -->
 <style is:global>
   .wistia-popover-overlay { background: #000 !important; opacity: 1 !important; }
   .wistia_placebo_close_button { z-index: 10001 !important; }
 </style>
-<script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
+<script is:inline>
+  (function(){
+    var loaded = false;
+    var target = document.querySelector('.productions-grid');
+    if (!target) return;
+    var io = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting && !loaded) {
+        loaded = true;
+        var s = document.createElement('script');
+        s.src = 'https://fast.wistia.com/assets/external/E-v1.js';
+        s.async = true;
+        document.head.appendChild(s);
+        io.disconnect();
+      }
+    }, { rootMargin: '200px' });
+    io.observe(target);
+  })();
+</script>
