@@ -140,7 +140,7 @@ if (services.length === 0) {
                 <h2 style="font-size:3.6rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Sélection <em style="font-family:var(--serif);font-style:italic;text-transform:none">de productions</em></h2>
               </div>
               <div class="productions-grid">
-                <div class="production-card rv" onclick="openWistia('9rg8erhogc')" style="cursor:pointer">
+                <div class="production-card rv" onclick="document.querySelector('#wistia-popover-sandro a').click()" style="cursor:pointer">
                   <div class="production-card__img">
                     <img src="/images/sandro-chinatown.webp" alt="Film publicitaire IA Sandro — Chinatown" loading="lazy" />
                     <div class="play-btn" aria-label="Lire la vidéo">
@@ -153,7 +153,7 @@ if (services.length === 0) {
                     <p class="production-card__desc">27 secondes · 100% IA</p>
                   </div>
                 </div>
-                <div class="production-card rv" onclick="openWistia('t427yb7j8z')" style="cursor:pointer">
+                <div class="production-card rv" onclick="document.querySelector('#wistia-popover-sanmarco a').click()" style="cursor:pointer">
                   <div class="production-card__img">
                     <img src="/images/cafe-san-marco.webp" alt="Film corporate Café San Marco" loading="lazy" />
                     <div class="play-btn" aria-label="Lire la vidéo">
@@ -166,7 +166,7 @@ if (services.length === 0) {
                     <p class="production-card__desc">Tournage réel · Brand content</p>
                   </div>
                 </div>
-                <div class="production-card rv" onclick="openWistia('2ytpjmvfi9')" style="cursor:pointer">
+                <div class="production-card rv" onclick="document.querySelector('#wistia-popover-segafredo a').click()" style="cursor:pointer">
                   <div class="production-card__img">
                     <img src="/images/segafredo.webp" alt="Film de marque Segafredo" loading="lazy" />
                     <div class="play-btn" aria-label="Lire la vidéo">
@@ -179,7 +179,7 @@ if (services.length === 0) {
                     <p class="production-card__desc">60 secondes · 4K · IA + Réel</p>
                   </div>
                 </div>
-                <div class="production-card rv" onclick="openWistia('hehl6vkokj')" style="cursor:pointer">
+                <div class="production-card rv" onclick="document.querySelector('#wistia-popover-bouillon a').click()" style="cursor:pointer">
                   <div class="production-card__img">
                     <img src="/images/bouillon-anime.webp" alt="Animation de marque Bouillon Italien" loading="lazy" />
                     <div class="play-btn" aria-label="Lire la vidéo">
@@ -195,6 +195,9 @@ if (services.length === 0) {
                 <div class="production-card rv">
                   <div class="production-card__img">
                     <img src="/images/service-fooh.webp" alt="FOOH Fake Out Of Home" loading="lazy" />
+                    <div class="play-btn play-btn--soon" aria-label="Bientot disponible">
+                      <span style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff">Bientot</span>
+                    </div>
                   </div>
                   <div class="production-card__info">
                     <span class="production-card__cat">FOOH</span>
@@ -207,11 +210,14 @@ if (services.length === 0) {
           </div>
         </div>
 
-        <!-- WISTIA LIGHTBOX MODAL -->
-        <div id="wistia-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:#000">
-          <button onclick="closeWistia()" style="position:absolute;top:1.2rem;right:1.2rem;background:rgba(0,0,0,.6);border:none;color:white;font-size:2.4rem;cursor:pointer;z-index:10001;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%" aria-label="Fermer">&#10005;</button>
-          <div id="wistia-container" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100vw;height:56.25vw;max-height:100vh;max-height:100dvh;max-width:177.78vh"></div>
-        </div>
+        <!-- WISTIA LIGHTBOX — uses Wistia's native popover (handles iOS fullscreen) -->
+        <!-- No custom modal needed — Wistia manages its own overlay -->
+
+<!-- Wistia popover embed containers (hidden, triggered by click) -->
+<div id="wistia-popover-sandro" class="wistia_embed wistia_async_9rg8erhogc popover=true popoverContent=link" style="display:inline;position:relative"><a href="#"></a></div>
+<div id="wistia-popover-sanmarco" class="wistia_embed wistia_async_t427yb7j8z popover=true popoverContent=link" style="display:inline;position:relative"><a href="#"></a></div>
+<div id="wistia-popover-segafredo" class="wistia_embed wistia_async_2ytpjmvfi9 popover=true popoverContent=link" style="display:inline;position:relative"><a href="#"></a></div>
+<div id="wistia-popover-bouillon" class="wistia_embed wistia_async_hehl6vkokj popover=true popoverContent=link" style="display:inline;position:relative"><a href="#"></a></div>
 
         <!-- CTA DARK -->
         <div class="section t-dark s-pad-md">
@@ -245,27 +251,5 @@ if (services.length === 0) {
   document.querySelectorAll('.rv').forEach((el) => obs.observe(el));
 </script>
 
-<!-- Wistia Player -->
+<!-- Wistia Player — popover mode handles its own fullscreen overlay -->
 <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
-<script is:inline>
-  function openWistia(hash) {
-    var modal = document.getElementById('wistia-modal');
-    var container = document.getElementById('wistia-container');
-    container.innerHTML = '<div class="wistia_embed wistia_async_' + hash + ' videoFoam=true autoPlay=true" style="width:100%;height:100%">&nbsp;</div>';
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-  }
-  function closeWistia() {
-    var modal = document.getElementById('wistia-modal');
-    var container = document.getElementById('wistia-container');
-    container.innerHTML = '';
-    modal.style.display = 'none';
-    document.body.style.overflow = '';
-  }
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeWistia();
-  });
-  document.getElementById('wistia-modal')?.addEventListener('click', function(e) {
-    if (e.target === this) closeWistia();
-  });
-</script>
