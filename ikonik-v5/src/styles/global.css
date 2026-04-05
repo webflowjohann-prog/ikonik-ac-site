@@ -732,12 +732,7 @@ h1 em, h2 em, h3 em {
   top: .7rem;
 }
 
-.su__inp--first { border-radius: 80rem; }
-.su__inp--last  { border-radius: 80rem; }
-@media (min-width: 768px) {
-  .su__inp--first { border-bottom-right-radius: 0; border-right: 0; border-top-right-radius: 0; }
-  .su__inp--last  { border-bottom-left-radius: 0;  border-top-left-radius: 0; }
-}
+/* Sign-up inputs — each input is its own full pill on all screen sizes */
 
 /* ── FOOTER ───────────────────────────────────────────────────── */
 .footer {
