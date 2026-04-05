@@ -214,10 +214,10 @@ if (services.length === 0) {
         <!-- No custom modal needed — Wistia manages its own overlay -->
 
 <!-- Wistia popover embed containers (hidden, triggered by click) -->
-<div id="wistia-popover-sandro" class="wistia_embed wistia_async_9rg8erhogc popover=true popoverContent=link" style="display:inline;position:relative"><a href="#"></a></div>
-<div id="wistia-popover-sanmarco" class="wistia_embed wistia_async_t427yb7j8z popover=true popoverContent=link" style="display:inline;position:relative"><a href="#"></a></div>
-<div id="wistia-popover-segafredo" class="wistia_embed wistia_async_2ytpjmvfi9 popover=true popoverContent=link" style="display:inline;position:relative"><a href="#"></a></div>
-<div id="wistia-popover-bouillon" class="wistia_embed wistia_async_hehl6vkokj popover=true popoverContent=link" style="display:inline;position:relative"><a href="#"></a></div>
+<div id="wistia-popover-sandro" class="wistia_embed wistia_async_9rg8erhogc popover=true popoverContent=link popoverOverlayColor=000000 popoverOverlayOpacity=1" style="display:inline;position:relative"><a href="#"></a></div>
+<div id="wistia-popover-sanmarco" class="wistia_embed wistia_async_t427yb7j8z popover=true popoverContent=link popoverOverlayColor=000000 popoverOverlayOpacity=1" style="display:inline;position:relative"><a href="#"></a></div>
+<div id="wistia-popover-segafredo" class="wistia_embed wistia_async_2ytpjmvfi9 popover=true popoverContent=link popoverOverlayColor=000000 popoverOverlayOpacity=1" style="display:inline;position:relative"><a href="#"></a></div>
+<div id="wistia-popover-bouillon" class="wistia_embed wistia_async_hehl6vkokj popover=true popoverContent=link popoverOverlayColor=000000 popoverOverlayOpacity=1" style="display:inline;position:relative"><a href="#"></a></div>
 
         <!-- CTA DARK -->
         <div class="section t-dark s-pad-md">
@@ -252,4 +252,8 @@ if (services.length === 0) {
 </script>
 
 <!-- Wistia Player — popover mode handles its own fullscreen overlay -->
+<style is:global>
+  .wistia-popover-overlay { background: #000 !important; opacity: 1 !important; }
+  .wistia_placebo_close_button { z-index: 10001 !important; }
+</style>
 <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
