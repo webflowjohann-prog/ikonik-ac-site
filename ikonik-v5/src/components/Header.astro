@@ -29,7 +29,7 @@
       </nav>
 
       <button class="burger" aria-label="Ouvrir le menu" id="burgerBtn">
-        <svg fill="none" viewBox="0 0 44 44" width="44" height="44" aria-hidden="true">
+        <svg fill="none" viewBox="0 0 44 44" width="44" height="44" aria-hidden="true" id="burgerIcon">
           <line x1="10" y1="16" x2="34" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
           <line x1="10" y1="28" x2="34" y2="28" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
@@ -38,6 +38,43 @@
     </div>
   </div>
 </header>
+
+<!-- Mobile menu overlay -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/" onclick="closeMobile()">Accueil</a>
+  <a href="/creatif" onclick="closeMobile()">Créatif</a>
+  <a href="/tech" onclick="closeMobile()">Tech</a>
+  <a href="/studio" onclick="closeMobile()">Studio</a>
+  <a href="/blog" onclick="closeMobile()">Journal</a>
+  <a href="/contact" onclick="closeMobile()">Contact</a>
+</div>
+
+
+<script is:inline>
+  // Mobile menu toggle
+  var menuOpen = false;
+  var burgerBtn = document.getElementById('burgerBtn');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (burgerBtn) {
+    burgerBtn.addEventListener('click', function() {
+      menuOpen = !menuOpen;
+      mobileMenu.classList.toggle('open', menuOpen);
+      document.body.style.overflow = menuOpen ? 'hidden' : '';
+      // Change burger to X
+      var icon = document.getElementById('burgerIcon');
+      if (menuOpen) {
+        icon.innerHTML = '<line x1="12" y1="12" x2="32" y2="32" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="32" y1="12" x2="12" y2="32" stroke="white" stroke-width="1.5" stroke-linecap="round"/>';
+      } else {
+        icon.innerHTML = '<line x1="10" y1="16" x2="34" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="10" y1="28" x2="34" y2="28" stroke="white" stroke-width="1.5" stroke-linecap="round"/>';
+      }
+    });
+  }
+  function closeMobile() {
+    menuOpen = false;
+    if (mobileMenu) mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+</script>
 
 
 <script>
