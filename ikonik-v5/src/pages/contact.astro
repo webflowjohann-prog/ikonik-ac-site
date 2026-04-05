@@ -192,22 +192,6 @@ import Footer from '../components/Footer.astro';
           </div>
         </div>
 
-        <!-- NEWSLETTER -->
-        <div class="section t-dark s-pad-md">
-          <div class="section__inner">
-            <div class="container rv newsletter-section">
-              <span class="nl-tag">Newsletter</span>
-              <h2 class="nl-heading">Restez <em>connecté</em></h2>
-              <p class="nl-sub">Tendances IA, production vidéo, tech. Pas de spam, que de la valeur.</p>
-              <form id="newsletter-form" class="nl-form">
-                <input type="email" id="nl-email" required placeholder="votre@email.com" class="nl-input" />
-                <button type="submit" class="nl-btn">S'inscrire</button>
-              </form>
-              <p id="nl-success" class="nl-success">Inscription confirmée. Bienvenue.</p>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
@@ -423,17 +407,6 @@ document.getElementById('contact-form').addEventListener('submit',async function
     b.querySelector('.form-submit__arrow').style.display='inline';
     b.querySelector('.form-submit__loading').style.display='none';
   }
-});
-
-document.getElementById('newsletter-form').addEventListener('submit',async function(e){
-  e.preventDefault();
-  var email=document.getElementById('nl-email').value;
-  try{
-    await fetch(SB+'/rest/v1/newsletter_subscribers',{method:'POST',headers:H,body:JSON.stringify({email:email,source:'site-newsletter'})});
-    document.getElementById('newsletter-form').style.display='none';
-    document.getElementById('nl-success').style.display='block';
-    if(window.ikonikTrack)window.ikonikTrack('newsletter_signup',{description:'Newsletter subscription',email_hash:btoa(email)});
-  }catch(err){}
 });
 </script>
 <script>

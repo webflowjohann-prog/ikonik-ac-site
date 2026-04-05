@@ -80,6 +80,20 @@ const {
         if (r.ok) {
           if (msg) { msg.style.display = 'block'; msg.style.color = '#3FB950'; msg.textContent = 'Merci — vous etes inscrit !'; }
           signupForm.reset();
+          // Send welcome email via Edge Function
+          fetch(SB_URL + '/functions/v1/ikonik-emails', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + SB_KEY },
+            body: JSON.stringify({
+              type: 'welcome',
+              to: email,
+              data: {
+                prenom: prenom || '',
+                subject: 'Bienvenue dans la newsletter IKONIK',
+                content: 'Bonjour ' + (prenom || '') + ',\n\nMerci pour votre inscription. Vous recevrez nos meilleurs contenus sur la production video IA, le developpement tech et les strategies qui font vendre.\n\nEn attendant, decouvrez nos realisations :\nhttps://ikonik-ac.com/creatif\n\nA tres vite,\nJohann — IKONIK'
+              }
+            })
+          }).catch(function(){});
         } else {
           var err = await r.text();
           if (err.indexOf('duplicate') > -1 || err.indexOf('unique') > -1) {
