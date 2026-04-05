@@ -1210,11 +1210,20 @@ h1 em, h2 em, h3 em {
   align-items: center;
 }
 .case-study:last-child { margin-bottom: 0; }
+
+/* Mobile: content first, image below — always */
+.case-study__content { order: 1; }
+.case-study__visuals { order: 2; }
+
 @media (min-width: 992px) {
   .case-study { grid-template-columns: 1fr 1fr; gap: 6rem; }
+  /* Desktop: reset to natural HTML order (image left, content right) */
+  .case-study__content { order: unset; }
+  .case-study__visuals { order: unset; }
 }
 
-.case-study--reverse .case-study__visuals { order: 1; }
+/* Reverse variant: only affects desktop */
+.case-study--reverse .case-study__visuals { order: 2; }
 @media (min-width: 992px) {
   .case-study--reverse .case-study__visuals { order: 2; }
   .case-study--reverse .case-study__content { order: 1; }
