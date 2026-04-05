@@ -18,9 +18,6 @@ const { videoSrc, subtitle } = Astro.props;
 
   <div class="home-hero__inner">
 
-    <!-- SEO H1 — visually hidden, accessible -->
-    <h1 class="sr-only">IKONIK — Studio créatif et tech, production vidéo, développement sur mesure et intelligence artificielle</h1>
-
     <!-- Ligne 1 : Make It — flex row, baseline alignés -->
     <div class="home-hero__line1">
       <em class="home-hero__make">Make</em>
@@ -53,12 +50,11 @@ const { videoSrc, subtitle } = Astro.props;
 <style>
   .home-hero {
     height: 100vh;
-    height: 100dvh;
     overflow: hidden;
     position: relative;
     width: 100%;
   }
-  /* Overlay gradient */
+  /* Overlay gradient — bleu marine IKONIK, bottom hidden by layout__content z-index */
   .home-hero::after {
     background: linear-gradient(180deg, rgba(21,28,36,.5) 0%, transparent 50%, rgba(21,28,36,.3) 100%);
     content: "";
@@ -67,26 +63,20 @@ const { videoSrc, subtitle } = Astro.props;
     z-index: 4;
   }
 
-  /* Video background — covers full hero on all devices */
+  /* Vidéo : 115% hauteur, centrée — exact Warwick */
   .home-hero__background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-    overflow: hidden;
-  }
-  .home-hero__background video {
+    height: 115%;
+    left: 50%;
     position: absolute;
     top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -57%);
+    width: 100%;
+    z-index: 2;
+  }
+  .home-hero__background video {
+    height: 100%;
     object-fit: cover;
+    width: 100%;
   }
 
   /* Inner centré */
