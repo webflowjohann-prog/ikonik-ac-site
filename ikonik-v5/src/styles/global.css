@@ -280,6 +280,7 @@ h1 em, h2 em, h3 em {
   height: 100%;
   left: 0;
   object-fit: cover;
+  object-position: center center;
   position: absolute;
   top: 0;
   width: 100%;
@@ -553,6 +554,7 @@ h1 em, h2 em, h3 em {
   border-radius: 20px;
   height: 320px;
   object-fit: cover;
+  object-position: center center;
   width: 100%;
 }
 @media (min-width: 768px) { .gallery-row__item img, .gallery-row__item video { height: 400px; } }

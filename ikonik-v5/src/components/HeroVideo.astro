@@ -53,11 +53,12 @@ const { videoSrc, subtitle } = Astro.props;
 <style>
   .home-hero {
     height: 100vh;
+    height: 100dvh;
     overflow: hidden;
     position: relative;
     width: 100%;
   }
-  /* Overlay gradient — bleu marine IKONIK, bottom hidden by layout__content z-index */
+  /* Overlay gradient */
   .home-hero::after {
     background: linear-gradient(180deg, rgba(21,28,36,.5) 0%, transparent 50%, rgba(21,28,36,.3) 100%);
     content: "";
@@ -66,20 +67,19 @@ const { videoSrc, subtitle } = Astro.props;
     z-index: 4;
   }
 
-  /* Vidéo : 115% hauteur, centrée — exact Warwick */
+  /* Video: simple absolute fill, object-fit cover handles centering */
   .home-hero__background {
-    height: 115%;
-    left: 50%;
     position: absolute;
-    top: 50%;
-    transform: translate(-50%, -57%);
+    inset: 0;
     width: 100%;
+    height: 100%;
     z-index: 2;
   }
   .home-hero__background video {
+    width: 100%;
     height: 100%;
     object-fit: cover;
-    width: 100%;
+    object-position: center center;
   }
 
   /* Inner centré */
