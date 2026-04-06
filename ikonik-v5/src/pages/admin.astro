@@ -236,8 +236,38 @@ textarea.f-inp{resize:vertical;min-height:80px}
       <div class="tabs-inner">
         <button class="tab-inner active" onclick="showInvTab('list')">Factures</button>
         <button class="tab-inner" onclick="showInvTab('new')">+ Nouvelle facture</button>
+        <button class="tab-inner" onclick="showInvTab('ai')" style="background:rgba(184,150,62,.08);border-color:var(--gold)">&#9889; Devis rapide IA</button>
       </div>
       <div id="inv-tab-list" class="card"><table class="tbl"><thead><tr><th>Numero</th><th>Client</th><th>Total TTC</th><th>Statut</th><th>Date</th></tr></thead><tbody id="inv-tbody"></tbody></table></div>
+      
+      <!-- DEVIS RAPIDE IA -->
+      <div id="inv-tab-ai" class="card" style="display:none">
+        <div class="card__title" style="display:flex;align-items:center;gap:8px">&#9889; Devis rapide IA <span style="font-size:11px;color:var(--muted);font-weight:400">Collez votre brief en vrac, l'IA le structure en devis</span></div>
+        <div class="f-row" style="margin-top:16px">
+          <div class="f-group"><label class="f-label">Nom du client</label><input class="f-inp" id="ai-client" placeholder="Nom du client ou societe" /></div>
+          <div class="f-group"><label class="f-label">Type</label><select class="f-inp" id="ai-type"><option value="devis">Devis</option><option value="facture">Facture</option></select></div>
+        </div>
+        <div class="f-group">
+          <label class="f-label">Brief du projet (en vrac)</label>
+          <textarea class="f-inp" id="ai-brief" rows="6" placeholder="Exemple : Tournage 2 jours pour Segafredo, cadreur + real, montage 4K, color grading, 3 versions social, livraison fichiers source, deplacements Rouen-Paris. Budget annonce 8000 euros HT." style="min-height:140px"></textarea>
+        </div>
+        <button class="btn btn--gold" id="ai-generate" style="width:100%">&#9889; Structurer le devis</button>
+        <div id="ai-loading" style="display:none;text-align:center;padding:24px;color:var(--gold)">
+          <div style="font-size:14px;margin-bottom:8px">L'IA analyse votre brief...</div>
+          <div style="font-size:12px;color:var(--muted)">Identification des prestations, estimation des tarifs</div>
+        </div>
+        <div id="ai-result" style="display:none;margin-top:20px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <div class="card__title" style="margin:0">Devis structure</div>
+            <button class="btn btn--gold btn--sm" id="ai-to-invoice">Transferer en facture &#8594;</button>
+          </div>
+          <div id="ai-lines-header" style="display:grid;gap:8px;grid-template-columns:3fr 1fr 1fr 1fr;margin-bottom:8px;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em"><span>Description</span><span>Qte</span><span>Prix HT</span><span>Total</span></div>
+          <div id="ai-lines"></div>
+          <div class="totals" style="margin-top:12px"><div class="totals__row"><span>Sous-total HT</span><span id="ai-st">0,00 EUR</span></div><div class="totals__row"><span>TVA (20%)</span><span id="ai-tv">0,00 EUR</span></div><div class="totals__row totals__row--big"><span>Total TTC</span><span id="ai-tt">0,00 EUR</span></div></div>
+          <div id="ai-notes" style="margin-top:16px;padding:14px;background:rgba(184,150,62,.06);border:1px solid rgba(184,150,62,.15);border-radius:8px;font-size:13px;color:var(--muted);display:none"></div>
+        </div>
+      </div>
+
       <div id="inv-tab-new" class="card" style="display:none">
         <div class="card__title">Nouvelle facture</div>
         <div class="f-row"><div class="f-group"><label class="f-label">Type</label><select class="f-inp" id="inv-type"><option value="facture">Facture</option><option value="devis">Devis</option><option value="avoir">Avoir</option></select></div><div class="f-group"><label class="f-label">Date</label><input type="date" class="f-inp" id="inv-date" /></div></div>
@@ -375,7 +405,79 @@ document.getElementById('adm-bk-submit').addEventListener('click',async function
 
 // ═══ FACTURATION ═══
 var invLineCount=0;
-function showInvTab(t){document.getElementById('inv-tab-list').style.display=t==='list'?'block':'none';document.getElementById('inv-tab-new').style.display=t==='new'?'block':'none';document.querySelectorAll('#sec-facturation .tabs-inner .tab-inner').forEach(function(b,i){b.classList.toggle('active',i===(t==='list'?0:1))});if(t==='list')loadInvoices();if(t==='new'){document.getElementById('inv-date').value=new Date().toISOString().slice(0,10);if(!invLineCount){addInvLine();addInvLine()}}}
+function showInvTab(t){
+  document.getElementById('inv-tab-list').style.display=t==='list'?'block':'none';
+  document.getElementById('inv-tab-new').style.display=t==='new'?'block':'none';
+  document.getElementById('inv-tab-ai').style.display=t==='ai'?'block':'none';
+  document.querySelectorAll('#sec-facturation .tabs-inner .tab-inner').forEach(function(b,i){
+    b.classList.toggle('active',i===(t==='list'?0:t==='new'?1:2));
+  });
+  if(t==='list')loadInvoices();
+  if(t==='new'){document.getElementById('inv-date').value=new Date().toISOString().slice(0,10);if(!invLineCount){addInvLine();addInvLine()}}
+}
+
+// ═══ DEVIS RAPIDE IA ═══
+var aiLines=[];
+document.getElementById('ai-generate').addEventListener('click',async function(){
+  var brief=document.getElementById('ai-brief').value;
+  var client=document.getElementById('ai-client').value;
+  var type=document.getElementById('ai-type').value;
+  if(!brief){alert('Collez votre brief de projet');return}
+  this.disabled=true;
+  document.getElementById('ai-loading').style.display='block';
+  document.getElementById('ai-result').style.display='none';
+  try{
+    var r=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        messages:[{role:'user',content:'Tu es le systeme de facturation du studio IKONIK (production video, dev web/IA, automatisation). Structure ce brief en lignes de '+type+' pour le client "'+client+'". Reponds UNIQUEMENT en JSON valide, rien d\'autre. Format: {"lignes":[{"description":"...","quantite":1,"prix_unitaire":500}],"notes":"remarques optionnelles"}. Identifie chaque prestation distincte (tournage, montage, color grading, motion design, dev, etc.) et estime un prix realiste en euros HT pour un studio premium francais. Brief:\n\n'+brief}]
+      })
+    });
+    var data=await r.json();
+    var text=data.content.map(function(c){return c.text||''}).join('');
+    var clean=text.replace(/```json|```/g,'').trim();
+    var parsed=JSON.parse(clean);
+    aiLines=parsed.lignes||[];
+    var linesEl=document.getElementById('ai-lines');
+    linesEl.innerHTML='';
+    var st=0;
+    aiLines.forEach(function(l,i){
+      var t=l.quantite*l.prix_unitaire;st+=t;
+      var d=document.createElement('div');
+      d.style.cssText='display:grid;gap:8px;grid-template-columns:3fr 1fr 1fr 1fr;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px;align-items:center';
+      d.innerHTML='<span style="color:var(--text)">'+l.description+'</span><span style="color:var(--muted);text-align:right">'+l.quantite+'</span><span style="color:var(--muted);text-align:right">'+fmt(l.prix_unitaire)+'</span><span style="color:var(--gold-light);font-weight:600;text-align:right">'+fmt(t)+'</span>';
+      linesEl.appendChild(d);
+    });
+    var tv=st*0.2;
+    document.getElementById('ai-st').textContent=fmt(st);
+    document.getElementById('ai-tv').textContent=fmt(tv);
+    document.getElementById('ai-tt').textContent=fmt(st+tv);
+    if(parsed.notes){document.getElementById('ai-notes').style.display='block';document.getElementById('ai-notes').textContent='Note IA : '+parsed.notes}else{document.getElementById('ai-notes').style.display='none'}
+    document.getElementById('ai-result').style.display='block';
+  }catch(err){alert('Erreur IA : '+err.message)}
+  document.getElementById('ai-loading').style.display='none';
+  this.disabled=false;
+});
+
+// Transfer AI lines to invoice form
+document.getElementById('ai-to-invoice').addEventListener('click',function(){
+  showInvTab('new');
+  document.getElementById('inv-client').value=document.getElementById('ai-client').value;
+  document.getElementById('inv-type').value=document.getElementById('ai-type').value;
+  document.getElementById('inv-date').value=new Date().toISOString().slice(0,10);
+  document.getElementById('inv-lines').innerHTML='';invLineCount=0;
+  aiLines.forEach(function(l){
+    addInvLine();
+    var line=document.getElementById('invl-'+invLineCount);
+    line.querySelector('.il-desc').value=l.description;
+    line.querySelector('.il-qty').value=l.quantite;
+    line.querySelector('.il-price').value=l.prix_unitaire;
+  });
+  calcInv();
+});
 async function loadInvoices(){
   var data=await q('invoices?select=id,numero,type,statut,client_nom,total_ttc,date_emission&order=created_at.desc&limit=50');
   document.getElementById('inv-tbody').innerHTML=data.length?data.map(function(inv){
