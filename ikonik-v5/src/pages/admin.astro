@@ -259,7 +259,7 @@ textarea.f-inp{resize:vertical;min-height:80px}
         <div id="ai-result" style="display:none;margin-top:20px">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
             <div class="card__title" style="margin:0">Devis structure</div>
-            <button class="btn btn--gold btn--sm" id="ai-to-invoice">Transferer en facture &#8594;</button>
+            <button class="btn btn--gold btn--sm" id="ai-to-invoice">Generer le devis &#8594;</button>
           </div>
           <div id="ai-lines-header" style="display:grid;gap:8px;grid-template-columns:3fr 1fr 1fr 1fr;margin-bottom:8px;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em"><span>Description</span><span>Qte</span><span>Prix HT</span><span>Total</span></div>
           <div id="ai-lines"></div>
@@ -471,6 +471,8 @@ document.getElementById('ai-to-invoice').addEventListener('click',function(){
     line.querySelector('.il-price').value=l.prix_unitaire;
   });
   calcInv();
+  // Auto-open premium preview
+  setTimeout(function(){ previewInvoice() }, 200);
 });
 async function loadInvoices(){
   var data=await q('invoices?select=id,numero,type,statut,client_nom,total_ttc,date_emission&order=created_at.desc&limit=50');
