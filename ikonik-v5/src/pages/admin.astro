@@ -427,19 +427,13 @@ document.getElementById('ai-generate').addEventListener('click',async function()
   document.getElementById('ai-loading').style.display='block';
   document.getElementById('ai-result').style.display='none';
   try{
-    var r=await fetch('https://api.anthropic.com/v1/messages',{
+    var r=await fetch(SB+'/functions/v1/ikonik-devis',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
-        messages:[{role:'user',content:'Tu es le systeme de facturation du studio IKONIK (production video, dev web/IA, automatisation). Structure ce brief en lignes de '+type+' pour le client "'+client+'". Reponds UNIQUEMENT en JSON valide, rien d\'autre. Format: {"lignes":[{"description":"...","quantite":1,"prix_unitaire":500}],"notes":"remarques optionnelles"}. Identifie chaque prestation distincte (tournage, montage, color grading, motion design, dev, etc.) et estime un prix realiste en euros HT pour un studio premium francais. Brief:\n\n'+brief}]
-      })
+      body:JSON.stringify({brief:brief,client:client,type:type})
     });
-    var data=await r.json();
-    var text=data.content.map(function(c){return c.text||''}).join('');
-    var clean=text.replace(/```json|```/g,'').trim();
-    var parsed=JSON.parse(clean);
+    var parsed=await r.json();
+    if(parsed.error){throw new Error(parsed.error)}
     aiLines=parsed.lignes||[];
     var linesEl=document.getElementById('ai-lines');
     linesEl.innerHTML='';
